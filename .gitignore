@@ -1,0 +1,8 @@
+*.aux
+*.log
+*.bcf
+erc-B*/erc-B*.pdf
+*.run.xml
+*.synctex.gz
+*.synctex.gz
+*.out
