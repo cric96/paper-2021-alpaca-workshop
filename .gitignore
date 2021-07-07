@@ -7,3 +7,9 @@ erc-B*/erc-B*.pdf
 *.synctex.gz
 *.out
 article.pdf
+*.fdb_latexmk
+*.abs
+*.bbl
+*.blg
+*.fls
+*.xmpdata

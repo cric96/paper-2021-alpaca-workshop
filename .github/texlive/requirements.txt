@@ -1,2 +1,3 @@
 biber
 texlive-bibtex-extra
+texlive-publishers
