@@ -7,7 +7,8 @@
 % twocolumn,
 % hf,
 ]{ceurart}
-\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[colorinlistoftodos,prependcaption]{todonotes}
+\usepackage{xcolor}
 %%
 %% One can fix some overfulls
 % \sloppy
@@ -59,7 +60,7 @@ url=todo,
 \begin{abstract}
   Artificial intelligence is here to stay. 
   In particular, Deep Learning techniques and models in the last years outperform hand-craft human solutions in different contexts, ranging from computer vision to videogames.
-  Currently, though, an all-encompassing Eeep learning model does not exist, so researchers explore the possibility to apply these outstanding techniques in different fields.
+  Currently, though, an all-encompassing Deep learning model does not exist, so researchers explore the possibility to apply these outstanding techniques in different fields.
   One of the most challenging is Cyber-Physical System. Here, engineers have to handle large scale, global-to-local behaviour mapping,
   highly environment stochasticity. 
   Historically, researchers favour handling them with self-organisation, by which a collective behaviour emerges from continuously local interaction between simple components.
@@ -87,9 +88,41 @@ url=todo,
 
 \section{Introduction}
 Aggregate Computing~\cite{DBLP:journals/computer/BealPV15}
+\todo[inline]{walkthrogh Cyber Physical Systems, why they are hard}
+\todo[inline]{Brief description of declarative approach, pros and cons}
+\todo[inline]{Brief description of machine learning approach (MARL and GNN for communication), pros and cons}
+\todo[inline]{Declare our direction: Combination to declarative and automatic approach}
+\todo[inline]{Outline}
+
 \section{Background and Related Work}
+\todo[inline]{walkthrogh traditional engineering way to design CPS}
+\todo[inline]{walkthrogh Aggregate Computing}
+\todo[inline]{walkthrogh Machine learning approach applied in MARL}
+\todo[inline]{current limitation (application specific, not large scala, centralised in some cases,..)}
+\todo[inline]{novel work on GNN -- agent learn to communicate -- node size indipendent~\cite{DBLP:conf/corl/TolstayaGPP0R19}}
+
+\section{Aggregate computing and Machine learning}
+\todo[inline]{description of execution model of AC}
+\todo[inline]{typical structure of AC algorithm : time evolution with hood operation}
+\todo[inline]{show an example of block G?}
+\todo[inline]{declare problems in applying traditional approach (variable-input size, feature hard-coded, environment non-stationarity, reward only know at the end)}
+\todo[inline]{define benefit, possible contrast (i.e. if AC is declarative, why we should use ML?)}
+
+\section{Toward a Neural Network Model}
+\todo[inline]{declare inspiration of GNN} %%ideally, we should use either reinforcement and supervised learning
+\todo[inline]{show the structure: state network, neighbour network, output network}
+\todo[inline]{possible limitations: non stabilisation and asynchrnous evaluation}
+\todo[inline]{learning algorithm: how to apply backprop here (similar to truncated backpropagation, currently does not work)}
+
+\section{Evaluation} %% optional section
+\todo[inline]{define experiment setup}
+\todo[inline]{verify if the system perform as traditional method}
 
 \section{Conclusion and Future Work}
+\todo[inline]{sharping the model}
+\todo[inline]{tune network in order to outperform traditional method}
+\todo[inline]{engineering hybrid application (when we need to use ML)}
+\todo[inline]{toward online learning?}
 %%
 %% Define the bibliography file to be used
 \bibliography{biblio}
