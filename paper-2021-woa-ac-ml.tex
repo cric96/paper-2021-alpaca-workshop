@@ -4,14 +4,16 @@
 %% twocolumn : Two column layout.
 %% hf: enable header and footer.
 \documentclass[
-% twocolumn,
+twocolumn,
 % hf,
 ]{ceurart}
 \usepackage[colorinlistoftodos,prependcaption]{todonotes}
 \usepackage{xcolor}
 %%
 %% One can fix some overfulls
-% \sloppy
+\sloppy
+
+\newcommand{\meta}[1]{{\color{blue}#1}}
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -131,6 +133,91 @@ Though, this mapping isn't easily definable -- since we handle complex systems -
 \todo[inline]{show an example of block G?}
 \todo[inline]{declare problems in applying traditional approach (variable-input size, feature hard-coded, environment non-stationarity, reward only know at the end)}
 \todo[inline]{define benefit, possible contrast (i.e. if AC is declarative, why we should use ML?)}
+
+In this section,
+ we analyse the characteristics of the aggregate computing paradigm,
+ map these to relevant machine learning contributions in literature,
+ and summarise the analysis into a roadmap.
+
+\paragraph{Multi- and many-agent system}
+%
+An aggregate system is a multi-agent system
+ and, often, a \emph{many}-agent system
+ where a large number (hundreds or more)
+ of autonomous entities are programmed to achieve 
+ some collective behaviour by means of \emph{repeated} 
+ sensing, computation, communication, and actuation steps.
+%
+\meta{TODO present approaches for learning in MAS, e.g., through prominent surveys}
+
+\paragraph{Neighbour-based or indirect (environment-mediated) interaction}
+%
+In aggregate systems,
+ a device can only directly interact with neighbours.
+%
+Data flows may be implemented
+ to support indirect communication across multiple hops;
+ however, information from devices far away tends to be obsolete.
+%
+The environment can also be used, via stigmergy,
+ for indirect communication;
+ however, a device can typically only access 
+  its very local portion of the environment.
+%
+In other words, the system state is only \emph{partially observable}.
+%
+\meta{What ML in these kinds of systems?}
+
+\paragraph{Learning goal: collective behaviour}
+%
+The devices of an aggregate 
+ must cooperatively learn the ``aggregate program'',
+ namely the collective behaviour 
+ that achieves a particular \emph{global goal}
+ in a decentralised, resilient way.
+%
+
+\paragraph{Self-organisation, swarm robotics}
+%
+\meta{TODO}
+
+\paragraph{Emergent behaviour}
+%
+The collective behaviour of an aggregate system
+ \emph{emerges} 
+ from a dense network of computations and interactions
+ in an evolving environment.
+%
+
+\paragraph{Delayed, global rewards}
+%
+In the light of the above properties,
+ if we consider a learning approach based on rewards,
+ we must observe that such rewards would be
+ delayed and mostly global---i.e.,
+ it may not be easy to solve the credit-assignment problem
+ to distinguish good from bad individual contributions
+ to the global outcome.
+
+\paragraph{Transient phase}
+%
+When an aggregate behaviour is carried out,
+ we often focus on the stabilised outcomes,
+ tolerating outcomes that are being generated
+ during the transient phase.
+%
+However, intermediate results are often important,
+ and invariants should hold throughout the entire computation.
+
+\paragraph{Dynamic topology}
+%
+If we admit \emph{mobility} and \emph{failure},
+ then we must also consider 
+ the possibility of changes in neighbourhoods
+ and hence the need of dealing with dynamic topologies.
+
+
+\subsection{Roadmap}
 
 \section{Towards Machine Learning approaches}
 \todo[inline]{declare inspiration of GNN} %%ideally, we should use either reinforcement and supervised learning
