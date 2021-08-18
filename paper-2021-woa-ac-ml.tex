@@ -149,14 +149,22 @@ An aggregate system is a multi-agent system
  sensing, computation, communication, and actuation steps.
 %
 Due to the high stochasticity of the environment,
-it is almost impossible to know and
-program the optimal behaviour for all agents in advance.
-This results in the need to create intelligent agents
-so that they can learn the optimal behaviour and adapt to environmental changes.
+ it is almost impossible to know and
+ program the optimal behaviour for all agents in advance.
+ This results in the need to create intelligent agents
+ so that they can learn the optimal behaviour and adapt to environmental changes.
 %
 In recent decades there has been an emerging trend in the use of reinforcement learning
  in multi-agent settings, as a powerful, robust and adaptive learning paradigm.
  Progress has been considerable and a wide range of algorithms are now available.
+% to expand and and references
+In general, there is not one technical solution in the multi-agent context.
+ There are several (even orthogonal) viewpoints on which research has focused.
+ One line of research (that of game theory) has tried to find techniques that achieve equilibrium such as Nash-Q learning.
+ Others have focused on exploiting coordination between agents. 
+ Others have applied single RL (such as Histeric Q-leraning) to each agent and achieved good results (even if no formal proof exist).
+%
+ The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
 
 \meta{TODO present approaches for learning in MAS, e.g., through prominent surveys}
 
