@@ -4,61 +4,48 @@
 %% twocolumn : Two column layout.
 %% hf: enable header and footer.
 \documentclass[
-twocolumn,
-% hf,
+  twocolumn,
+  % hf
 ]{ceurart}
 \usepackage[colorinlistoftodos,prependcaption]{todonotes}
 \usepackage{xcolor}
-%%
-%% One can fix some overfulls
 \sloppy
 
 \newcommand{\meta}[1]{{\color{blue}#1}}
 
-%%
-%% end of the preamble, start of the body of the document source.
 \begin{document}
+\conference{ - X - }
 
-%%
-%% Rights management information.
-%% CC-BY is default license.
-\copyrightyear{2020}
-\copyrightclause{Copyright for this paper by its authors.
-  Use permitted under Creative Commons License Attribution 4.0
-  International (CC BY 4.0).}
-
-%%
-%% This command is for the conference information
-\conference{22nd Workshop "From Objects to Agents" 
-Bologna, Italy, 1-3 September 2021 }
-
-%%
-%% The "title" command
 \title{Towards a Machine Learning approach for Aggregate Computing} %% or Towards a Machine Learning approach for Aggregate Computing
 
-%%
-%% The "author" command and its associated commands are used to define
-%% the authors and their affiliations.
 \author[1]{Gianluca Aguzzi}[%
-orcid=todo,
-email=gianluca.aguzzi@unibo.it,
-url=https://todo/,
+ orcid=todo,
+ email=gianluca.aguzzi@unibo.it,
+ url=https://todo/,
 ]
+
 \author[2]{Roberto Casadei}[%
-orcid=todo,
-email=roby.casadei@unibo.it,
-url=todo,
+ orcid=todo,
+ email=roby.casadei@unibo.it,
+ url=todo,
 ]
+
 \author[2]{Mirko Viroli}[%
-orcid=todo,
-email=mirko.viroli@unibo.it,
-url=todo,
+ orcid=todo,
+ email=mirko.viroli@unibo.it,
+ url=todo,
 ]
-\address[1]{Alma Mater Studiorum - Università di Bologna,
-  Cesena, Italy}
-%%
-%% The abstract is a short summary of the work to be presented in the
-%% article.
+\address[1]{Alma Mater Studiorum - Università di Bologna, Cesena, Italy}
+%%%%% LEGENDA FOR NOTES %%%%%
+%% RED: constraints
+%% YELLOW: suggestions
+%% CYAN: todos
+%% GREEN: outline
+\newcommand{\constraints}[1]{\todo[inline, color=red]{#1}}
+\newcommand{\suggestions}[1]{\todo[inline, color=yellow]{#1}}
+\newcommand{\todos}[1]{\todo[inline, color=cyan]{#1}}
+\newcommand{\outline}[1]{\todo[inline, color=green]{#1}}
+
 \begin{abstract}
 Artificial intelligence is here to stay. 
  In particular, Deep Learning techniques in the last years outperform 
@@ -101,12 +88,9 @@ So, we outline a Machine Learning technique that could be applied in Aggregate C
 %% This command processes the author and affiliation and title
 %% information and builds the first part of the formatted document.
 
-%%%%% LEGENDA FOR NOTES %%%%%
-%% RED: constraints
-%% YELLOW: suggestions
-%% CYAN: todos
+
 \maketitle
-\todo[inline, color=red]{max pages : 16}
+\suggestions{Perhaps we could change the narration directly towards "reinforcement learning". I think that I cannot continue to explore multi solution..}
 \section{Introduction}
 \todo[inline]{walkthrogh CAS, why they are hard}
 Nowadays, computer engineers have to deal with Collective Adaptive Systems (CASs)
@@ -161,39 +145,40 @@ Thanks to the ``composable'' nature of Aggregate Computing, we find common abstr
 %
 With those, different properties have been proven (such as \textit{eventual consistency}) and various
  application have been build (such as swarm robotics, crowds engineering and IoT like application).
-%
+
 Anyway, building block synthesis concerns different stuff related not only to the behaviour itself
- but also about the "ensamble" specifcations, that is some some are orthogonal to the
+ but also about the "ensamble" specifcations, that are orthogonal to the
  beheviour itself. For instance, it is quite difficult to make building block
  that easly scale with the node movements rapidity.
-%
 
 So, we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden
  to developers of defining the right collective specifications.
 %
-This lead to an "hibrid" approach where some behaviour part are still express in the of Aggregate Computing
+This lead to an "hybrid" approach where some behaviour part are still express in the of Aggregate Computing
  API, and another part is distilled through learning.
-
-\todo[inline, color=yellow]{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be usefull in the paper flow}
-\todo[inline, color=cyan]{Outline}
+%
+In this paper, as a first step towards a trurly hybrid approach, we investigate how Aggregate Computing can be
+ extended with Reinforcement Learning (and in particolar with Independent Reinforcement Learning) through a cases
+ study where we outline the performance improve of the "hop count" program.
+ 
+\suggestions{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be usefull in the paper flow}
+\todos{Outline}
 
 \section{Background and Related Work}
-\todo[inline]{walkthrogh traditional engineering way to design CAS}
-\todo[inline]{walkthrogh Aggregate Computing}
-\todo[inline]{walkthrogh Machine learning approach applied in MARL}
-\todo[inline]{current limitation (application specific, not large scale, centralised in some cases,..)}
-\todo[inline]{novel work on GNN -- agent learn to communicate -- node size indipendent~\cite{DBLP:conf/corl/TolstayaGPP0R19}}
+\outline{Probably, for a "short" paper, this section can be avoided.}
+\outline{walkthrogh traditional engineering way to design CAS}
+\outline{walkthrogh Aggregate Computing}
+
+\outline{I do not know, perhaps it is better to avoid this }
+\outline{walkthrogh Machine learning approach applied in MARL}
+\outline{current limitation (application specific, not large scale, centralised in some cases,..)}
 
 \section{Aggregate computing and Machine learning}
-\todo[inline]{description of execution model of AC}
-\todo[inline]{typical structure of AC algorithm : time evolution with hood operation}
-\todo[inline]{show an example of block G?}
-\todo[inline]{declare problems in applying traditional approach (variable-input size, feature hard-coded, environment non-stationarity, reward only know at the end)}
-\todo[inline]{define benefit, possible contrast (i.e. if AC is declarative, why we should use ML?)}
 
 In this section,
  we analyse the characteristics of the aggregate computing paradigm,
  map these to relevant machine learning contributions in literature,
+ pointing out different learning settings in which aggregate computing can me integrated,
  and summarise the analysis into a roadmap.
 
 \paragraph{Multi- and many-agent system}
@@ -223,7 +208,7 @@ In general, there is not one technical solution in the multi-agent context.
 %
  The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
 
-\meta{TODO present approaches for learning in MAS, e.g., through prominent surveys}
+\todos{present approaches for learning in MAS, e.g., through prominent surveys}
 
 \paragraph{Neighbour-based or indirect (environment-mediated) interaction}
 %
@@ -241,8 +226,7 @@ The environment can also be used, via stigmergy,
 %
 In other words, the system state is only \emph{partially observable}.
 %
-\meta{What ML in these kinds of systems?}
-
+\suggestions{ What kind of ML algorithms can be used here?}
 \paragraph{Learning goal: collective behaviour}
 %
 The devices of an aggregate 
@@ -254,7 +238,7 @@ The devices of an aggregate
 
 \paragraph{Self-organisation, swarm robotics}
 %
-\meta{TODO}
+\suggestions{ You can talk about similar problem structure (i.e. the collective follow the same local behaviour)}
 
 \paragraph{Emergent behaviour}
 %
@@ -291,17 +275,31 @@ If we admit \emph{mobility} and \emph{failure},
  the possibility of changes in neighbourhoods
  and hence the need of dealing with dynamic topologies.
 
-
+\subsection{Machine Learning settings}
+\todo[inline, color=green]{"application" perprective: building block, framework, aggregate computing to guide learning}
+\todo[inline, color=green]{learning perspective: homogeneous team learning}
+\todo[inline, color=green]{learning mode perspective: offline through simulation, offline with local reward, offline then online, full-online}
+\todo[inline, color=green]{method perspective: Supervised, reinforcement, multi-agent reinforcement}
 \subsection{Roadmap}
+\todo[inline, color=green]{AC + ML for building block refining -- offline}
+\todo[inline, color=green]{AC + ML for building block refining -- online}
+\todo[inline, color=green]{AC + ML for application refining -- offline/offline}
+\todo[inline, color=green]{AC + ML for building block creation -- offline} %% why not?
+\todo[inline, color=green]{AC + ML for building block creation -- online}
+\todo[inline, color=green]{AC + ML for framework level -- online}
 
-\section{Towards Machine Learning approaches}
-\todo[inline]{declare inspiration of GNN} %%ideally, we should use either reinforcement and supervised learning
-\todo[inline]{show the structure: state network, neighbour network, output network}
-\todo[inline]{possible limitations: non stabilisation and asynchrnous evaluation}
-\todo[inline]{learning algorithm: how to apply backprop here (similar to truncated backpropagation, currently does not work)}
-\todo[inline]{when makes sense to apply RL? (goal-oriented application?)}
+\section{Aggregate Computing with Reinforcement}
+In this section we describe our first result in Aggregate Computing and Machine learning combination,
+ in particular, we briefly describe how nodes compute to follow the global specification,
+ how reinforcement learning can be injected in the computation loop,
+ and what kind of Reinforcement Learning can be used with Aggregate Computing.
+\subsection{Computatational Model}
+\subsection{Reinforcement Learnin integration}
+\subsection{Independent Reinforcement Learning}
+As a first step, we investigate t
 \section{Evaluation} %% optional section
-\todo[inline]{define experiment setup}
+\todo[inline]{define experiment setup, hop count problem}
+
 \todo[inline]{verify if the system perform as traditional method}
 
 \section{Conclusion and Future Work}
