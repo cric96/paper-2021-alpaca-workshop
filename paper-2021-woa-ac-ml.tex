@@ -60,17 +60,31 @@ url=todo,
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  Artificial intelligence is here to stay. 
-  In particular, Deep Learning techniques in the last years outperform hand-craft human solutions in different contexts, ranging from computer vision to videogames.
-  Currently, though, an all-encompassing Deep learning model does not exist, so researchers explore the possibility to apply these outstanding techniques in different fields.
-  One of the most challenging is Collective-Adaptive System (CAS). Here, engineers have to handle large scale, global-to-local behaviour mapping,
-  highly environment stochasticity. 
-  Historically, researchers favour handling them with self-organisation, by which a collective behaviour emerges from continuously local interaction between simple components.
-  A novel technique to specify self-organising behaviour in a composable and functional manner is Aggregate Computing. Even though is promising for expressing high-level collective behaviour, 
-  it needs to build low-level blocks that tend to be tricky. 
-  On the opposite side, some research lines apply Deep learning (supervised, reinforcement, non-supervised and self-supervised)
-  along with CAS. Currently, though, no one gain popularity and solution tend to be application-specific.
-  So, we outline a Machine Learning technique that could be applied in Aggregate Computing, making the possibility to combine declarative and automatic approaches that can easily scale in application complexity.
+Artificial intelligence is here to stay. 
+ In particular, Deep Learning techniques in the last years outperform 
+ hand-craft human solutions in different contexts, ranging from computer vision to videogames.
+%
+Currently, though, an all-encompassing Deep learning model does not exist, 
+ so researchers explore the possibility to apply these techniques in different fields.
+
+One of the most challenging is Collective-Adaptive System (CAS). % Or we want to use Cyber-Physical Swarm??
+ Here, engineers have to handle large scale, global-to-local behaviour mapping,
+ highly environment stochasticity. 
+%
+Historically, researchers favour handling them with self-organisation,
+ by which a collective behaviour emerges from continuously local interaction between simple components.
+%
+A novel technique to specify self-organising behaviour 
+ in a composable and functional manner is Aggregate Computing. 
+ Even though it is promising for expressing high-level collective behaviour, 
+ it needs to build low-level blocks that tend to be tricky. 
+
+On the opposite side, some research lines apply Deep learning (supervised, reinforcement, non-supervised and self-supervised)
+ along with CAS. Currently, though, no one gain popularity and solution tend to be application-specific.
+%
+So, we outline a Machine Learning technique that could be applied in Aggregate Computing, 
+ making the possibility to combine specification-based and automatic approaches 
+ that can easily scale in application complexity and to any system size.
 \end{abstract}
 
 %%
@@ -86,14 +100,20 @@ url=todo,
 %%
 %% This command processes the author and affiliation and title
 %% information and builds the first part of the formatted document.
+
+%%%%% LEGENDA FOR NOTES %%%%%
+%% RED: constraints
+%% YELLOW: suggestions
+%% CYAN: todos
 \maketitle
 \todo[inline, color=red]{max pages : 16}
 \section{Introduction}
-Aggregate Computing~\cite{DBLP:journals/computer/BealPV15}
 \todo[inline]{walkthrogh CAS, why they are hard}
-Nowadays, computer engineers have to deal with Collective Adaptive Systems (CASs) due to the increasing interconnected computational devices placed in ever-changing environments.
+Nowadays, computer engineers have to deal with Collective Adaptive Systems (CASs)
+ due to the increasing interconnected computational devices placed in ever-changing environments.
  Examples of those include robot swarm, smart cities and augmenting crowds.
-A CAS is characterised by 
+
+CASs are characterised by 
 \begin{itemize}
 \item a global order that emerges from local node interactions, 
 \item  decentralised control, and 
@@ -103,22 +123,59 @@ CAS are notoriously hard to design due as part of complex systems.
 %
 So, over the years, in literature, various approaches aim at handling this complexity. 
 %
-Some of them take inspiration from the natural system composed of social animals -- like bees, fish and ants. 
+Some of them take inspiration from the natural system
+ composed of social animals --- like bees, fish and ants. 
 %
-Here, a sort of hive mind arises -- something referred to as swarm intelligence -- born from local interactions between agents. 
+Here, a sort of hive mind arises -- 
+ something referred to as swarm intelligence -- 
+born from local interactions between agents. 
 %
-This kind of behaviour is called self-organisation, namely a global order that emerges from continuous interactions between simple entities.
+This kind of behaviour is called self-organisation, 
+ namely a global order that emerges from continuous 
+ interactions between simple entities.
 
-Initially, researchers try to bring those properties in the computer science world by miming the collective behaviour bottom-up, 
- namely trying to find the single node behaviour to reach a global behaviour, e.g. flocking, foraging, etc.
+Initially, researchers try to bring those properties in the computer science world 
+ by miming the collective behaviour bottom-up, 
+ namely trying to find the right single node behaviour 
+ to reach a global behaviour, e.g. flocking, foraging, etc.
 %
-Though, this mapping isn't easily definable -- since we handle complex systems -- therefore novel techniques move the design focus by the ensemble level,
- specifying the system behaviour as a whole. 
+Though, this mapping isn't easily definable ---
+ since we handle complex systems.
+%
+Ideally we would like to express collective behaviours focusing only at the ensemble level,
+ abstracting over non-functional aspect such as the network topology, environment uncertetines and 
+ so on.
 
-\todo[inline]{Brief description of declarative approaches, pros and cons}
-\todo[inline]{Brief description of machine learning approaches (MARL and GNN for communication), pros and cons}
-\todo[inline]{Declare our direction: Combination to declarative and automatic approach}
-\todo[inline]{Outline}
+In this direction, Aggregate Computing is an innovative solution by which 
+ developers can express collective self-organising behaviours through a functional program specification.
+%
+Indeed, an aggregate blueprint consist of a manipulation of \textit{computational fields}, a distributed
+ data structure where at each point in the space time is associated the result of a computation
+ perform by a node.
+%
+These manipulation are defined in \textit{Field-calcus} --- the root of Aggregate Computing. 
+ This calculus describe a set of minimal constructurs to express any spatiotemporal computation.
+%
+Thanks to the ``composable'' nature of Aggregate Computing, we find common abstraction 
+ in collective behaviour specification and then we incapsulate it in so-called ``building-blocks''.
+%
+With those, different properties have been proven (such as \textit{eventual consistency}) and various
+ application have been build (such as swarm robotics, crowds engineering and IoT like application).
+%
+Anyway, building block synthesis concerns different stuff related not only to the behaviour itself
+ but also about the "ensamble" specifcations, that is some some are orthogonal to the
+ beheviour itself. For instance, it is quite difficult to make building block
+ that easly scale with the node movements rapidity.
+%
+
+So, we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden
+ to developers of defining the right collective specifications.
+%
+This lead to an "hibrid" approach where some behaviour part are still express in the of Aggregate Computing
+ API, and another part is distilled through learning.
+
+\todo[inline, color=yellow]{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be usefull in the paper flow}
+\todo[inline, color=cyan]{Outline}
 
 \section{Background and Related Work}
 \todo[inline]{walkthrogh traditional engineering way to design CAS}
@@ -254,6 +311,7 @@ If we admit \emph{mobility} and \emph{failure},
 \todo[inline]{toward online learning?}
 %%
 %% Define the bibliography file to be used
+\nocite{*}
 \bibliography{biblio}
 
 %%
