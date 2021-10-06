@@ -336,10 +336,25 @@ Aside of what kind of problem we setup, we can use Reinforcement Learning, Super
 \todo[inline, color=green]{method perspective: Supervised, reinforcement, multi-agent reinforcement}
 
 \subsection{Roadmap}
-\todo[inline, color=green]{AC + ML for building block refining -- offline}
-\todo[inline, color=green]{AC + ML for building block refining -- online}
-\todo[inline, color=green]{AC + ML for application refining -- offline/offline}
-\todo[inline, color=green]{AC + ML for building block creation -- offline} %% why not?
+The path towards a fully integration of Machine Learning and Aggregate Computing is long
+ and probably we do not know the implications that it can bring. Currently, we program to:
+
+\begin{enumerate}
+  \item Enhance building block through learning -- \textbf{offline}: in this first step, we 
+  need to understand what kind of learning mode is most suitable for us. To decrease the complexity,
+  we aim at perform learning \textit{offline} and at the \textit{building block} level.
+  \item Enhance building blocks through learning -- \textbf{online}: here, the most challenging part
+  in bringing the offline results could be in the reward function definition. Indeed, at runtime
+  we cannot use a global view of the system. Novel way in describe a collective reward by Aggregate Computing
+  might be taken in consideration.
+  \item Create building block through learning: some building block currenlty lack of a proper implementation -- 
+  such the the distributed leader election -- so learning can help us also in crating them. 
+  Here, though, the research space increase drastically, so possibility it cannot be easy to bring our 
+  result there.
+  \item Improve framework aspects through learning: when we successufly apply learning in the first two steps, 
+  we can also consider to move learning at the framework level, to manage non-functional aspect. In this way,
+  developers can really focus on the "high level" behaviour aspect.
+\end{enumerate}
 \todo[inline, color=green]{AC + ML for building block creation -- online}
 \todo[inline, color=green]{AC + ML for framework level -- online}
 
