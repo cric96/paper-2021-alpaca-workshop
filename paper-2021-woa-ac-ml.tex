@@ -9,6 +9,7 @@
 ]{ceurart}
 \usepackage[colorinlistoftodos,prependcaption]{todonotes}
 \usepackage{xcolor}
+\usepackage{listings}
 \sloppy
 
 \newcommand{\meta}[1]{{\color{blue}#1}}
@@ -47,6 +48,7 @@
 \newcommand{\outline}[1]{\todo[inline, color=green]{#1}}
 
 \begin{abstract}
+\suggestions{}
 Artificial intelligence is here to stay. 
  In particular, Deep Learning techniques in the last years outperform 
  hand-craft human solutions in different contexts, ranging from computer vision to videogames.
@@ -159,7 +161,7 @@ This lead to a "hybrid" approach where a part of behaviour is still expressed us
 In this paper, as the first steps towards \textit{Hybrid Aggregate Computing}, we investigate how Aggregate Computing can be
  extended with Reinforcement Learning (and in particular with Independent Reinforcement Learning) through a case
  study where we outline the performance improvement of the "hop count" program.
- \suggestions{If we leave the part about "roadmap" and "machine learning similar setting", we need to add some description here.}
+\suggestions{If we leave the part about "roadmap" and "machine learning similar setting", we need to add some description here.}
 \suggestions{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be usefull in the paper flow}
 \todos{Outline}
 
@@ -167,8 +169,9 @@ In this paper, as the first steps towards \textit{Hybrid Aggregate Computing}, w
 \outline{Probably, for a "short" paper, this section can be avoided.}
 \outline{walkthrogh traditional engineering way to design CAS}
 \outline{walkthrogh Aggregate Computing}
-
-\outline{I do not know, perhaps it is better to avoid this }
+\subsection{Field calcus}
+\subsection{Machine Learning}
+\suggestions{I do not know, perhaps it is better to avoid this }
 \outline{walkthrogh Machine learning approach applied in MARL}
 \outline{current limitation (application-specific, not large scale, centralised in some cases,..)}
 
@@ -177,7 +180,7 @@ In this paper, as the first steps towards \textit{Hybrid Aggregate Computing}, w
 In this section,
  we analyse the characteristics of the aggregate computing paradigm,
  map these to relevant machine learning contributions in literature,
- pointing out different learning perspective about the integration of Aggregate Computing with Machine Learning,
+ pointing out different learning perspectives about the integration of Aggregate Computing with Machine Learning,
  and summarise the analysis into a roadmap.
 
 \paragraph{Multi- and many-agent system}
@@ -294,7 +297,7 @@ On the other side, learning can be useful also for framework related stuff,
 \suggestions{Move the definition of team learning and concurrent learning in the previous section}
 \paragraph{Learning problem} As reference to \cite{mas-anc-cooperation}, Multi agent learning can be
  divided in \textit{concurrent} and \textit{team} learning. In the foster, each agent perform the 
- learning process and the in the latter, the learning processo is perform only by one agent an then 
+ learning process and the in the latter, the learning process is performed only by one agent an then 
  shared to the collective.
  Team learning is usually used in the ``swarm'' system, due to the homogeneous behaviour -- i.e. each
  agent perform the same program. Here, a common reward signal exist and evaluate the overall collective behaviour.
@@ -363,8 +366,69 @@ In this section, we describe our first result in Aggregate Computing and Machine
  in particular, we briefly describe how nodes compute to follow the global specification,
  how Reinforcement Learning can be injected in the computation loop,
  and what kind of Reinforcement Learning can be used with Aggregate Computing.
+
 \subsection{Computatational Model}
+An aggregate program execution consists in a continuously node-point execution of a \textit{round}, that is
+ the atomical part of aggregate computing.
+%
+Each node can interact only with-in its neighbourhoods sharing the \textit{export}, namely the result produced by
+ the evaluation of a round.
+
+The main round steps consist in:
+\begin{enumerate}
+  \item execution context creation: where node collect information from the sensors, the neighbourhoods exports and the old
+  program output
+  \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. This produce 
+  the export.
+  \item export sharing: the export created will be shared within the current neighbourhoods perceived by the nodes
+  \item actuations: giving the export produced, node might be perform some actuation (e.g. motor activations, steering, ...)
+\end{enumerate}
+
+The rounds executiong is completly asynchrouns, so do not exist a global clock to coordinate the aggregate. This makes possible
+ to scala easly with the node number size.
+
+This collective, proactive and periodical execution will eventually bring to the system-wide specification.
+
 \subsection{Reinforcement Learning integration}
+By a local view, a program execution can be see as:
+$$
+f : CONTEXT => OUTPUT
+$$
+Where the context contains:
+\begin{itemize}
+  \item $S(name) => value$: a function from sensor name to the perceived value
+  \item $\phi(ID) => EXPORT$ a function from id to neighbourhoods data
+\end{itemize}
+The computational field $\theta$ contains all output produced by the system.
+
+Speaking by Reinforcement Learning settings, we need to define the state functions
+and the reward functions.
+
+Here the execution need to be distributed, so state will be a function from the local node context:
+$$
+STATE := \Omega(CONTEXT)
+$$
+
+Reward function instead, might be depens on the learning mode. Indeed, if we perform learning offline, 
+it could be defined from the overall computational field:
+$$
+REWARD_{global} := \psi({\theta})
+$$
+If we use a online mode, it need to be defined as a function to the local context:
+$$
+REWARD_{local} := \psi(\phi)
+$$
+
+Finally, actions will be something that influece the current aggregate program output, changing the program evaluation as:
+$$
+f_{rl} = CONTEXT => \lambda(OUTPUT, ACTION)
+$$
+
+As remarked before, the policy $\pi$ need to be distributed so each agent to choose an action perfom:
+$$
+ACTION = \pi(STATE)
+$$
+
 \subsection{Independent Reinforcement Learning}
 As a first step, we investigate t
 \section{Evaluation} %% optional section
