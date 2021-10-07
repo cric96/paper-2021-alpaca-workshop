@@ -1,19 +1,24 @@
 %% The first command in your LaTeX source must be the \documentclass command.
 %%
 %% Options:
-%% twocolumn : Two column layout.
 %% hf: enable header and footer.
 \documentclass[
   twocolumn,
   % hf
 ]{ceurart}
+\usepackage{tcolorbox}
 \usepackage[colorinlistoftodos,prependcaption]{todonotes}
 \usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{minted}
 \usepackage{listings}
+\usepackage{amsmath}
+\usepackage{systeme}
+
+\setminted{frame=single}
 \sloppy
 
 \newcommand{\meta}[1]{{\color{blue}#1}}
-
 \begin{document}
 \conference{ - X - }
 
@@ -53,18 +58,17 @@ Artificial intelligence is here to stay.
  In particular, Deep Learning techniques in the last years outperform 
  hand-craft human solutions in different contexts, ranging from computer vision to videogames.
 %
-Currently, though, an all-encompassing Deep learning model does not exist, 
+Currently, though, an all-encompassing Deep learning algorithm does not exist, 
  so researchers explore the possibility to apply these techniques in different fields.
 
-One of the most challenging is Collective-Adaptive System (CAS). % Or we want to use Cyber-Physical Swarm??
+One of the most challenging is Collective-Adaptive System (CAS). % Or do we want to use Cyber-Physical Swarm??
  Here, engineers have to handle large scale, global-to-local behaviour mapping,
  highly environment stochasticity. 
 %
 Historically, researchers favour handling them with self-organisation,
  by which a collective behaviour emerges from continuously local interaction between simple components.
 %
-A novel technique to specify self-organising behaviour 
- in a composable and functional manner is Aggregate Computing. 
+A novel technique to specify self-organising behaviour in a composable and functional manner is Aggregate Computing. 
  Even though it is promising for expressing high-level collective behaviour, 
  it needs to build low-level blocks that tend to be tricky. 
 
@@ -72,8 +76,7 @@ On the opposite side, some research lines apply Deep learning (supervised, reinf
  along with CAS. Currently, though, no one gain popularity and solution tend to be application-specific.
 %
 So, we outline a Machine Learning technique that could be applied in Aggregate Computing, 
- making the possibility to combine specification-based and automatic approaches 
- that can easily scale in application complexity and to any system size.
+ making the possibility to combine specification-based and automatic approaches that can easily scale in application complexity and to any system size.
 \end{abstract}
 
 %%
@@ -92,7 +95,7 @@ So, we outline a Machine Learning technique that could be applied in Aggregate C
 
 
 \maketitle
-\suggestions{Perhaps we could change the narration directly towards "reinforcement learning". I think that I cannot continue to explore multi solution..}
+\suggestions{Perhaps we could change the narration directly towards "reinforcement learning". I think that I cannot continue to explore multiple solutions..}
 \section{Introduction}
 Nowadays, computer engineers have to deal with Collective Adaptive Systems (CASs)
  due to the increasing interconnected computational devices placed in ever-changing environments.
@@ -134,21 +137,21 @@ Ideally, we would like to express collective behaviours focusing only at the ens
 In this direction, Aggregate Computing is an innovative solution by which 
  developers can express collective self-organising behaviours through a functional program specification.
 %
-Indeed, an aggregate blueprint consists of manipulation of \textit{computational fields}, a distributed
- data structure where at each point in the spacetime is associated the result of a computation
- perform by a node.
+Indeed, an aggregate blueprint consists of the manipulation of \textit{computational fields}, a distributed
+ data structure where each point in the spacetime is associated with the result of a computation
+ performed by a node.
 %
-These manipulations are defined in \textit{Field-calcus} --- the root of Aggregate Computing. 
+These operations are defined in \textit{Field-calculus} --- the root of Aggregate Computing. 
  This calculus describes a set of minimal constructs to express any spatiotemporal computation.
 %
 Thanks to the ``composable'' nature of Aggregate Computing, we find common abstractions 
- in collective behaviour specification, and then we encapsulate them in so-called ``building-blocks''.
+ in collective behaviour specification, and then we encapsulate them in so-called ``building blocks''.
 %
 With those, different properties have been proven (such as \textit{eventual consistency}) and various
- applications have been build (such as swarm robotics, crowds engineering).
+ applications have been built (such as swarm robotics, crowds engineering).
 
-Anyway, building block synthesis concerns different stuff related not only to the behaviour itself,
- but also about the "ensemble" specifications. 
+Anyway, building block synthesis concerns different stuff related not only to the behaviour itself
+ but also to the "ensemble" specifications. 
  For instance, it is quite difficult to craft building blocks
  that easily adapt w.r.t the node movements rapidity.
 
@@ -201,7 +204,7 @@ Due to the high stochasticity of the environment,
 In recent decades there has been an emerging trend in the use of Reinforcement Learning
  in multi-agent settings, as a powerful, robust and adaptive learning paradigm.
  Progress has been considerable and a wide range of algorithms are now available.
-% to expand and and references
+% to expand and references
 In general, there is not one technical solution in the multi-agent context.
  There are several (even orthogonal) viewpoints on which researchers have focused.
  One line of research (that of game theory) has tried to find techniques that achieve equilibrium such as Nash-Q learning~\cite{nash-q}.
@@ -224,7 +227,7 @@ Data flows may be implemented
 The environment can also be used, via stigmergy,
  for indirect communication;
  however, a device can typically only access 
-  its very local portion of the environment.
+  to a very local portion of the environment.
 %
 In other words, the system state is only \emph{partially observable}.
 %
@@ -256,7 +259,7 @@ In the light of the above properties,
  if we consider a learning approach based on rewards,
  we must observe that such rewards would be
  delayed and mostly global---i.e.,
- it may not be easy to solve the credit-assignment problem
+ it may not be easy to solve the credit assignment problem
  to distinguish good from bad individual contributions
  to the global outcome.
 
@@ -283,80 +286,76 @@ Here we outline the different perspectives about Hybrid Aggregate Computing with
  to clarify the current research gap and to help us in the definition of a research roadmap.
 %
 \paragraph{Application} Learning can be useful at different levels in our framework.
- Surely, what for us is most important is to improve our building-block definition.
+ Surely, what for us is most important is to improve our building block definition.
 %
  Indeed, most of our results and applications are based on them.
- The building block improvement can succeed either by learning a correction factor 
- or by learning the behaviour entirely.
+ The building block improvement can succeed either by learning a correction factor or by learning the behaviour entirely.
 
 On the other side, learning can be useful also for framework related stuff,
  mainly aim at "non-functional" aspects. Trust mechanisms, evaluation frequency,
- energy consumption manager, package storage are all the things 
- that currently need to be handle by hand.
+ energy consumption manager, package storage are all the things that currently need to be handle by hand.
  
 \suggestions{Move the definition of team learning and concurrent learning in the previous section}
-\paragraph{Learning problem} As reference to \cite{mas-anc-cooperation}, Multi agent learning can be
+\paragraph{Learning problem} Multi-agent learning can be
  divided in \textit{concurrent} and \textit{team} learning. In the foster, each agent perform the 
- learning process and the in the latter, the learning process is performed only by one agent an then 
+ the learning process and the in the latter, the learning process is performed only by one agent an then 
  shared to the collective.
- Team learning is usually used in the ``swarm'' system, due to the homogeneous behaviour -- i.e. each
- agent perform the same program. Here, a common reward signal exist and evaluate the overall collective behaviour.
- Aggregate Computing is quite near to this kind of settings.
+ Team learning is usually used in the ``swarm'' system, due to the homogeneous behaviour -- i.e. each agent performs the same program. 
+ Here, a common reward signal exists and evaluate the overall collective behaviour.
+ Aggregate Computing is quite near to this kind of setting.
  On the other hand, Concurrent Learning, in \cite{csas-and-marl} seems to be usually applied in Collective
- Adaptive System, so again a field near to Aggregate Computing. In particular, Indipendedet Reinforcement Learning
- seems to reach good result in this kind of system, even if no thereom exist as the single agent context.
- Concurrent learning does not presume a global collective behaviour convernce. Indeed using a common reward signal,
+ Adaptive System, so again a field near to Aggregate Computing. 
+ In particular, Indipendedet Reinforcement Learning seems to reach good results in this kind of system, even if no theorems exist in the single-agent context.
+ Concurrent learning does not presume a global collective behaviour convergence. Indeed using a common reward signal,
  the collective can reach the same behaviour, as in the team learning settings as done here~\cite{iima2008swarm}.
-\paragraph{Learning mode}
-Aside of what kind of problem we setup, we can use Reinforcement Learning, Supervised Learning.
- Superivsed learning is quite rare in CSAS -- or in the swarm system in general. Novel work leverage Graph Neural network
- to learn how agent should communicate, supposing to know the right behaviour (i.e. produced via global vision simulation).
- In Aggregate Computing, Supervised Learning makes sense if we want to craft new building block by zero. 
+
+\paragraph{learning modality}
+Aside from what kind of problem we set up, we can use Reinforcement Learning, Supervised Learning.
+ Supervised learning is quite rare in CSAS -- or in the swarm system in general.
+Novel work leverage Graph Neural network to learn how agents should communicate, supposing to know the right behaviour (i.e. produced via global vision simulation).
+ In Aggregate Computing, Supervised Learning makes sense if we want to craft new building blocks by zero. 
  Indeed, we know eventually the right state of the system, but we do not know how the system can reach it
 
- Reinforcement Leanring is quite used in CAS, 
- due its flessibility and thanks to the plethora of apporaches used in this scenarion.
+ Reinforcement Learning is quite used in CAS, 
+ due to its flexibility and thanks to the plethora of approaches used in this scenario.
  In our scenario, Reinforcement Learning can be used both at the building block level and the framework level.
- For the forster, the simplest scenario can be that agents learn a correction factor to improve a long-term
+ For the first, the simplest scenario can be that agents learn a correction factor to improve a long-term
  reward signal.
  
 \paragraph{Learning time}
- Finally, learning can be perform offline, offline and then online, or fully-online.
- The foster is the most easy scenario. Here indeed, we can leverage simulation to know the right 
- collective value and then synthesis the right value. Supervised, Reinforcement Learning and even Evolutionary 
- computing can be used here. offline + online instead can be a mid-level complexity direction.
- Here, simulation can always leveraged to reach a good behavior, but then at online in can be
- adapted in front of new environmental situation. We know that it is quite problematic scenario. Reinforcement 
- Learning is the most suitable mode here --- also the "meta" learning can help.
- Finally, we can image that learning will be performed fully online. It is a common situation where
- we do not know the environment and also simulation can be very hard to accomplish. Here, again, Reinforcement learning
- seems to be the most suitable approach.
+ Finally, learning can be performed \texttt{offline}, \texttt{offline and then online}, or \texttt{fully online}.
+ The foster is the easiest scenario.
+ Here indeed, we can leverage simulation to know the right collective value and then synthesis the right value. 
+ Supervised, Reinforcement Learning and even Evolutionary computing can be used here. 
+ offline and then online instead can be a mid-level complexity direction.
+ Here, simulation can always be leveraged to reach a good behaviour, but then online in can be adapted in front of new environmental situations. 
+ We know that it is quite a problematic scenario. 
+ Reinforcement Learning is the most suitable mode here --- also the "meta" learning can help.
+ Finally, we can imagine that learning will be performed fully online. 
+ It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
+ Here, again, Reinforcement learning seems to be the most suitable approach.
 
  
 \todo[inline, color=green]{"application" pesprective: building block, framework, aggregate computing to guide learning}
 \todo[inline, color=green]{learning perspective: homogeneous team learning}
-\todo[inline, color=green]{learning mode perspective: offline through simulation, offline with local reward, offline then online, full-online}
+\todo[inline, color=green]{learning modality perspective: offline through simulation, offline with local reward, offline then online, full-online}
 \todo[inline, color=green]{method perspective: Supervised, reinforcement, multi-agent reinforcement}
 
 \subsection{Roadmap}
-The path towards a fully integration of Machine Learning and Aggregate Computing is long
- and probably we do not know the implications that it can bring. Currently, we program to:
-
+The path towards full integration of Machine Learning and Aggregate Computing is long and probably we do not know the implications that it can bring. 
+Currently, we program to:
 \begin{enumerate}
-  \item Enhance building block through learning -- \textbf{offline}: in this first step, we 
-  need to understand what kind of learning mode is most suitable for us. To decrease the complexity,
-  we aim at perform learning \textit{offline} and at the \textit{building block} level.
-  \item Enhance building blocks through learning -- \textbf{online}: here, the most challenging part
-  in bringing the offline results could be in the reward function definition. Indeed, at runtime
-  we cannot use a global view of the system. Novel way in describe a collective reward by Aggregate Computing
-  might be taken in consideration.
-  \item Create building block through learning: some building block currenlty lack of a proper implementation -- 
-  such the the distributed leader election -- so learning can help us also in crating them. 
-  Here, though, the research space increase drastically, so possibility it cannot be easy to bring our 
-  result there.
-  \item Improve framework aspects through learning: when we successufly apply learning in the first two steps, 
-  we can also consider to move learning at the framework level, to manage non-functional aspect. In this way,
-  developers can really focus on the "high level" behaviour aspect.
+  \item Enhance building block through learning -- \textbf{offline}: in this first step, we need to understand what kind of learning modality is most suitable for us. 
+  To decrease the complexity, we aim at perform learning \textit{offline} and at the \textit{building block} level.
+  \item Enhance building blocks through learning -- \textbf{online}: here, the most challenging part in bringing the offline results could be in the reward function definition. 
+  Indeed, at runtime, we cannot use a global view of the system. 
+  A novel way to describe a collective reward by Aggregate Computing might be taken into consideration.
+  \item Create building block through learning: some building blocks currently lack a proper implementation -- 
+  such as the distributed leader election -- so learning can help us also in crafting them. 
+  Here, though, the research space increase drastically, so it is possible it cannot be easy to bring our result there.
+  \item Improve framework aspects through learning: when we successfully apply to learn in the first two steps, 
+  we can also consider moving learning at the framework level, to manage non-functional aspects. In this way,
+  developers can focus on the "high level" behaviour aspect.
 \end{enumerate}
 \todo[inline, color=green]{AC + ML for building block creation -- online}
 \todo[inline, color=green]{AC + ML for framework level -- online}
@@ -368,29 +367,29 @@ In this section, we describe our first result in Aggregate Computing and Machine
  and what kind of Reinforcement Learning can be used with Aggregate Computing.
 
 \subsection{Computatational Model}
-An aggregate program execution consists in a continuously node-point execution of a \textit{round}, that is
+An aggregate program execution consists in a continuously node-point execution of a \texttt{round}, that is
  the atomical part of aggregate computing.
 %
-Each node can interact only with-in its neighbourhoods sharing the \textit{export}, namely the result produced by
- the evaluation of a round.
+Each node can interact only with-in its neighbourhoods sharing the \texttt{export}, namely the result produced by
+ the evaluation of a \texttt{round}.
 
 The main round steps consist in:
 \begin{enumerate}
-  \item execution context creation: where node collect information from the sensors, the neighbourhoods exports and the old
+  \item execution context creation: where node collects information from the sensors, the neighbourhoods exports and the old
   program output
-  \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. This produce 
-  the export.
+  \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. 
+  This produces the \texttt{export}.
   \item export sharing: the export created will be shared within the current neighbourhoods perceived by the nodes
-  \item actuations: giving the export produced, node might be perform some actuation (e.g. motor activations, steering, ...)
+  \item actuations: giving the export produced, nodes may performing some actuation (e.g. motor activations, steering, ...)
 \end{enumerate}
 
-The rounds executiong is completly asynchrouns, so do not exist a global clock to coordinate the aggregate. This makes possible
- to scala easly with the node number size.
+The rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. This makes possible
+ to scale easily with the node number size.
 
 This collective, proactive and periodical execution will eventually bring to the system-wide specification.
 
 \subsection{Reinforcement Learning integration}
-By a local view, a program execution can be see as:
+From a local view, program execution can be seen as:
 $$
 f : CONTEXT => OUTPUT
 $$
@@ -404,43 +403,167 @@ The computational field $\theta$ contains all output produced by the system.
 Speaking by Reinforcement Learning settings, we need to define the state functions
 and the reward functions.
 
-Here the execution need to be distributed, so state will be a function from the local node context:
+Here the execution needs to be distributed, so the state will be a function from the local node context:
 $$
 STATE := \Omega(CONTEXT)
 $$
 
-Reward function instead, might be depens on the learning mode. Indeed, if we perform learning offline, 
+Reward function instead, might be depending on the learning modality. Indeed, if we perform learning offline, 
 it could be defined from the overall computational field:
 $$
 REWARD_{global} := \psi({\theta})
 $$
-If we use a online mode, it need to be defined as a function to the local context:
+If we use an online mode, it needs to be defined as a function to the local context:
 $$
 REWARD_{local} := \psi(\phi)
 $$
 
-Finally, actions will be something that influece the current aggregate program output, changing the program evaluation as:
+Finally, actions will be something that influences the current aggregate program output, changing the program evaluation as:
 $$
 f_{rl} = CONTEXT => \lambda(OUTPUT, ACTION)
 $$
 
-As remarked before, the policy $\pi$ need to be distributed so each agent to choose an action perfom:
+As remarked before, the policy $\pi$ need to be distributed so each agent to choose the action that will be performed:
 $$
 ACTION = \pi(STATE)
 $$
 
-\subsection{Independent Reinforcement Learning}
-As a first step, we investigate t
+For our first tests, we decide to test a concurrent learning technique by which each agent try to improve our current local policy.
+In these settings, the environment became non-stationary making the learning process quite unstable.
+But, as we observe in learning application in collective self-adaptive systems, practically these solutions led to good results.
+
+
 \section{Evaluation} %% optional section
-\todo[inline]{define experiment setup, hop count problem}
+In this section, we outline the results of the Reinforcement Learning application in one simple
+ aggregate program: the hop count.
 
-\todo[inline]{verify if the system perform as traditional method}
+Here, the computational field that will eventually be produced consists of the distance in terms of the minimum number of nodes needed to reach source nodes.
 
-\section{Conclusion and Future Work}
-\todo[inline]{sharping the model}
-\todo[inline]{tune network in order to outperform traditional method}
-\todo[inline]{engineering hybrid application (when we need to use ML)}
-\todo[inline]{toward online learning?}
+A naive implementation of this kind of problem can be describe in Aggregate Computing as:
+\begin{minted}{scala}
+rep(inf) { hopCounts => 
+ mux(source) 
+  { 0 } 
+  { minHood(hopCounts) + 1} 
+}
+\end{minted}
+This solution though suffers from the slow-rising problem. It consists of a slow convergence time when an equilibrium situation is broken. 
+\todos{expand with examples}
+
+So, our first intuition is to increase the speed of convergence through learning. In particular, the previous solution can be rewrite as:
+
+ \begin{minted}{scala}
+rep(inf) { hopCounts => 
+  val currentState = state(hopCounts)
+  val action = localPolicy(state)
+  mux(source) 
+  { 0 } 
+  { minHood(hopCounts) + 1 + action} 
+}
+\end{minted}
+
+Where the actions are discrete values (0, 1 in the simplest scenario) that correct the local result following a policy refined through learning.
+
+The state instead, is built upon previous output and of the neighbourhoods output.
+
+In particular, in this case, it is built from a temporal window in order to encode the hop count increasing speed:
+\begin{minted}{scala}
+  def speed(hopCount) {
+    val min = minHood(hopCounts)
+    val window = recentValues(min, k)
+    min - window.head 
+  }
+\end{minted}
+Then, due to the partially observability of the environment, we mantain a 
+ list of speed, to understand the hop count direction:
+
+ \begin{minted}{scala}
+  def space(hopCount) {
+    val currentSpeed = speed(hopCount)
+    recentValues(currentSpeed, w)
+  }
+\end{minted}
+
+Where k and w are two parameters of this algorithm.
+
+The policy is improved locally, during simulation, using the Q-Learning algorithm. 
+The reward function is then evaluated locally and consist in: 
+\[
+\systeme*{0 : \textit{hop count output is right}, -1 : \textit{otherwise}}
+\]
+This is a common reward function used to maintain the nodes in a stable situation or to
+fasten the time needed to reach a stable situation.
+
+So, the learnin loop, can be defined as:
+\begin{minted}{scala}
+rep(initialState) {
+  oldState =>
+  val output = rep(inf) { hopCounts => 
+   val currentState = state(hopCounts)
+   val action = localPolicy(state)
+   mux(source) 
+    { 0 } 
+    { minHood(hopCounts) + 1 + action} 
+  }
+  val currentReward = reward(output)
+  qLearning(oldState, 
+   state, 
+   action, 
+   reward
+  )
+}
+\end{minted}
+
+To verify if the aggregate can improve the convergence time using reinforcement learning,
+we simulate a situation where the rising problem emerges:
+in the beginning, two source nodes exist in the network, ($\alpha$ and $\beta$).
+At the time $t$, $\beta$ disappears. So the node near to $\beta$ start a slow process
+to eventually reach the distance towards $\alpha$.
+
+We use x node displacement into an irregular grid. Each simulation least y time unit.
+ we run the simulation for 100 episodes.
+ We use also a time-decay policy both for $\epsilon$ and $\alpha$ as:
+$$
+put a formula
+$$
+
+Figure x shows the error for both naive implementation and Reinforcement Learning based implementation as the time changes.
+
+As you can see, at the time 100 using the greedy policy, the collective learning to recover to a stable situation
+faster than the standard naive implementation.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{img/1}
+      \label{fig:y equals x}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{img/50}
+      \label{fig:three sin x}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{img/100}
+      \label{fig:five over x}
+  \end{subfigure}
+     \caption{The error evolution compared with naive implementation.}
+\end{figure}
+\todos{add blinking scenarios}
+\todos{add movement scenarios}
+
+\section{Conclusion and Discussion}
+In this article, we briefly overview how Aggregate Computing can be mixed with Machine Learning -- in particular Reinforcement 
+Learning. This leads us to compare Aggregate Computing problems with current Machine Learning solutions in MASs systems.
+We then define a possible roadmap towards full support of a so-called "Hybrid Aggregate Computing", where Machine Learning
+and Aggregate Computing collaborate.
+\todos{discussion about the result}
+\todos{limitations: it does not easily scale with the complex application, it cannot be applied online, it cannot be used in different scenarios}
+\todos{future work: integrate deep learning solution, integrate actor-critic method (team learning)}
 %%
 %% Define the bibliography file to be used
 \nocite{*}
