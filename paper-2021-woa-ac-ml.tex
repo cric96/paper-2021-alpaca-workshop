@@ -14,11 +14,11 @@
 \usepackage{listings}
 \usepackage{amsmath}
 \usepackage{systeme}
+\usepackage{cleveref}
 
 \setminted{frame=single}
 \sloppy
 
-\newcommand{\meta}[1]{{\color{blue}#1}}
 \begin{document}
 \conference{ - X - }
 
@@ -36,7 +36,7 @@
  url=todo,
 ]
 
-\author[2]{Mirko Viroli}[%
+\author[3]{Mirko Viroli}[%
  orcid=todo,
  email=mirko.viroli@unibo.it,
  url=todo,
@@ -51,7 +51,12 @@
 \newcommand{\suggestions}[1]{\todo[inline, color=yellow]{#1}}
 \newcommand{\todos}[1]{\todo[inline, color=cyan]{#1}}
 \newcommand{\outline}[1]{\todo[inline, color=green]{#1}}
-
+%% Utility commands
+\newcommand{\hybridaggregate}{\textit{Hybrid Aggregate Computing}}
+\newcommand{\round}{\texttt{round}}
+\newcommand{\export}{\texttt{export}}
+%% Minted helpers
+\definecolor{mblue}{rgb}{0.27,0.33,0.53}
 \begin{abstract}
 \suggestions{}
 Artificial intelligence is here to stay. 
@@ -92,7 +97,6 @@ So, we outline a Machine Learning technique that could be applied in Aggregate C
 %%
 %% This command processes the author and affiliation and title
 %% information and builds the first part of the formatted document.
-
 
 \maketitle
 \suggestions{Perhaps we could change the narration directly towards "reinforcement learning". I think that I cannot continue to explore multiple solutions..}
@@ -161,11 +165,11 @@ So, we claim that Machine Learning can help us in handling this "unseen" situati
 This lead to a "hybrid" approach where a part of behaviour is still expressed using common 
  Aggregate Computing abstractions and another part is distilled through learning.
 %
-In this paper, as the first steps towards \textit{Hybrid Aggregate Computing}, we investigate how Aggregate Computing can be
+In this paper, as the first steps towards \hybridaggregate{}, we investigate how Aggregate Computing can be
  extended with Reinforcement Learning (and in particular with Independent Reinforcement Learning) through a case
  study where we outline the performance improvement of the "hop count" program.
 \suggestions{If we leave the part about "roadmap" and "machine learning similar setting", we need to add some description here.}
-\suggestions{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be usefull in the paper flow}
+\suggestions{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be useful in the paper flow}
 \todos{Outline}
 
 \section{Background and Related Work}
@@ -173,6 +177,7 @@ In this paper, as the first steps towards \textit{Hybrid Aggregate Computing}, w
 \outline{walkthrogh traditional engineering way to design CAS}
 \outline{walkthrogh Aggregate Computing}
 \subsection{Field calcus}
+\todos{I think it can be helpful to introduce fields calculus through ScaFi...}
 \subsection{Machine Learning}
 \suggestions{I do not know, perhaps it is better to avoid this }
 \outline{walkthrogh Machine learning approach applied in MARL}
@@ -206,9 +211,9 @@ In recent decades there has been an emerging trend in the use of Reinforcement L
  Progress has been considerable and a wide range of algorithms are now available.
 % to expand and references
 In general, there is not one technical solution in the multi-agent context.
- There are several (even orthogonal) viewpoints on which researchers have focused.
+ There are several (even orthogonal) viewpoints on which researchers have been focused.
  One line of research (that of game theory) has tried to find techniques that achieve equilibrium such as Nash-Q learning~\cite{nash-q}.
- Others have focused on exploiting coordination between agents. 
+ Others exploiting coordination between agents. 
  Others have applied single RL (such as Hysteretic Q-learning~\cite{hysteretic-q}) to each agent and achieved good results (even if no formal proof exist).
 %
  The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
@@ -217,8 +222,7 @@ In general, there is not one technical solution in the multi-agent context.
 
 \paragraph{Neighbour-based or indirect (environment-mediated) interaction}
 %
-In aggregate systems,
- a device can only directly interact with neighbours.
+In aggregate systems, a device can only directly interact with neighbours.
 %
 Data flows may be implemented
  to support indirect communication across multiple hops;
@@ -243,7 +247,7 @@ The devices of an aggregate
 
 \paragraph{Self-organisation, swarm robotics}
 %
-\suggestions{ You can talk about similar problem structure (i.e. the collective follow the same local behaviour)}
+\suggestions{You can talk about similar problem structure (i.e. the collective follow the same local behaviour)}
 
 \paragraph{Emergent behaviour}
 %
@@ -281,60 +285,77 @@ If we admit \emph{mobility} and \emph{failure},
  and hence the need of dealing with dynamic topologies.
 
 
-\subsection{Intergration perspectives}
-Here we outline the different perspectives about Hybrid Aggregate Computing with the aim
- to clarify the current research gap and to help us in the definition of a research roadmap.
+\subsection{Integration perspectives}
+Here we outline the different perspectives about \hybridaggregate{} with the aim
+ of clarifying the current research gap and to help us in the definition of a research roadmap.
 %
 \paragraph{Application} Learning can be useful at different levels in our framework.
- Surely, what for us is most important is to improve our building block definition.
+ Surely, what for us is most important is to improve our building blocks definition.
+% 
+Indeed, most of our results and applications are based on them.
 %
- Indeed, most of our results and applications are based on them.
- The building block improvement can succeed either by learning a correction factor or by learning the behaviour entirely.
+The building block improvement may consist either of learning a correction factor or by learning the behaviour entirely.
 
 On the other side, learning can be useful also for framework related stuff,
- mainly aim at "non-functional" aspects. Trust mechanisms, evaluation frequency,
- energy consumption manager, package storage are all the things that currently need to be handle by hand.
+ mainly aim at "non-functional" aspects. 
+ Trust mechanisms, evaluation frequency, energy consumption manager, package storage are all the things that currently need to be handle by hand.
  
 \suggestions{Move the definition of team learning and concurrent learning in the previous section}
-\paragraph{Learning problem} Multi-agent learning can be
- divided in \textit{concurrent} and \textit{team} learning. In the foster, each agent perform the 
- the learning process and the in the latter, the learning process is performed only by one agent an then 
- shared to the collective.
- Team learning is usually used in the ``swarm'' system, due to the homogeneous behaviour -- i.e. each agent performs the same program. 
+\paragraph{Learning problem} 
+Multi-agent learning can be divided in \textit{Concurrent} and \textit{Team} learning. 
+In the foster, each agent perform the learning process and in the latter,
+ the learning process is performed only by one agent and then shared with the collective.
+% 
+Team learning is usually used in the ``swarm'' system, due to the homogeneous behaviour 
+ --- i.e. each agent performs the same program. 
  Here, a common reward signal exists and evaluate the overall collective behaviour.
  Aggregate Computing is quite near to this kind of setting.
- On the other hand, Concurrent Learning, in \cite{csas-and-marl} seems to be usually applied in Collective
- Adaptive System, so again a field near to Aggregate Computing. 
- In particular, Indipendedet Reinforcement Learning seems to reach good results in this kind of system, even if no theorems exist in the single-agent context.
- Concurrent learning does not presume a global collective behaviour convergence. Indeed using a common reward signal,
- the collective can reach the same behaviour, as in the team learning settings as done here~\cite{iima2008swarm}.
+% 
+Indeed, each agent follows the \textit{same} aggregate program shared within the entire system.
 
-\paragraph{learning modality}
-Aside from what kind of problem we set up, we can use Reinforcement Learning, Supervised Learning.
- Supervised learning is quite rare in CSAS -- or in the swarm system in general.
-Novel work leverage Graph Neural network to learn how agents should communicate, supposing to know the right behaviour (i.e. produced via global vision simulation).
- In Aggregate Computing, Supervised Learning makes sense if we want to craft new building blocks by zero. 
- Indeed, we know eventually the right state of the system, but we do not know how the system can reach it
+On the other hand, Concurrent Learning, in \cite{csas-and-marl} seems to be usually applied in Collective
+ (Self-)Adaptive System, so again a field near to Aggregate Computing. 
+ In particular, Indipendedet Reinforcement Learning seems to reach good results in this kind of system, 
+ even if no theorems exist as in the single-agent context.
+%
+With Concurrent learning though is still possible to reach a global collective behaviour convergence. 
+ Indeed using a common reward signal, the collective may reach the same behaviour as in the team learning settings as done here~\cite{iima2008swarm}.
 
- Reinforcement Learning is quite used in CAS, 
+\paragraph{Learning technique}
+Aside from what kind of problem we set up, we can then use different Machine Learning techniques,
+ such as Reinforcement Learning or Supervised Learning.
+%
+Supervised learning is quite rare in CSAS -- or in the ``swarm" like system in general.
+%
+Novel works~\cite{DBLP:conf/corl/TolstayaGPP0R19} leverage Graph Neural network to learn how agents should communicate, supposing to know the right behaviour (i.e. produced via global vision simulation).
+%
+In Aggregate Computing, Supervised Learning makes sense if we want to craft new building blocks by zero. 
+% 
+Indeed, we know eventually the right state of the system, but we do not know how the system can reach it.
+
+Reinforcement Learning is predominantly used in CAS, 
  due to its flexibility and thanks to the plethora of approaches used in this scenario.
- In our scenario, Reinforcement Learning can be used both at the building block level and the framework level.
- For the first, the simplest scenario can be that agents learn a correction factor to improve a long-term
- reward signal.
+% 
+In our case, Reinforcement Learning can be used both at the building block level and the framework level.
+%
+For the foster, the simplest scenario can be that agents learn a correction factor to improve a long-term reward signal.
  
 \paragraph{Learning time}
- Finally, learning can be performed \texttt{offline}, \texttt{offline and then online}, or \texttt{fully online}.
- The foster is the easiest scenario.
- Here indeed, we can leverage simulation to know the right collective value and then synthesis the right value. 
- Supervised, Reinforcement Learning and even Evolutionary computing can be used here. 
- offline and then online instead can be a mid-level complexity direction.
- Here, simulation can always be leveraged to reach a good behaviour, but then online in can be adapted in front of new environmental situations. 
- We know that it is quite a problematic scenario. 
- Reinforcement Learning is the most suitable mode here --- also the "meta" learning can help.
- Finally, we can imagine that learning will be performed fully online. 
+Finally, learning can be performed \textit{offline}, \texttt{online} or \textit{offine an then online} (\textit{mixed time}).
+% 
+The foster is the easiest scenario.
+ Here indeed, we can leverage simulation to know the right computational field.
+% 
+Supervised, Reinforcement Learning and even Evolutionary computing can be used here.
+%
+Mixed-time learning can be a mid-level complexity direction instead.
+ Here, simulation can always be leveraged to reach a good behaviour, but at runtime, the behaviour can be adapted in front of new environmental situations. 
+%
+Reinforcement Learning is the most suitable mode here --- also the "meta" learning can help.
+%
+Finally, we can imagine that learning can be performed online. 
  It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
  Here, again, Reinforcement learning seems to be the most suitable approach.
-
  
 \todo[inline, color=green]{"application" pesprective: building block, framework, aggregate computing to guide learning}
 \todo[inline, color=green]{learning perspective: homogeneous team learning}
@@ -345,131 +366,144 @@ Novel work leverage Graph Neural network to learn how agents should communicate,
 The path towards full integration of Machine Learning and Aggregate Computing is long and probably we do not know the implications that it can bring. 
 Currently, we program to:
 \begin{enumerate}
-  \item Enhance building block through learning -- \textbf{offline}: in this first step, we need to understand what kind of learning modality is most suitable for us. 
+  \item Enhance building blocks through learning -- \textit{offline}: 
+  in this first step, we need to understand what kind of learning modality is most suitable for us. 
   To decrease the complexity, we aim at perform learning \textit{offline} and at the \textit{building block} level.
-  \item Enhance building blocks through learning -- \textbf{online}: here, the most challenging part in bringing the offline results could be in the reward function definition. 
+  \item Enhance building blocks through learning -- \textit{online}:
+  here, the most challenging part in bringing the offline results could be in the reward function definition.
   Indeed, at runtime, we cannot use a global view of the system. 
   A novel way to describe a collective reward by Aggregate Computing might be taken into consideration.
-  \item Create building block through learning: some building blocks currently lack a proper implementation -- 
+  \item Create building blocks through learning: some building blocks currently lack a proper implementation -- 
   such as the distributed leader election -- so learning can help us also in crafting them. 
-  Here, though, the research space increase drastically, so it is possible it cannot be easy to bring our result there.
-  \item Improve framework aspects through learning: when we successfully apply to learn in the first two steps, 
-  we can also consider moving learning at the framework level, to manage non-functional aspects. In this way,
-  developers can focus on the "high level" behaviour aspect.
+  Here, though, the research space increase drastically, 
+  so probably it might be not easy to bring our previous results there.
+  \item Improve framework aspects through learning: 
+  when we successfully apply to learn in the first two steps, 
+  we can also consider moving learning at the framework level, to manage non-functional aspects. 
+  In this way, developers can focus on the "high level" behaviour aspect.
 \end{enumerate}
 \todo[inline, color=green]{AC + ML for building block creation -- online}
 \todo[inline, color=green]{AC + ML for framework level -- online}
 
 \section{Aggregate Computing with Reinforcement}
-In this section, we describe our first result in Aggregate Computing and Machine learning combination,
- in particular, we briefly describe how nodes compute to follow the global specification,
+In this section, we describe our first result in Aggregate Computing and Machine learning combination.
+% 
+Hence we briefly describe how nodes compute to follow the global aggregate specification,
  how Reinforcement Learning can be injected in the computation loop,
  and what kind of Reinforcement Learning can be used with Aggregate Computing.
 
 \subsection{Computatational Model}
-An aggregate program execution consists in a continuously node-point execution of a \texttt{round}, that is
- the atomical part of aggregate computing.
+An aggregate program execution consists of a continuously node-point execution of a \round{}, 
+ that is the atomical part of aggregate computing.
 %
-Each node can interact only with-in its neighbourhoods sharing the \texttt{export}, namely the result produced by
- the evaluation of a \texttt{round}.
+Each node can interact only with-in its neighbourhoods sharing the \export{}, 
+ namely the result produced by the evaluation of a \round{}.
 
 The main round steps consist in:
 \begin{enumerate}
   \item execution context creation: where node collects information from the sensors, the neighbourhoods exports and the old
   program output
   \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. 
-  This produces the \texttt{export}.
+  This produces the \export{}.
   \item export sharing: the export created will be shared within the current neighbourhoods perceived by the nodes
   \item actuations: giving the export produced, nodes may performing some actuation (e.g. motor activations, steering, ...)
 \end{enumerate}
 
-The rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. This makes possible
- to scale easily with the node number size.
+The rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
+ This makes it possible to scale easily with the node number size.
 
-This collective, proactive and periodical execution will eventually bring to the system-wide specification.
+This collective, proactive and periodical execution will eventually reach the system-wide specification.
 
 \subsection{Reinforcement Learning integration}
 From a local view, program execution can be seen as:
 $$
-f : CONTEXT => OUTPUT
+f : \textit{Context} \rightarrow \textit{Output}
 $$
 Where the context contains:
 \begin{itemize}
-  \item $S(name) => value$: a function from sensor name to the perceived value
-  \item $\phi(ID) => EXPORT$ a function from id to neighbourhoods data
+  \item $\sigma(name) \rightarrow \textit{data}$: a function from sensor name to the perceived value
+  \item $\phi(\textit{ID}) \rightarrow \textit{Export}$: a function from id to neighbourhoods export data
 \end{itemize}
 The computational field $\theta$ contains all output produced by the system.
 
-Speaking by Reinforcement Learning settings, we need to define the state functions
-and the reward functions.
-
+Speaking by Reinforcement Learning settings, we need to define the state functions and the reward functions.
+%
 Here the execution needs to be distributed, so the state will be a function from the local node context:
 $$
-STATE := \Omega(CONTEXT)
+K := \Omega(\textit{Context})
 $$
 
-Reward function instead, might be depending on the learning modality. Indeed, if we perform learning offline, 
-it could be defined from the overall computational field:
+Reward function instead, might be depending on the learning technique, time and problem. 
+ Indeed, if we perform learning offline, it could be defined from the overall \textit{simulated} computational field:
 $$
-REWARD_{global} := \psi({\theta})
+\textit{R}_{global} := \psi({\theta})
 $$
-If we use an online mode, it needs to be defined as a function to the local context:
+If we use an online mode, it needs to be defined as a function to the local node context:
 $$
-REWARD_{local} := \psi(\phi)
+\textit{R}_{local} := \psi(\textit{Context})
 $$
-
-Finally, actions will be something that influences the current aggregate program output, changing the program evaluation as:
+Finally, actions influence the current aggregate program output, changing the program evaluation as:
 $$
-f_{rl} = CONTEXT => \lambda(OUTPUT, ACTION)
+f_{rl} : \textit{Context} \rightarrow \lambda(\textit{Output}, \textit{Action})
 $$
-
-As remarked before, the policy $\pi$ need to be distributed so each agent to choose the action that will be performed:
+As remarked before, the policy $\pi$ need to be distributed, so each agent can choose the action that will be performed:
 $$
-ACTION = \pi(STATE)
+\textit{Action} \leftarrow \pi(K)
 $$
 
-For our first tests, we decide to test a concurrent learning technique by which each agent try to improve our current local policy.
-In these settings, the environment became non-stationary making the learning process quite unstable.
-But, as we observe in learning application in collective self-adaptive systems, practically these solutions led to good results.
+For our first tests, 
+ we decide to set up a Concurrent learning technique, by which each agent try to improve our current local policy.
+%
+In these settings, the environment became non-stationary making the learning process unstable.
+ But, as we observe in collective self-adaptive systems, practically these solutions led to good results.
 
-
-\section{Evaluation} %% optional section
+\section{Evaluation}
 In this section, we outline the results of the Reinforcement Learning application in one simple
  aggregate program: the hop count.
 
 Here, the computational field that will eventually be produced consists of the distance in terms of the minimum number of nodes needed to reach source nodes.
 
-A naive implementation of this kind of problem can be describe in Aggregate Computing as:
+A naive implementation of this kind of problem can be described in Aggregate Computing as:
 \begin{minted}{scala}
-rep(inf) { hopCounts => 
- mux(source) 
-  { 0 } 
-  { minHood(hopCounts) + 1} 
+def hopCount(): Int = {
+  rep(Double.PositiveInfinity) { 
+    hopCounts => mux(source) 
+    { 0 } 
+    { minHoodPlus(nbr{hopCounts}) + 1 }
+  }
 }
 \end{minted}
-This solution though suffers from the slow-rising problem. It consists of a slow convergence time when an equilibrium situation is broken. 
+This solution though suffers from the slow-rising problem. 
+ It consists of a slow convergence time when an equilibrium situation is broken. 
 \todos{expand with examples}
 
-So, our first intuition is to increase the speed of convergence through learning. In particular, the previous solution can be rewrite as:
+So, our first intuition is to increase the speed of convergence through learning. 
+ In particular, the previous solution can be rewrite as:
 
  \begin{minted}{scala}
-rep(inf) { hopCounts => 
-  val currentState = state(hopCounts)
-  val action = localPolicy(state)
-  mux(source) 
-  { 0 } 
-  { minHood(hopCounts) + 1 + action} 
+def hopCountRl(k: Int, w: Int): Int = {
+  rep(Double.PositiveInfinity) { 
+    hopCounts => 
+      val currentState = 
+        state(hopCounts, k, w)
+      val action = localPolicy(state)
+      mux(source) 
+        { 0 } 
+        { minHood(nbr{ hopCounts }) 
+          + 1 
+          + action
+        } 
+  }
 }
 \end{minted}
 
 Where the actions are discrete values (0, 1 in the simplest scenario) that correct the local result following a policy refined through learning.
-
+%
 The state instead, is built upon previous output and of the neighbourhoods output.
-
-In particular, in this case, it is built from a temporal window in order to encode the hop count increasing speed:
+ In particular, in this case, it is built from a temporal window in order to encode the hop count increasing speed:
 \begin{minted}{scala}
-def speed(hopCount) {
-  val min = minHood(hopCounts)
+def speed(hopCount: Int, k: Int) {
+  val min = minHood(nbr{ hopCounts })
   val window = recentValues(min, k)
   min - window.head 
 }
@@ -478,89 +512,114 @@ Then, due to the partially observability of the environment, we mantain a
  list of speed, to understand the hop count direction:
 
  \begin{minted}{scala}
-def space(hopCount) {
-  val currentSpeed = speed(hopCount)
+def space(hopCount: Int, k: Int, w: Int) {
+  val currentSpeed = speed(hopCount, k)
   recentValues(currentSpeed, w)
 }
 \end{minted}
 
-Where k and w are two parameters of this algorithm.
-
-The policy is improved locally, during simulation, using the Q-Learning algorithm. 
-The reward function is then evaluated locally and consist in: 
+Where \textbf{\texttt{k}} and \textbf{\texttt{w}} are two parameters of this algorithm.
+%
+The policy is learnt locally, during simulation, using the Q-Learning algorithm. 
+ The reward function consists in: 
 \[
 \systeme*{0 : \textit{hop count output is right}, -1 : \textit{otherwise}}
 \]
 This is a common reward function used to maintain the nodes in a stable situation or to
-fasten the time needed to reach a stable situation.
-
-So, the learnin loop, can be defined as:
-\begin{minted}{scala}
-rep(initialState) {
-  oldState =>
-  val output = rep(inf) { hopCounts => 
-   val currentState = state(hopCounts)
-   val action = localPolicy(state)
-   mux(source) 
-    { 0 } 
-    { minHood(hopCounts) + 1 + action} 
-  }
-  val currentReward = reward(output)
-  qLearning(oldState, 
-   state, 
-   action, 
-   reward
-  )
+ fasten the time needed to reach a stable one.
+%
+So, the learning loop, can be defined as:
+\begin{minted}[obeytabs=true,tabsize=1]{scala}
+val inf = Double.PositiveInfinity
+rep((initState, initPolicy, inf)) {
+  (oldState, policy, hopCount) => 
+      val currentState = 
+        state(hopCount, k, w)
+      val action = policy(state)
+      val output = mux(source) 
+        { 0 } 
+        { minHood(hopCount) 
+          + 1 
+          + action
+        } 
+      }
+      val currentReward = 
+        reward(output)
+      val improvedPolicy = 
+        qLearning(oldState, 
+          state, 
+          action, 
+          reward,
+          policy
+      (currentState, policy, output)
+    )
 }
 \end{minted}
 
-To verify if the aggregate can improve the convergence time using reinforcement learning,
-we simulate a situation where the rising problem emerges:
-in the beginning, two source nodes exist in the network, ($\alpha$ and $\beta$).
-At the time $t$, $\beta$ disappears. So the node near to $\beta$ start a slow process
-to eventually reach the distance towards $\alpha$.
-
-We use x node displacement into an irregular grid. Each simulation least y time unit.
- we run the simulation for 100 episodes.
- We use also a time-decay policy both for $\epsilon$ and $\alpha$ as:
+To verify if we can improve the convergence time using reinforcement learning,
+ we simulate a situation where the rising problem emerges:
+ in the beginning, two source nodes exist in the network, ($\alpha$ and $\beta$).
+ At the time $t$, $\beta$ disappears. So the node near to $\beta$ start a slow process
+ to eventually reach the distance towards $\alpha$.
+%
+We use 80 nodes displaced into an irregular grid 100x20 meters. 
+ Each node has a neighbourhoods range equal to 8 meters. 
+ So, on average, each node has 7 neighbours.
+ The time $t$ is fixed to 35.
+ Each simulation least 120-time unit.
+% 
+We run the simulation for 100 episodes.
+ The Q-learning parameters are:
 $$
-put a formula
+\epsilon = 0.01, 
+\alpha_t = 0.05,
+\gamma = 0.9
 $$
-
-Figure x shows the error for both naive implementation and Reinforcement Learning based implementation as the time changes.
-
+\Cref{fig:simulation} shows the error for both naive implementation and Reinforcement Learning based implementation as time changes.
+The error is evaluated as:
+$$
+error(i, t) \leftarrow  | \textit{rightValue}(i,t) - \textit{output}(i,t) |
+$$
+Where \textbf{i} is the node identifier and \textbf{t} is the time when the error is evaluated.
+%
 As you can see, at the time 100 using the greedy policy, the collective learning to recover to a stable situation
-faster than the standard naive implementation.
+ faster than the standard naive implementation.
 
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/1}
-      \label{fig:y equals x}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/50}
-      \label{fig:three sin x}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.3\textwidth}
       \centering
       \includegraphics[width=\textwidth]{img/100}
-      \label{fig:five over x}
   \end{subfigure}
-     \caption{The error evolution compared with naive implementation.}
+  \caption{The error evolution compared with naive implementation. The \textit{black} line 
+  describes the Reinforcement Learning solution error. The \textit{yellow} line shows
+  the naive solution error.}
+  \label{fig:simulation}
 \end{figure}
 \todos{add blinking scenarios}
 \todos{add movement scenarios}
 
 \section{Conclusion and Discussion}
-In this article, we briefly overview how Aggregate Computing can be mixed with Machine Learning -- in particular Reinforcement 
-Learning. This leads us to compare Aggregate Computing problems with current Machine Learning solutions in MASs systems.
-We then define a possible roadmap towards full support of a so-called "Hybrid Aggregate Computing", where Machine Learning
-and Aggregate Computing collaborate.
+In this article, we briefly overview how Aggregate Computing can be mixed with Machine Learning -- 
+ in particular with Reinforcement Learning. 
+ This leads us to compare Aggregate Computing problems with current Machine Learning solutions in MASs systems.
+%
+We then define a possible roadmap towards full support of a so-called \hybridaggregate{}, 
+ where Machine Learning and Aggregate Computing collaborate.
+%
+To exemplify how this integration can be performed we build a preliminary use case where 
+ learning enhances successfully a standard Aggregate Computing program.
+
 \todos{discussion about the result}
 \todos{limitations: it does not easily scale with the complex application, it cannot be applied online, it cannot be used in different scenarios}
 \todos{future work: integrate deep learning solution, integrate actor-critic method (team learning)}
