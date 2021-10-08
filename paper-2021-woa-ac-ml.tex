@@ -468,20 +468,20 @@ The state instead, is built upon previous output and of the neighbourhoods outpu
 
 In particular, in this case, it is built from a temporal window in order to encode the hop count increasing speed:
 \begin{minted}{scala}
-  def speed(hopCount) {
-    val min = minHood(hopCounts)
-    val window = recentValues(min, k)
-    min - window.head 
-  }
+def speed(hopCount) {
+  val min = minHood(hopCounts)
+  val window = recentValues(min, k)
+  min - window.head 
+}
 \end{minted}
 Then, due to the partially observability of the environment, we mantain a 
  list of speed, to understand the hop count direction:
 
  \begin{minted}{scala}
-  def space(hopCount) {
-    val currentSpeed = speed(hopCount)
-    recentValues(currentSpeed, w)
-  }
+def space(hopCount) {
+  val currentSpeed = speed(hopCount)
+  recentValues(currentSpeed, w)
+}
 \end{minted}
 
 Where k and w are two parameters of this algorithm.

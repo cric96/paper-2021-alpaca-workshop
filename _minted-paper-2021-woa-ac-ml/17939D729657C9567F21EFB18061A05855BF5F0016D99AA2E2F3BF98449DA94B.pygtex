@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-  \PYG{k}{def} \PYG{n+nf}{speed}\PYG{p}{(}\PYG{n}{hopCount}\PYG{p}{)} \PYG{p}{\PYGZob{}}
-    \PYG{k+kd}{val} \PYG{n}{min} \PYG{o}{=} \PYG{n}{minHood}\PYG{p}{(}\PYG{n}{hopCounts}\PYG{p}{)}
-    \PYG{k+kd}{val} \PYG{n}{window} \PYG{o}{=} \PYG{n}{recentValues}\PYG{p}{(}\PYG{n}{min}\PYG{p}{,} \PYG{n}{k}\PYG{p}{)}
-    \PYG{n}{min} \PYG{o}{\PYGZhy{}} \PYG{n}{window}\PYG{p}{.}\PYG{n}{head}
-  \PYG{p}{\PYGZcb{}}
-\end{Verbatim}

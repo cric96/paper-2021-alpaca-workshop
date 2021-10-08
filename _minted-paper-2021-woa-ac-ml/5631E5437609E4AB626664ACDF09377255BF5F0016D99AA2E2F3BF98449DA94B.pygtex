@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-  \PYG{k}{def} \PYG{n+nf}{space}\PYG{p}{(}\PYG{n}{hopCount}\PYG{p}{)} \PYG{p}{\PYGZob{}}
-    \PYG{k+kd}{val} \PYG{n}{currentSpeed} \PYG{o}{=} \PYG{n}{speed}\PYG{p}{(}\PYG{n}{hopCount}\PYG{p}{)}
-    \PYG{n}{recentValues}\PYG{p}{(}\PYG{n}{currentSpeed}\PYG{p}{,} \PYG{n}{w}\PYG{p}{)}
-  \PYG{p}{\PYGZcb{}}
-\end{Verbatim}
