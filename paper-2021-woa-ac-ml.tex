@@ -75,12 +75,11 @@ Email: \{gianluca.aguzzi, roby.casadei, mirko.viroli\}@unibo.it
 
 \maketitle
 \begin{abstract}
-\suggestions{}
 Artificial intelligence is here to stay. 
- In particular, Deep Learning techniques in the last years outperform 
+ In particular, Machine Learning techniques in the last years outperform 
  hand-craft human solutions in different contexts, ranging from computer vision to videogames.
 %
-Currently, though, an all-encompassing Deep learning algorithm does not exist, 
+Currently, though, an all-encompassing Machine learning algorithm does not exist, 
  so researchers explore the possibility to apply these techniques in different fields.
 
 One of the most challenging is Collective-Adaptive System (CAS). % Or do we want to use Cyber-Physical Swarm??
@@ -90,15 +89,22 @@ One of the most challenging is Collective-Adaptive System (CAS). % Or do we want
 Historically, researchers favour handling them with self-organisation,
  by which a collective behaviour emerges from continuously local interaction between simple components.
 %
-A novel technique to specify self-organising behaviour in a composable and functional manner is Aggregate Computing. 
- Even though it is promising for expressing high-level collective behaviour, 
- it needs to build low-level blocks that tend to be tricky. 
-
-On the opposite side, some research lines apply Deep learning (supervised, reinforcement, non-supervised and self-supervised)
- along with CAS. Currently, though, no one gain popularity and solution tend to be application-specific.
+A novel technique to specify self-organising behaviour in a composable and functional manner is Aggregate Computing.
+ In particular, this paradigm enables collective program specification as a whole, 
+ as it is based on a distributed data structure manipulation called \textit{computational fields}.
+ It is successfully used in different scenarios ranging from Swarm Robotics to Smart cities.
+ 
+Even though it is promising for expressing high-level collective behaviour,
+ practically it is difficult to make programs work in highly dynamic networks, 
+ where nodes have to deal with continuous changes at the environment side.
 %
-So, we outline a Machine Learning technique that could be applied in Aggregate Computing, 
- making the possibility to combine specification-based and automatic approaches that can easily scale in application complexity and to any system size.
+Therefore, with this work, we stand the first step towards integration between Aggregate Computing and Machine Learning,
+ in order to improve adaptivity acting in the low-level specifications but maintaining the high-level program behaviours. 
+
+In the article, we outline issues, opportunities and methodologies of these integrations, presenting a case study
+ where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
+%
+
 \end{abstract}
 \begin{IEEEkeywords}
   Collective-Adaptive System,
@@ -113,13 +119,12 @@ Nowadays, computer engineers have to deal with Collective Adaptive Systems (CASs
  due to the increasing interconnected computational devices placed in ever-changing environments.
  Examples of those include robot swarm, smart cities and augmenting crowds.
 
-CASs are characterised by 
+CAS are notoriously hard~\cite{DBLP:conf/huc/Ferscha15} to design as they are characterised by 
 \begin{itemize}
 \item a global order that emerges from local node interactions, 
-\item  decentralised control, and 
+\item decentralised control, and 
 \item adaptive behaviours towards environmental changes to pursuit a collective goal.
-\end{itemize}
-CAS are notoriously hard to design due as part of complex systems. 
+\end{itemize} 
 %
 So, over the years, in literature, various approaches aim at handling this complexity. 
 %
@@ -130,11 +135,11 @@ Here, a sort of hive mind arises --
  something referred to as swarm intelligence -- 
 born from local interactions between agents. 
 %
-This kind of behaviour is called self-organisation, 
+These kinds of behaviours are accomplished with self-organisation, 
  namely a global order that emerges from continuous 
  interactions between simple entities.
 
-Initially, researchers try to bring those properties into  the computer science world 
+Initially, researchers try to bring those properties into the computer science world 
  by miming the collective behaviour bottom-up, 
  namely trying to find the right single node behaviour 
  to reach a global behaviour, e.g. flocking, foraging, etc.
@@ -146,21 +151,21 @@ Ideally, we would like to express collective behaviours focusing only at the ens
  abstracting over non-functional aspects such as the network topology, environment uncertainties and 
  so on.
 
-In this direction, Aggregate Computing is an innovative solution by which 
+In this direction, Aggregate Computing~\cite{DBLP:journals/computer/BealPV15} is an innovative solution by which 
  developers can express collective self-organising behaviours through a functional program specification.
 %
-Indeed, an aggregate blueprint consists of the manipulation of \textit{computational fields}, a distributed
+Indeed, an aggregate program consists of the manipulation of \textit{computational fields}, a distributed
  data structure where each point in the spacetime is associated with the result of a computation
  performed by a node.
 %
-These operations are defined in \textit{Field-calculus} --- the root of Aggregate Computing. 
+These operations are defined in \textit{Field-calculus}~\cite{DBLP:conf/coordination/AudritoBDV18} --- the root of Aggregate Computing. 
  This calculus describes a set of minimal constructs to express any spatiotemporal computation.
 %
 Thanks to the ``composable'' nature of Aggregate Computing, we find common abstractions 
  in collective behaviour specification, and then we encapsulate them in so-called ``building blocks''.
 %
-With those, different properties have been proven (such as \textit{eventual consistency}) and various
- applications have been built (such as swarm robotics, crowds engineering).
+With those, different properties have been proven (such as \textit{eventual consistency}~\cite{DBLP:journals/taas/BealVPD17}) and various
+ applications have been built (such as swarm robotics, crowds engineering~\cite{DBLP:journals/eaai/CasadeiVAPD21}).
 
 Anyway, building block synthesis concerns different stuff related not only to the behaviour itself
  but also to the "ensemble" specifications. 
@@ -170,15 +175,15 @@ Anyway, building block synthesis concerns different stuff related not only to th
 So, we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden
  to developers of defining the right collective specifications.
 %
-This lead to a "hybrid" approach where a part of behaviour is still expressed using common 
- Aggregate Computing abstractions and another part is distilled through learning.
+This lead to an ``hybrid" approach where a part of behaviour is still expressed using common 
+ Aggregate Computing abstractions and another part is distilled through learning~\cite{research}.
 %
-In this paper, as the first steps towards \hybridaggregate{}, we investigate how Aggregate Computing can be
- extended with Reinforcement Learning (and in particular with Independent Reinforcement Learning) through a case
+In this paper, as the first steps towards a so-called \hybridaggregate{}, we investigate how Aggregate Computing can be
+ extended with Reinforcement Learning through a case
  study where we outline the performance improvement of the "hop count" program.
 \suggestions{If we leave the part about "roadmap" and "machine learning similar setting", we need to add some description here.}
 \suggestions{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be useful in the paper flow}
-\todos{Outline}
+
 
 \section{Background and Related Work}
 \outline{Probably, for a "short" paper, this section can be avoided.}
@@ -593,7 +598,7 @@ Where \textbf{i} is the node identifier and \textbf{t} is the time when the erro
 As you can see, at the time 100 using the greedy policy, the collective learning to recover to a stable situation
  faster than the standard naive implementation.
 
-\begin{figure}
+\begin{figure*}
   \centering
   \begin{subfigure}[b]{0.3\textwidth}
       \centering
@@ -613,9 +618,9 @@ As you can see, at the time 100 using the greedy policy, the collective learning
   describes the Reinforcement Learning solution error. The \textit{yellow} line shows
   the naive solution error.}
   \label{fig:simulation}
-\end{figure}
-\todos{add blinking scenarios}
-\todos{add movement scenarios}
+\end{figure*}
+%\todos{add blinking scenarios}
+%\todos{add movement scenarios}
 
 \section{Conclusion and Discussion}
 In this article, we briefly overview how Aggregate Computing can be mixed with Machine Learning -- 
@@ -638,7 +643,7 @@ To exemplify how this integration can be performed we build a preliminary use ca
 \bibliography{biblio}
 %%
 %% If your work has an appendix, this is the place to put it.
-\appendix
+%\appendix
 
 \end{document}
 
