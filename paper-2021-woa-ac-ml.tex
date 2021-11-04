@@ -1,47 +1,35 @@
-%% The first command in your LaTeX source must be the \documentclass command.
-%%
-%% Options:
-%% hf: enable header and footer.
-\documentclass[
-  twocolumn,
-  % hf
-]{ceurart}
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+
 \usepackage{tcolorbox}
 \usepackage[colorinlistoftodos,prependcaption]{todonotes}
 \usepackage{xcolor}
-\usepackage{subcaption}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
 \usepackage{minted}
-\usepackage{listings}
-\usepackage{amsmath}
-\usepackage{systeme}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage[inline]{enumitem}
+\usepackage[T1]{fontenc}
 \usepackage{cleveref}
+\usepackage{systeme}
+\setminted[scala]{fontsize=\scriptsize,baselinestretch=1,bgcolor=white,frame=single}
 
-\setminted{frame=single}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+  T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \sloppy
 
-\begin{document}
-\conference{ - X - }
 
-\title{Towards a Machine Learning approach for Aggregate Computing} %% or Towards a Machine Learning approach for Aggregate Computing
 
-\author[1]{Gianluca Aguzzi}[%
- orcid=todo,
- email=gianluca.aguzzi@unibo.it,
- url=https://todo/,
-]
-
-\author[2]{Roberto Casadei}[%
- orcid=todo,
- email=roby.casadei@unibo.it,
- url=todo,
-]
-
-\author[3]{Mirko Viroli}[%
- orcid=todo,
- email=mirko.viroli@unibo.it,
- url=todo,
-]
-\address[1]{Alma Mater Studiorum - Università di Bologna, Cesena, Italy}
+\newcommand{\unibo}{\textsc{Alma Mater Studiorum} -- \textit{Università di Bologna}}
+\newcommand{\disi}{\textit{Computer Science and Engineering - DISI}}
+\newcommand{\scafi}{{ScaFi}}
+\newcommand{\scalaloci}{{ScalaLoci}}
+\newcommand{\scafiloci}{{ScaFiLoci}}
+\newcommand{\scalainline}[1]{\mintinline[fontsize=\small]{scala}{#1}}
 %%%%% LEGENDA FOR NOTES %%%%%
 %% RED: constraints
 %% YELLOW: suggestions
@@ -55,8 +43,37 @@
 \newcommand{\hybridaggregate}{\textit{Hybrid Aggregate Computing}}
 \newcommand{\round}{\texttt{round}}
 \newcommand{\export}{\texttt{export}}
+
+\begin{document}
+
+\title{Towards a Machine Learning approach for Aggregate Computing} %% or Towards a Machine Learning approach for Aggregate Computing
+\author{\IEEEauthorblockN{
+Gianluca Aguzzi\IEEEauthorrefmark{1},
+Roberto Casadei\IEEEauthorrefmark{1},
+Mirko Viroli\IEEEauthorrefmark{1}
+}\\
+\IEEEauthorblockA{\IEEEauthorrefmark{1}
+\textsc{Alma Mater Studiorum}---Universit\`a di Bologna, Cesena, Italy\\
+Email: \{gianluca.aguzzi, roby.casadei, mirko.viroli\}@unibo.it
+}}
+
 %% Minted helpers
 \definecolor{mblue}{rgb}{0.27,0.33,0.53}
+%%
+%% Keywords. The author(s) should pick words that accurately describe
+%% the work being presented. Separate the keywords with commas.
+%\begin{keywords}
+%  Collective-Adaptive System \sep
+%  Aggregate Computing \sep
+%  Deep Learning \sep
+%  Reinforcement Learning \sep
+%\end{keywords}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+
+\maketitle
 \begin{abstract}
 \suggestions{}
 Artificial intelligence is here to stay. 
@@ -83,22 +100,13 @@ On the opposite side, some research lines apply Deep learning (supervised, reinf
 So, we outline a Machine Learning technique that could be applied in Aggregate Computing, 
  making the possibility to combine specification-based and automatic approaches that can easily scale in application complexity and to any system size.
 \end{abstract}
-
-%%
-%% Keywords. The author(s) should pick words that accurately describe
-%% the work being presented. Separate the keywords with commas.
-\begin{keywords}
-  Collective-Adaptive System \sep
-  Aggregate Computing \sep
-  Deep Learning \sep
-  Reinforcement Learning \sep
-\end{keywords}
-
-%%
-%% This command processes the author and affiliation and title
-%% information and builds the first part of the formatted document.
-
-\maketitle
+\begin{IEEEkeywords}
+  Collective-Adaptive System,
+  Aggregate Computing,
+  Deep Learning,
+  Reinforcement Learning
+\end{IEEEkeywords}
+  
 \suggestions{Perhaps we could change the narration directly towards "reinforcement learning". I think that I cannot continue to explore multiple solutions..}
 \section{Introduction}
 Nowadays, computer engineers have to deal with Collective Adaptive Systems (CASs)
@@ -625,9 +633,9 @@ To exemplify how this integration can be performed we build a preliminary use ca
 \todos{future work: integrate deep learning solution, integrate actor-critic method (team learning)}
 %%
 %% Define the bibliography file to be used
-\nocite{*}
-\bibliography{biblio}
 
+\bibliographystyle{IEEEtran}
+\bibliography{biblio}
 %%
 %% If your work has an appendix, this is the place to put it.
 \appendix
