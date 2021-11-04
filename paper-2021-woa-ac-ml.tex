@@ -181,7 +181,6 @@ In this paper, as the first steps towards a so-called \hybridaggregate{}, we inv
  extended with Reinforcement Learning through a case
  study where we outline the performance improvement of the "hop count" program.
 \todos{Outline}
-\suggestions{I do not know if we can avoid it altogether, but also a brief description of machine learning approaches can be useful in the paper flow}
 
 \section{Background and Related Work}
 
@@ -221,11 +220,14 @@ Crafting opportunistically these building-blocks is possible to verify prominent
  and self-stabilisation~\cite{DBLP:journals/tomacs/ViroliABDP18} (i.e. the ability of a system to recover from arbitrary changes).
 
 Aggregate Computing is studied in various simulated scenario (thanks to Alchemist, a meta-simulator for pervasive systems), rangin from smart cities to crodws, thaks to programming language and toolchain that support 
- this paradigm, such as ScaFi, FCCP and Protelis.
+ this paradigm, such as ScaFi~\cite{DBLP:conf/ecoop/CasadeiV16}, FCCP~\cite{DBLP:conf/acsos/Audrito20} and Protelis~\cite{PianiniSAC2015}.
 
 In the next sections, we show the field calculus operators that are essential to understand the case study presented and then
  we underline how each node computes in order to follow the aggregate program speficiation 
 \subsection{Field Calculus operators}
+
+
+\subsection{ScaFi DSL}
 
 \subsection{Computational Model}
 An aggregate program execution consists of a continuously node-point execution of a \round{}, 
@@ -248,14 +250,6 @@ The rounds execution is completely asynchronous, so do not exist a global clock 
  This makes it possible to scale easily with the node number size.
 
 This collective, proactive and periodical execution will eventually reach the system-wide specification.
-
-\outline{Probably, for a "short" paper, this section can be avoided.}
-\outline{walkthrogh traditional engineering way to design CAS}
-\outline{walkthrogh Aggregate Computing}
-\subsection{Machine Learning}
-\suggestions{I do not know, perhaps it is better to avoid this }
-\outline{walkthrogh Machine learning approach applied in MARL}
-\outline{current limitation (application-specific, not large scale, centralised in some cases,..)}
 
 \section{Aggregate computing and Machine learning}
 
@@ -291,8 +285,6 @@ In general, there is not one technical solution in the multi-agent context.
  Others have applied single RL (such as Hysteretic Q-learning~\cite{hysteretic-q}) to each agent and achieved good results (even if no formal proof exist).
 %
  The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
-
-\todos{present approaches for learning in MAS, e.g., through prominent surveys}
 
 \paragraph{Neighbour-based or indirect (environment-mediated) interaction}
 %
@@ -374,7 +366,6 @@ On the other side, learning can be useful also for framework related stuff,
  mainly aim at "non-functional" aspects. 
  Trust mechanisms, evaluation frequency, energy consumption manager, package storage are all the things that currently need to be handle by hand.
  
-\suggestions{Move the definition of team learning and concurrent learning in the previous section}
 \paragraph{Learning problem} 
 Multi-agent learning can be divided in \textit{Concurrent} and \textit{Team} learning. 
 In the foster, each agent perform the learning process and in the latter,
@@ -451,8 +442,6 @@ Currently, we program to:
   we can also consider moving learning at the framework level, to manage non-functional aspects. 
   In this way, developers can focus on the "high level" behaviour aspect.
 \end{enumerate}
-\todo[inline, color=green]{AC + ML for building block creation -- online}
-\todo[inline, color=green]{AC + ML for framework level -- online}
 
 \section{Aggregate Computing with Reinforcement}
 In this section, we describe our first result in Aggregate Computing and Machine learning combination.
