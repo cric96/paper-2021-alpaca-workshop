@@ -101,7 +101,7 @@ Even though it is promising for expressing high-level collective behaviour,
 Therefore, with this work, we stand the first step towards integration between Aggregate Computing and Machine Learning,
  in order to improve adaptivity acting in the low-level specifications but maintaining the high-level program behaviours. 
 
-In the article, we outline issues, opportunities and methodologies of these integrations, presenting a case study
+In the article, we outline issues, opportunities and methodologies of this integration, presenting a case study
  where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
 %
 
@@ -153,11 +153,11 @@ Ideally, we would like to express collective behaviours focusing only at the ens
 In this direction, Aggregate Computing~\cite{DBLP:journals/computer/BealPV15} is an innovative solution by which 
  developers can express collective self-organising behaviours through a functional program specification.
 %
-Indeed, an aggregate program consists of the manipulation of \textit{computational fields}, a distributed
+Indeed, an aggregate program (i.e. a program written with Aggregate Computing) consists of the manipulation of \textit{computational fields}, a distributed
  data structure where each point in the spacetime is associated with the result of a computation
  performed by a node.
 %
-These operations are defined in \textit{Field-calculus}~\cite{DBLP:conf/coordination/AudritoBDV18} --- the root of Aggregate Computing. 
+These operations are defined in \textit{field-calculus}~\cite{DBLP:conf/coordination/AudritoBDV18} --- the root of Aggregate Computing. 
  This calculus describes a set of minimal constructs to express any spatiotemporal computation.
 %
 Thanks to the ``composable'' nature of Aggregate Computing, we find common abstractions 
@@ -194,13 +194,64 @@ In particular, in literature, we speak of Collective Adaptive Systems
  and the ensemble pursuit of collective goals
  exhibiting swarm intelligence.
  
+Engineering this kind of system is a thriving area, various approaches have been proposed.
+ First attempts leverage so-called \textit{local-to-global} techniques, where the collective behaviour emerges from local behaviour description, 
+ usually inspired by nature~\cite{DBLP:journals/swarm/BrambillaFBD13}. 
+%
+Though, a natural way to describe this kind of problem is by using an \textit{collective} view of the system.
+ And it is the idea used by the \textit{global-to-local} techniques~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/scp/AlrahmanNL20, DBLP:conf/cbse/BuresGHKKP13}, where the behaviours are designed \textit{top-down},
+ and then the local behaviour is generated automatically. 
+% 
+Also ``meet-in-the-middle''~\cite{DBLP:journals/computer/PinciroliB16} approaches exist, where
+ a part of the system is still expressed bottom-up (device-centric) whereas a part is expressed top-down (swarm-centric)
 
+In our works, we are focused on Aggregate Computing~\cite{DBLP:journals/computer/BealPV15}, global-to-local approach where
+ the self-organising collective behaviour is expressed in terms of manipulation of \textit{computational fields}.
+
+The latter could be seen as the extension of electromagnetic fields to computer science since it basically consists in a 
+ map from any device to its computational value (i.e. the result of a computation).
+
+The computational field manipulation is ruled by \textit{field calculus}, which define the constructs needed 
+ any for express spatio-temporal computation~\cite{DBLP:conf/coordination/AudritoBDV18}.
+
+The novelty of Aggregate Computing consists in its composable (functional-like) program definition: using basic constructs
+ we identify the main patterns (\textit{building-blocks}) that could be reusable at the application level.
+
+Crafting opportunistically these building-blocks is possible to verify prominent properties such as eventual consistency~\cite{DBLP:journals/taas/BealVPD17} (i.e. the ensamble behaviour is independent from the underlying network details)
+ and self-stabilisation~\cite{DBLP:journals/tomacs/ViroliABDP18} (i.e. the ability of a system to recover from arbitrary changes).
+
+Aggregate Computing is studied in various simulated scenario (thanks to Alchemist, a meta-simulator for pervasive systems), rangin from smart cities to crodws, thaks to programming language and toolchain that support 
+ this paradigm, such as ScaFi, FCCP and Protelis.
+
+In the next sections, we show the field calculus operators that are essential to understand the case study presented and then
+ we underline how each node computes in order to follow the aggregate program speficiation 
+\subsection{Field Calculus operators}
+
+\subsection{Computational Model}
+An aggregate program execution consists of a continuously node-point execution of a \round{}, 
+ that is the atomical part of aggregate computing.
+%
+Each node can interact only with-in its neighbourhoods sharing the \export{}, 
+ namely the result produced by the evaluation of a \round{}.
+
+The main round steps consist in:
+\begin{enumerate}
+  \item execution context creation: where node collects information from the sensors, the neighbourhoods exports and the old
+  program output
+  \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. 
+  This produces the \export{}.
+  \item export sharing: the export created will be shared within the current neighbourhoods perceived by the nodes
+  \item actuations: giving the export produced, nodes may performing some actuation (e.g. motor activations, steering, ...)
+\end{enumerate}
+
+The rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
+ This makes it possible to scale easily with the node number size.
+
+This collective, proactive and periodical execution will eventually reach the system-wide specification.
 
 \outline{Probably, for a "short" paper, this section can be avoided.}
 \outline{walkthrogh traditional engineering way to design CAS}
 \outline{walkthrogh Aggregate Computing}
-\subsection{Field calcus}
-\todos{I think it can be helpful to introduce fields calculus through ScaFi...}
 \subsection{Machine Learning}
 \suggestions{I do not know, perhaps it is better to avoid this }
 \outline{walkthrogh Machine learning approach applied in MARL}
@@ -379,11 +430,6 @@ Reinforcement Learning is the most suitable mode here --- also the "meta" learni
 Finally, we can imagine that learning can be performed online. 
  It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
  Here, again, Reinforcement learning seems to be the most suitable approach.
- 
-\todo[inline, color=green]{"application" pesprective: building block, framework, aggregate computing to guide learning}
-\todo[inline, color=green]{learning perspective: homogeneous team learning}
-\todo[inline, color=green]{learning modality perspective: offline through simulation, offline with local reward, offline then online, full-online}
-\todo[inline, color=green]{method perspective: Supervised, reinforcement, multi-agent reinforcement}
 
 \subsection{Roadmap}
 The path towards full integration of Machine Learning and Aggregate Computing is long and probably we do not know the implications that it can bring. 
@@ -411,31 +457,8 @@ Currently, we program to:
 \section{Aggregate Computing with Reinforcement}
 In this section, we describe our first result in Aggregate Computing and Machine learning combination.
 % 
-Hence we briefly describe how nodes compute to follow the global aggregate specification,
- how Reinforcement Learning can be injected in the computation loop,
+Hence we briefly describe how Reinforcement Learning can be injected in the computation loop,
  and what kind of Reinforcement Learning can be used with Aggregate Computing.
-
-\subsection{Computatational Model}
-An aggregate program execution consists of a continuously node-point execution of a \round{}, 
- that is the atomical part of aggregate computing.
-%
-Each node can interact only with-in its neighbourhoods sharing the \export{}, 
- namely the result produced by the evaluation of a \round{}.
-
-The main round steps consist in:
-\begin{enumerate}
-  \item execution context creation: where node collects information from the sensors, the neighbourhoods exports and the old
-  program output
-  \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. 
-  This produces the \export{}.
-  \item export sharing: the export created will be shared within the current neighbourhoods perceived by the nodes
-  \item actuations: giving the export produced, nodes may performing some actuation (e.g. motor activations, steering, ...)
-\end{enumerate}
-
-The rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
- This makes it possible to scale easily with the node number size.
-
-This collective, proactive and periodical execution will eventually reach the system-wide specification.
 
 \subsection{Reinforcement Learning integration}
 From a local view, program execution can be seen as:
