@@ -16,7 +16,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{cleveref}
 \usepackage{systeme}
-\setminted[scala]{fontsize=\scriptsize,baselinestretch=1,bgcolor=white,frame=single}
+\setminted[scala]{baselinestretch=1,bgcolor=white,frame=single}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
   T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -177,9 +177,9 @@ So, we claim that Machine Learning can help us in handling this "unseen" situati
 This lead to an ``hybrid" approach where a part of behaviour is still expressed using common 
  Aggregate Computing abstractions and another part is distilled through learning~\cite{research}.
 %
-In this paper, as the first steps towards a so-called \hybridaggregate{}, we investigate how Aggregate Computing can be
- extended with Reinforcement Learning through a case
- study where we outline the performance improvement of the "hop count" program.
+In this paper, as the first steps towards a so-called \hybridaggregate{},
+ we investigate how Aggregate Computing can be extended with Reinforcement Learning through a case study,
+ where we outline the performance improvement of the "hop count" program.
 \todos{Outline}
 
 \section{Background and Related Work}
@@ -219,16 +219,25 @@ The novelty of Aggregate Computing consists in its composable (functional-like) 
 Crafting opportunistically these building-blocks is possible to verify prominent properties such as eventual consistency~\cite{DBLP:journals/taas/BealVPD17} (i.e. the ensamble behaviour is independent from the underlying network details)
  and self-stabilisation~\cite{DBLP:journals/tomacs/ViroliABDP18} (i.e. the ability of a system to recover from arbitrary changes).
 
-Aggregate Computing is studied in various simulated scenario (thanks to Alchemist, a meta-simulator for pervasive systems), rangin from smart cities to crodws, thaks to programming language and toolchain that support 
+Aggregate Computing is studied in various simulated scenarios (thanks to Alchemist, a meta-simulator for pervasive systems), ranging from smart cities to crowds, thanks to programming language and toolchain that support 
  this paradigm, such as ScaFi~\cite{DBLP:conf/ecoop/CasadeiV16}, FCCP~\cite{DBLP:conf/acsos/Audrito20} and Protelis~\cite{PianiniSAC2015}.
 
-In the next sections, we show the field calculus operators that are essential to understand the case study presented and then
- we underline how each node computes in order to follow the aggregate program speficiation 
+In the next sections, we show the field calculus operators that are essential to understand the case study presented,
+ and then we underline how each node computes in order to follow the aggregate program specification.
 \subsection{Field Calculus operators}
-
-
-\subsection{ScaFi DSL}
-
+The main constructs that captures the essential aspects for programming self-organising systems are:
+\begin{itemize}
+  \item \textit{Stateful field evolution} expression \mintinline[escapeinside=||]{scala}{|{\color{teal}rep}|(|$e_1$|) {|($x$) => $e_2$|}} describes a field evolving in time. 
+  $e_1$ is the initial field value and the function $(x) => e_2$ define how the field changes at each execution.
+  \item \textit{Neighbour interaction} expression \mintinline[escapeinside=||]{scala}{|\color{teal}nbr|{|$e$|}} a view
+  of the field values in the surroundings of each device where neighbours are
+  mapped to their evaluations of $e$. A series of \mintinline{scala}{*hood} operators leverage this map to produce relevant result. 
+  For instance, $minHood$ return the minimum value 
+  from the neighbourhoods.
+  \item \textit{Domain partitioning} expression \mintinline[escapeinside=||]{scala}{|\color{teal}if|(|$e_0$|){|$e_1$|}{|$e_2$|}} splits the computational
+  field into two non-communicating zones hosting isolated subcomputations:
+  $e_1$ where $e_0$ is true, and $e_2$ where $e_0$ is false.
+\end{itemize}
 \subsection{Computational Model}
 An aggregate program execution consists of a continuously node-point execution of a \round{}, 
  that is the atomical part of aggregate computing.
@@ -243,10 +252,10 @@ The main round steps consist in:
   \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. 
   This produces the \export{}.
   \item export sharing: the export created will be shared within the current neighbourhoods perceived by the nodes
-  \item actuations: giving the export produced, nodes may performing some actuation (e.g. motor activations, steering, ...)
+  \item actuations: giving the export produced, nodes may perform some actuation (e.g. motor activations, steering, ...)
 \end{enumerate}
 
-The rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
+Rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
  This makes it possible to scale easily with the node number size.
 
 This collective, proactive and periodical execution will eventually reach the system-wide specification.
@@ -259,7 +268,7 @@ In this section,
  pointing out different learning perspectives about the integration of Aggregate Computing with Machine Learning,
  and summarise the analysis into a roadmap.
 
-\paragraph{Multi- and many-agent system}
+\paragraph{Multi-and many-agent system}
 %
 An aggregate system is a multi-agent system
  and, often, a \emph{many}-agent system
@@ -278,11 +287,28 @@ In recent decades there has been an emerging trend in the use of Reinforcement L
  in multi-agent settings, as a powerful, robust and adaptive learning paradigm.
  Progress has been considerable and a wide range of algorithms are now available.
 % to expand and references
-In general, there is not one technical solution in the multi-agent context.
- There are several (even orthogonal) viewpoints on which researchers have been focused.
- One line of research (that of game theory) has tried to find techniques that achieve equilibrium such as Nash-Q learning~\cite{nash-q}.
- Others exploiting coordination between agents. 
- Others have applied single RL (such as Hysteretic Q-learning~\cite{hysteretic-q}) to each agent and achieved good results (even if no formal proof exist).
+This field is a conjunction of Game theory and Reinforcement Learning, 
+ and there are several (even orthogonal) viewpoints on which researchers have been focused.
+
+First attempts from Reinforcement Learning viewpoint, 
+ goes towards a so-called \textit{conccurent/independent learning}~\cite{DBLP:journals/tsmc/BusoniuBS08} approach, 
+ where each agent learn locally against the whole environment~\cite{DBLP:conf/icml/Tan93}. 
+Here various approaches have been proposed,
+ such as Hysteretic Q-Learning (used to reduce non-stationarity)~\cite{hysteretic-q}, 
+ Lenient Learning~\cite{DBLP:journals/jmlr/WeiL16}, and Frequency Maximum Q-value.
+The pro of these approaches is that their complexity does not scale up with the number of agents, 
+ but, unfortunately, the learning process is extremely non-stationary and non-stable.
+ Furthermore, they are heuristic and does not exist any convergence proof to a stationary state (even if practically often convergence to a stable policy).
+
+%
+The game theory viewpoint instead has tried to find techniques that achieve equilibrium such as Nash-equilibrium of Pareto optimality.
+ The first works towards this direction are Nash-Q-Learning~\cite{nash-q}, Friend-or-Foe Q-learning~\cite{DBLP:conf/icml/Littman01}, Minimax-Q.
+The problem there is that is used with few agents and scale hardly with the application complexity.
+%
+So, current emerging trends tend to leverage a so-called centralised training and decentralised execution (CTDE) approach, by which 
+ agents should leverage the system-wide knowledge at training time but at runtime, they act independently~\cite{DBLP:journals/aamas/Hernandez-LealK19}.
+ Most promising approaches in this direction are MAPPO~\cite{DBLP:journals/corr/abs-2103-01955}, COMA~\cite{DBLP:journals/corr/FoersterFANW17} and MADDPG~\cite{DBLP:conf/nips/LoweWTHAM17}.
+ 
 %
  The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
 
@@ -300,8 +326,13 @@ The environment can also be used, via stigmergy,
   to a very local portion of the environment.
 %
 In other words, the system state is only \emph{partially observable}.
+
+In practice, CTDE technique aims to solve these problems, using a \emph{global} view at training time but
+ a \emph{partial view} at execution time.
+
+Furthermore, when the system node size is very large, novel works of Mean-Field Reinforcement Learning~\cite{DBLP:conf/ijcnn/ZhouZX21} are able to
+ handle learning efficiently, reasoning about agent and agent neighbourhoods.
 %
-\suggestions{What kind of ML algorithms can be used here?}
 \paragraph{Learning goal: collective behaviour}
 %
 The devices of an aggregate 
@@ -311,9 +342,9 @@ The devices of an aggregate
  in a decentralised, resilient way.
 %
 
-\paragraph{Self-organisation, swarm robotics}
+% \paragraph{Self-organisation, swarm robotics} it is condensed it other perspective, so I think it is better to avoid this paragraph.
 %
-\suggestions{You can talk about similar problem structure (i.e. the collective follow the same local behaviour)}
+% \suggestions{You can talk about similar problem structure (i.e. the collective follow the same local behaviour)}
 
 \paragraph{Emergent behaviour}
 %
@@ -322,6 +353,8 @@ The collective behaviour of an aggregate system
  from a dense network of computations and interactions
  in an evolving environment.
 %
+
+Typically, in CAS, single-agent RL brings to emergent behaviour and is used in various applications~\cite{DBLP:conf/icse/DAngeloGGGNPT19}.
 
 \paragraph{Delayed, global rewards}
 %
@@ -333,6 +366,7 @@ In the light of the above properties,
  to distinguish good from bad individual contributions
  to the global outcome.
 
+A way to handle this kind of rewards in multi-agent settings is \textit{difference rewards}~\cite{DBLP:conf/atal/DevlinYKT14}. It is used to capture agents contributions to the system's global performance.
 \paragraph{Transient phase}
 %
 When an aggregate behaviour is carried out,
@@ -345,15 +379,14 @@ However, intermediate results are often important,
 
 \paragraph{Dynamic topology}
 %
-If we admit \emph{mobility} and \emph{failure},
- then we must also consider 
+If we admit \emph{mobility} and \emph{failure} (rarely considered in related works, where node population is fixed),
+ then we must also consider
  the possibility of changes in neighbourhoods
  and hence the need of dealing with dynamic topologies.
 
-
 \subsection{Integration perspectives}
 Here we outline the different perspectives about \hybridaggregate{} with the aim
- of clarifying the current research gap and to help us in the definition of a research roadmap.
+ of clarifying the current research.
 %
 \paragraph{Application} Learning can be useful at different levels in our framework.
  Surely, what for us is most important is to improve our building blocks definition.
@@ -364,10 +397,10 @@ The building block improvement may consist either of learning a correction facto
 
 On the other side, learning can be useful also for framework related stuff,
  mainly aim at "non-functional" aspects. 
- Trust mechanisms, evaluation frequency, energy consumption manager, package storage are all the things that currently need to be handle by hand.
+ Trust mechanisms, evaluation frequency, energy consumption manager, package storage are all the things that could need to be handled by hand.
  
 \paragraph{Learning problem} 
-Multi-agent learning can be divided in \textit{Concurrent} and \textit{Team} learning. 
+The learning problem in multi-agent settings can be pose as \textit{Independent} and \textit{Team} learning. 
 In the foster, each agent perform the learning process and in the latter,
  the learning process is performed only by one agent and then shared with the collective.
 % 
@@ -378,13 +411,13 @@ Team learning is usually used in the ``swarm'' system, due to the homogeneous be
 % 
 Indeed, each agent follows the \textit{same} aggregate program shared within the entire system.
 
-On the other hand, Concurrent Learning, in \cite{csas-and-marl} seems to be usually applied in Collective
- (Self-)Adaptive System, so again a field near to Aggregate Computing. 
- In particular, Indipendedet Reinforcement Learning seems to reach good results in this kind of system, 
+On the other hand, Independent Learning is usually applied in Collective
+ (Self-)Adaptive System \cite{csas-and-marl}, so again a field near to Aggregate Computing.
+ In particular, Independent Reinforcement Learning seems to reach good results in this kind of system, 
  even if no theorems exist as in the single-agent context.
 %
 With Concurrent learning though is still possible to reach a global collective behaviour convergence. 
- Indeed using a common reward signal, the collective may reach the same behaviour as in the team learning settings as done here~\cite{iima2008swarm}.
+ Indeed using a common reward signal, the collective may reach the same behaviour \cite{iima2008swarm, nguyen2018swarm}.
 
 \paragraph{Learning technique}
 Aside from what kind of problem we set up, we can then use different Machine Learning techniques,
@@ -399,7 +432,7 @@ In Aggregate Computing, Supervised Learning makes sense if we want to craft new 
 Indeed, we know eventually the right state of the system, but we do not know how the system can reach it.
 
 Reinforcement Learning is predominantly used in CAS, 
- due to its flexibility and thanks to the plethora of approaches used in this scenario.
+ due to its flexibility and thanks to the plethora of approaches used in this scenario~\cite{csas-and-marl}.
 % 
 In our case, Reinforcement Learning can be used both at the building block level and the framework level.
 %
@@ -409,44 +442,22 @@ For the foster, the simplest scenario can be that agents learn a correction fact
 Finally, learning can be performed \textit{offline}, \texttt{online} or \textit{offine an then online} (\textit{mixed time}).
 % 
 The foster is the easiest scenario.
- Here indeed, we can leverage simulation to know the right computational field.
+ Here indeed, we can leverage simulation to know the right computational field and then use one of the novels CTDE techniques. 
 % 
 Supervised, Reinforcement Learning and even Evolutionary computing can be used here.
 %
 Mixed-time learning can be a mid-level complexity direction instead.
  Here, simulation can always be leveraged to reach a good behaviour, but at runtime, the behaviour can be adapted in front of new environmental situations. 
 %
-Reinforcement Learning is the most suitable mode here --- also the "meta" learning can help.
-%
 Finally, we can imagine that learning can be performed online. 
  It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
- Here, again, Reinforcement learning seems to be the most suitable approach.
-
-\subsection{Roadmap}
-The path towards full integration of Machine Learning and Aggregate Computing is long and probably we do not know the implications that it can bring. 
-Currently, we program to:
-\begin{enumerate}
-  \item Enhance building blocks through learning -- \textit{offline}: 
-  in this first step, we need to understand what kind of learning modality is most suitable for us. 
-  To decrease the complexity, we aim at perform learning \textit{offline} and at the \textit{building block} level.
-  \item Enhance building blocks through learning -- \textit{online}:
-  here, the most challenging part in bringing the offline results could be in the reward function definition.
-  Indeed, at runtime, we cannot use a global view of the system. 
-  A novel way to describe a collective reward by Aggregate Computing might be taken into consideration.
-  \item Create building blocks through learning: some building blocks currently lack a proper implementation -- 
-  such as the distributed leader election -- so learning can help us also in crafting them. 
-  Here, though, the research space increase drastically, 
-  so probably it might be not easy to bring our previous results there.
-  \item Improve framework aspects through learning: 
-  when we successfully apply to learn in the first two steps, 
-  we can also consider moving learning at the framework level, to manage non-functional aspects. 
-  In this way, developers can focus on the "high level" behaviour aspect.
-\end{enumerate}
+ 
+In mixed and online cases, Reinforcement Learning is the most suitable mode here --- also the "meta" learning can help.
 
 \section{Aggregate Computing with Reinforcement}
 In this section, we describe our first result in Aggregate Computing and Machine learning combination.
 % 
-Hence we briefly describe how Reinforcement Learning can be injected in the computation loop,
+Hence we briefly describe how Reinforcement Learning can be injected into the computation loop,
  and what kind of Reinforcement Learning can be used with Aggregate Computing.
 
 \subsection{Reinforcement Learning integration}
@@ -487,11 +498,24 @@ $$
 $$
 
 For our first tests, 
- we decide to set up a Concurrent learning technique, by which each agent try to improve our current local policy.
+ we decide to set up an Independent learning technique, by which each agent try to improve our current local policy.
+ Our approach is partially inspired by Swarm Q-Learning~\cite{nguyen2018swarm} and leverage Hysteretic Q-Learning~\cite{hysteretic-q} to 
+ handle
+ the non-stationarity in the environment.
 %
-In these settings, the environment became non-stationary making the learning process unstable.
- But, as we observe in collective self-adaptive systems, practically these solutions led to good results.
-
+In particular, each agent maintains a local Q table ($Q_i(s, a)$, where i is the agent id) following the standard Hysteretic update:
+$$
+Q(s, a) = 
+$$
+At the end of the episodes, each agent has collected its local experience, which can vary in different zones. So, we combine the N q table
+ selecting the maximum value for each state-action pair:
+$$
+Q_{max}(s, a) = max_i(Q_i(s, a))
+$$
+Then, in the new episode, each agent starts with the $Q_max$ and try to refine it. 
+ This max combination works because we assume a homogeneous behaviour, where each agent perform
+ in the same way when reaching the same state.
+ 
 \section{Evaluation}
 In this section, we outline the results of the Reinforcement Learning application in one simple
  aggregate program: the hop count.
@@ -654,6 +678,28 @@ We then define a possible roadmap towards full support of a so-called \hybridagg
 %
 To exemplify how this integration can be performed we build a preliminary use case where 
  learning enhances successfully a standard Aggregate Computing program.
+
+
+\subsection{Roadmap}
+The path towards full integration of Machine Learning and Aggregate Computing is long and probably we do not know the implications that it can bring. 
+Currently, we program to:
+\begin{enumerate}
+  \item Enhance building blocks through learning -- \textit{offline}: 
+  in this first step, we need to understand what kind of learning modality is most suitable for us. 
+  To decrease the complexity, we aim at perform learning \textit{offline} and at the \textit{building block} level.
+  \item Enhance building blocks through learning -- \textit{online}:
+  here, the most challenging part in bringing the offline results could be in the reward function definition.
+  Indeed, at runtime, we cannot use a global view of the system. 
+  A novel way to describe a collective reward by Aggregate Computing might be taken into consideration.
+  \item Create building blocks through learning: some building blocks currently lack a proper implementation -- 
+  such as the distributed leader election -- so learning can help us also in crafting them. 
+  Here, though, the research space increase drastically, 
+  so probably it might be not easy to bring our previous results there.
+  \item Improve framework aspects through learning: 
+  when we successfully apply to learn in the first two steps, 
+  we can also consider moving learning at the framework level, to manage non-functional aspects. 
+  In this way, developers can focus on the "high level" behaviour aspect.
+\end{enumerate}
 
 \todos{discussion about the result}
 \todos{limitations: it does not easily scale with the complex application, it cannot be applied online, it cannot be used in different scenarios}
