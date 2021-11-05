@@ -505,8 +505,15 @@ For our first tests,
 %
 In particular, each agent maintains a local Q table ($Q_i(s, a)$, where i is the agent id) following the standard Hysteretic update:
 $$
-Q(s, a) = 
+\delta \leftarrow r + \gamma * max_a Q_i(s', a) - Q_i(s_t, a_t)
 $$
+$$
+Q(s_t, a_t) =  \begin{cases} 
+  Q(s_t, a_t) + \alpha * \delta & \mbox{if } delta >= 0 \\ 
+  Q(s_t, a_t) + \beta * \delta & \mbox{otherwise }
+\end{cases}
+$$
+
 At the end of the episodes, each agent has collected its local experience, which can vary in different zones. So, we combine the N q table
  selecting the maximum value for each state-action pair:
 $$
