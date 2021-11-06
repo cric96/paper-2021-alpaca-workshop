@@ -455,12 +455,22 @@ Finally, we can imagine that learning can be performed online.
 In mixed and online cases, Reinforcement Learning is the most suitable mode here --- also the "meta" learning can help.
 
 \section{Aggregate Computing with Reinforcement}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{img/algorithm-learning.pdf}
+  \caption{This figure shows the main steps of reinforcement learning in aggregate computing.
+  Each agent starts with his copy of a q-table. 
+  Then, during the simulation, they refine them q-tables changing q-values according to their experience (different colours mean different values). 
+  In the end, a new $Q_{max}$ table will be created aggregating each agent table. 
+  Then, a new episode starts using this $Q_{max}$ as a starting point.
+  }
+  \label{fig:aggregate-q-learning}
+\end{figure}
 In this section, we describe our first result in Aggregate Computing and Machine learning combination.
 % 
 Hence we briefly describe how Reinforcement Learning can be injected into the computation loop,
  and what kind of Reinforcement Learning can be used with Aggregate Computing.
 
-\subsection{Reinforcement Learning integration}
 From a local view, program execution can be seen as:
 $$
 f : \textit{Context} \rightarrow \textit{Output}
@@ -498,7 +508,7 @@ $$
 $$
 
 For our first tests, 
- we decide to set up an Independent learning technique, by which each agent try to improve our current local policy.
+ we decide to set up an Independent learning technique, by which each agent try to improve our current local policy (shown in \Cref{fig:aggregate-q-learning}).
  Our approach is partially inspired by Swarm Q-Learning~\cite{nguyen2018swarm} and leverage Hysteretic Q-Learning~\cite{hysteretic-q} to 
  handle
  the non-stationarity in the environment.
@@ -519,13 +529,19 @@ At the end of the episodes, each agent has collected its local experience, which
 $$
 Q_{max}(s, a) = max_i(Q_i(s, a))
 $$
-Then, in the new episode, each agent starts with the $Q_max$ and try to refine it. 
- This max combination works because we assume a homogeneous behaviour, where each agent perform
- in the same way when reaching the same state.
+Then, in the next episode, each agent starts with the $Q_{max}$ and try to refine it.
+ This max combination works because we assume a homogeneous behaviour, where each agent perform in the same way when reaching the same state.
  
 \section{Evaluation}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\linewidth]{img/hop-count.png}
+  \caption{Graphical result of hop count evaluation. The red node is the target zone. The label 
+  associated with each node is the result of the aggregate program evaluated in that zone.}
+  \label{fig:hop-count}
+\end{figure}
 In this section, we outline the results of the Reinforcement Learning application in one simple
- aggregate program: the hop count.
+ aggregate program: the hop count (\Cref{fig:aggregate-q-learning}).
 
 Here, the computational field that will eventually be produced consists of the distance in terms of the minimum number of nodes needed to reach source nodes.
 
@@ -578,7 +594,7 @@ Then, due to the partially observability of the environment, we mantain a
  list of speed, to understand the hop count direction:
 
  \begin{minted}{scala}
-def space(hopCount: Int, k: Int, w: Int) {
+def state(hopCount: Int, k: Int, w: Int) {
   val currentSpeed = speed(hopCount, k)
   recentValues(currentSpeed, w)
 }
@@ -594,33 +610,39 @@ The policy is learnt locally, during simulation, using the Q-Learning algorithm.
 This is a common reward function used to maintain the nodes in a stable situation or to
  fasten the time needed to reach a stable one.
 %
-So, the learning loop, can be defined as:
-\begin{minted}[obeytabs=true,tabsize=1]{scala}
-val inf = Double.PositiveInfinity
-rep((initState, initPolicy, inf)) {
-  (oldState, policy, hopCount) => 
-      val currentState = 
-        state(hopCount, k, w)
-      val action = policy(state)
-      val output = mux(source) 
-        { 0 } 
-        { minHood(hopCount) 
-          + 1 
-          + action
-        } 
-      }
-      val currentReward = 
-        reward(output)
-      val improvedPolicy = 
-        qLearning(oldState, 
-          state, 
-          action, 
-          reward,
-          policy
-      (currentState, policy, output)
-    )
-}
-\end{minted}
+The \Cref{fig:aggregate-learning-loop} shows the learning loop in details.
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{img/aggregate-program-evaluation.pdf}
+  \caption{todo}
+  \label{fig:aggregate-learning-loop}
+\end{figure}
+%\begin{minted}[obeytabs=true,tabsize=1]{scala}
+%val inf = Double.PositiveInfinity
+%rep((initState, initPolicy, inf)) {
+%  (oldState, policy, hopCount) => 
+%      val currentState = 
+%        state(hopCount, k, w)
+%      val action = policy(state)
+%      val output = mux(source) 
+%        { 0 } 
+%        { minHood(hopCount) 
+%          + 1 
+%          + action
+%        } 
+%      }
+%      val currentReward = 
+%        reward(output)
+%      val improvedPolicy = 
+%        qLearning(oldState, 
+%          state, 
+%          action, 
+%          reward,
+%          policy
+%      (currentState, policy, output)
+%    )
+%}
+%\end{minted}
 
 To verify if we can improve the convergence time using reinforcement learning,
  we simulate a situation where the rising problem emerges (repository at \url{https://github.com/cric96/scafi-with-reinforcement-learning/tree/independent-q-learning-hop-count}):
