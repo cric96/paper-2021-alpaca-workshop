@@ -8,6 +8,6 @@ jobs:
   Build-LaTeX:
     runs-on: ubuntu-20.04
     steps:
-      - env:
+      - uses: DanySK/compile-and-publish-all-latex@0.2.0
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: DanySK/compile-and-publish-all-latex@0.1.21
