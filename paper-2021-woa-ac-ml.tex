@@ -78,7 +78,7 @@ Email: \{gianluca.aguzzi, roby.casadei, mirco.musolesi, mirko.viroli\}@unibo.it
 \maketitle
 \begin{abstract}
 Artificial intelligence is here to stay. 
- In particular, in the recent years, Machine Learning techniques have outperformed 
+ In particular, in recent years, Machine Learning techniques have outperformed 
  hand-craft human solutions in different contexts, ranging from computer vision to videogames.
 %
 %Currently, though, an all-encompassing Machine learning algorithm does not exist, 
@@ -94,8 +94,10 @@ Even though it is promising for expressing high-level collective behaviour syste
  practically it is difficult to write programs that work in highly dynamic networks, 
  where nodes have to deal with continuous changes in terms of environment.
 
-
-Therefore, with this work, we propose a solution that can be seen as the first step towards the integration between Aggregate Computing and Machine Learning, and, in particular Reinforcement Learning. The goal is to improve adaptivity through low-level specifications but maintaining high-level program behaviours. In this work, we outline issues, opportunities and methodologies of this integration, presenting a case study where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
+Therefore, with this work, we propose a solution that can be seen as the first step towards the integration between Aggregate Computing and Machine Learning, and, in particular Reinforcement Learning. 
+ The goal is to improve adaptivity through low-level specifications but maintaining high-level program behaviours. 
+ 
+In this work, we outline issues, opportunities and methodologies of this integration, presenting a case study where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
 %
 
 \end{abstract}
@@ -145,7 +147,7 @@ Ideally, we would like to express collective behaviours at the ensemble level,
  abstracting over non-functional aspects such as the network topology, environment uncertainties and 
  system size.
 
-In this direction, Aggregate Computing~\cite{DBLP:journals/computer/BealPV15} is an innovative paradigm, according to which
+In this direction, Aggregate Computing~\cite{DBLP:journals/computer/BealPV15}(AC) is an innovative paradigm, according to which
  developers can express collective self-organising behaviours through a functional program specification.
 %
 Indeed, an aggregate program (i.e. a program written with Aggregate Computing) consists of the manipulation of \textit{computational fields}, a distributed
@@ -155,7 +157,7 @@ Indeed, an aggregate program (i.e. a program written with Aggregate Computing) c
 %These operations are defined in \textit{field-calculus}~\cite{DBLP:conf/coordination/AudritoBDV18} --- the root of Aggregate Computing. 
 % This calculus describes a set of minimal constructs to express any spatiotemporal computation.
 
-Aggregate Computing captures common abstractions for collective behaviour specification. 
+AC captures common abstractions for collective behaviour specification. 
  These abstractions are encapsulated in so-called ``building blocks'' through which various
  applications have been built 
  (e.g., for swarm robotics and crowds engineering~\cite{DBLP:journals/eaai/CasadeiVAPD21}).
@@ -165,19 +167,25 @@ However, building block synthesis concerns different stuff not only related to t
  that easily adapt w.r.t the node movements rapidity.
 
 Ideally, we would like to continue building our application using these building blocks -- so the high-level specification remains the same -- but using some
- under-the-hood mechanisms that adapt the behaviour according to different environmental changes. For this reason we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden
+ under-the-hood mechanisms that adapt the behaviour according to different environmental changes. For this reason, we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden
  to developers of defining the right collective specifications.
 This lead to an ``hybrid" approach where a part of behaviour is still expressed using common 
- Aggregate Computing abstractions and another part is distilled through learning~\cite{research}.
+ AC abstractions and another part is distilled through learning~\cite{research}.
 
 In particular, in this paper,
  we investigate how Aggregate Computing can be extended with Reinforcement Learning (RL) through a case study,
  where we outline the performance improvement of the ``hop count" program --- 
  i.e. an aggregate program that produces a field that stores the distance from a source zone. 
  Furthermore, we show that the learnt policy scales up to different system sizes.
-\todos{Outline}
+ 
+The paper is divided as follow, in \Cref{background} we describe
+ the AC framework, showing the context in which
+ is typically applied and the overall idea of how it works, in \Cref{aggregate-and-machine-learning} we detail the relevant properties of Aggregate
+ Computing in terms of machine learning problems, in \Cref{aggregate-and-rl} we describe a combination of AC with RL and then in
+ \Cref{evaluation} we practically applied it in a paradigmatic AC case study,
+ finally, \Cref{conclusion} we discuss the result showed and we underline a path toward an in-depth AC and RL integration.
 
-\section{Background and Related Work}
+ \section{Background and Related Work}\label{background}
 
 %Computer Science is an incredibly evolving research area. 
 % In a few years, the environment had been filled with intercommunicating computational devices, such as smartphones, smart things, and personal computers.
@@ -246,7 +254,7 @@ The main round steps consist of:
 Rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
  This makes it possible to scale easily with the node number size. This collective, proactive and periodical execution will eventually lead to the satisfaction of the system-wide specification.
 
-\section{Aggregate Computing and Machine Learning}
+\section{Aggregate Computing and Machine Learning}\label{aggregate-and-machine-learning}
 
 In this section, we analyse the characteristics of the aggregate computing paradigm,
  map these to relevant machine learning contributions in the literature,
@@ -426,7 +434,7 @@ For the foster, the simplest scenario can be that agents learn a correction fact
 Finally, learning can be performed \textit{offline}, \textit{online} or \textit{offline an then online} (\textit{mixed time}).
 % 
 The foster is the common scenario in multi-agent settings.
- Here indeed, we can leverage simulation to know the right computational field and then use one of the novel CTDE techniques. 
+ Here indeed, we can leverage simulation to know the right computational field and then use one of the novels CTDE techniques. 
 Mixed-time learning can be a mid-level complexity direction instead.
  Here, simulation can always be exploited to reach a good behaviour, but at runtime, 
  the behaviour can be adapted based on the new environmental situations. 
@@ -434,7 +442,7 @@ Finally, we can imagine that learning can be performed online.
  It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
  In mixed and online cases, Reinforcement Learning is the most suitable model, because agents \textit{learn by doing}.
 
-\section{Aggregate Computing with Reinforcement}
+\section{Aggregate Computing with Reinforcement}\label{aggregate-and-rl}
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{img/algorithm-learning.pdf}
@@ -512,7 +520,7 @@ $$
 Q_{max}(s, a) = max_i(Q_i(s, a))
 $$
 Then, in the next episode, each agent starts with the $Q_{max}$ and try to refine it.
-\section{Evaluation}
+\section{Evaluation}\label{evaluation}
 \begin{figure*}[h]
   \centering
   \begin{subfigure}[b]{0.32\textwidth}
@@ -723,7 +731,7 @@ As a result, the aggregate speed-up convergence in each new situation.
 %\todos{add blinking scenarios}
 %\todos{add movement scenarios}
 
-\section{Discussion and Concluding Remarks}
+\section{Discussion and Concluding Remarks}\label{conclusion}
 In this article, we have discussed a preliminary example of how Aggregate Computing can be integrated with Reinforcement Learning. 
 We have then compared Aggregate Computing problems with current Machine Learning solutions in MASs systems.
 %
