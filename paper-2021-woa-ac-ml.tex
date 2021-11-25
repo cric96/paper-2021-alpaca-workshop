@@ -38,7 +38,6 @@
 \newcommand{\todos}[1]{\todo[inline, color=cyan]{\textbf{TODO}: #1}}
 \newcommand{\outline}[1]{\todo[inline, color=green]{#1}}
 %% Utility commands
-\newcommand{\hybridaggregate}{\textit{Hybrid Aggregate Computing}}
 \newcommand{\round}{\texttt{round}}
 \newcommand{\export}{\texttt{export}}
 \sloppy
@@ -150,7 +149,7 @@ Ideally, we would like to express collective behaviours at the ensemble level,
 In this direction, Aggregate Computing~\cite{DBLP:journals/computer/BealPV15}(AC) is an innovative paradigm, according to which
  developers can express collective self-organising behaviours through a functional program specification.
 %
-Indeed, an aggregate program (i.e. a program written with Aggregate Computing) consists of the manipulation of \textit{computational fields}, a distributed
+Indeed, an aggregate program (i.e. a program written with AC) consists of the manipulation of \textit{computational fields}, a distributed
  data structure where each point in the spacetime is associated with the result of a computation
  performed by a node.
 %
@@ -173,11 +172,11 @@ This lead to an ``hybrid" approach where a part of behaviour is still expressed 
  AC abstractions and another part is distilled through learning~\cite{research}.
 
 In particular, in this paper,
- we investigate how Aggregate Computing can be extended with Reinforcement Learning (RL) through a case study,
+ we investigate how AC can be extended with Reinforcement Learning (RL) through a case study,
  where we outline the performance improvement of the ``hop count" program --- 
  i.e. an aggregate program that produces a field that stores the distance from a source zone. 
  Furthermore, we show that the learnt policy scales up to different system sizes.
- 
+
 The paper is divided as follow, in \Cref{background} we describe
  the AC framework, showing the context in which
  is typically applied and the overall idea of how it works, in \Cref{aggregate-and-machine-learning} we detail the relevant properties of Aggregate
@@ -209,13 +208,13 @@ The latter could be seen as the extension of electromagnetic fields to Computer 
  map from any devices to their computational value (i.e. the result of a computation).
 The computational field manipulation is ruled by \textit{field calculus}, which define the constructs needed 
  to express spatio-temporal computation~\cite{DBLP:conf/coordination/AudritoBDV18}.
-The novelty of Aggregate Computing consists in its composable (functional-like) system-size independent program definition: 
+The novelty of AC consists in its composable (functional-like) system-size independent program definition: 
 using basic constructs we identify the main patterns (\textit{building-blocks}) that could be reusable at the application level.
 By opportunistically crafting these building-blocks it is possible to verify prominent properties such as eventual consistency~\cite{DBLP:journals/taas/BealVPD17} 
  (i.e. the ensemble behaviour is independent of the underlying network details)
  and self-stabilisation~\cite{DBLP:journals/tomacs/ViroliABDP18} (i.e. the ability of a system to recover from arbitrary changes).
 
-Aggregate Computing is studied in various simulated scenarios ranging from smart cities to crowds, 
+AC is studied in various simulated scenarios ranging from smart cities to crowds, 
  thanks to Alchemist~\cite{DBLP:journals/jos/PianiniMV13} (a meta-simulator for pervasive systems) and to programming languages and toolchains that support 
  this paradigm, such as ScaFi~\cite{DBLP:conf/ecoop/CasadeiV16}, FCCP~\cite{DBLP:conf/acsos/Audrito20} and Protelis~\cite{PianiniSAC2015}.
 
@@ -239,7 +238,7 @@ For a more in-depth explanation of these operators, please refer to~\cite{DBLP:j
 
 \subsection{Computational Model}
 An aggregate program execution consists of a continuously node-point execution of a \round{}, 
- that is the atomical part of aggregate computing. Each node can interact only with-in its neighbourhoods sharing the \export{}, namely the result produced by the evaluation of a \round{}.
+ that is the atomical part of AC. Each node can interact only with-in its neighbourhoods sharing the \export{}, namely the result produced by the evaluation of a \round{}.
 
 The main round steps consist of:
 \begin{enumerate}
@@ -256,9 +255,9 @@ Rounds execution is completely asynchronous, so do not exist a global clock to c
 
 \section{Aggregate Computing and Machine Learning}\label{aggregate-and-machine-learning}
 
-In this section, we analyse the characteristics of the aggregate computing paradigm,
+In this section, we analyse the characteristics of the AC paradigm,
  map these to relevant machine learning contributions in the literature,
- and point out different learning perspectives about the integration of Aggregate Computing with Machine Learning
+ and point out different learning perspectives about the integration of AC with Machine Learning
 
 \paragraph{Multi-and many-agent system}
 %
@@ -275,11 +274,11 @@ Due to the high stochasticity of the environment,
  This uncertainty results in the need of creating intelligent agents
  so that they can learn the optimal behaviour and adapt to environmental changes.
 %
-In recent decades there has been an emerging trend in the use of Reinforcement Learning (RL) 
- in multi-agent settings (called Multi-Agent Reinforcement Learning), as a powerful, robust and adaptive learning paradigm.
+In recent decades there has been an emerging trend in the use of RL 
+ in multi-agent settings -- called Multi-Agent Reinforcement Learning (MARL) -- as a powerful, robust and adaptive learning paradigm.
  Progress has been considerable and a wide range of algorithms are now available.
 
-Multi-Agent Reinforcement Learning is a conjunction of Game theory and Reinforcement Learning, 
+MARL is a conjunction of Game theory and RL, 
  and there are several (even orthogonal) viewpoints on which researchers have been focused.
 
 First attempts from RL viewpoint, 
@@ -303,7 +302,7 @@ Finally, current emerging trends tend to leverage a so-called centralised traini
  Most promising approaches in this direction are MAPPO~\cite{DBLP:journals/corr/abs-2103-01955}, COMA~\cite{DBLP:journals/corr/FoersterFANW17} and MADDPG~\cite{DBLP:conf/nips/LoweWTHAM17}.
  
 The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
- In Aggregate Computing instead, we need to find a technique that does not depend on the system node count.
+ In AC instead, we need to find a technique that does not depend on the system node count.
 
 \paragraph{Neighbour-based or indirect (environment-mediated) interaction}
 %
@@ -375,7 +374,7 @@ If we admit \emph{mobility} and \emph{failure} (rarely considered in related wor
  and hence the need of dealing with dynamic topologies.
 
 \subsection{Integrating Learning Mechanisms into Aggregate Computing}
-We now outline the different perspectives about Aggregate Computing with learning, 
+We now outline the different perspectives about AC with learning, 
  to clarify the current and the future research path.
 %
 \paragraph{Application} Learning can be useful at different levels in our framework.
@@ -398,11 +397,11 @@ Team learning is usually used in the ``swarm'' system, due to the homogeneous be
  --- i.e. each agent performs the same program. 
  Here, a common reward signal exists and evaluate the overall collective behaviour.
 % 
-In Aggregate Computing, each agent follows the \textit{same} aggregate program shared within the entire system, so Team learning can 
+In AC, each agent follows the \textit{same} aggregate program shared within the entire system, so Team learning can 
  be applied seamlessly.
 
 On the other hand, Independent Learning is usually applied in Collective
- (Self-)Adaptive System \cite{csas-and-marl}, a field near to Aggregate Computing.
+ (Self-)Adaptive System \cite{csas-and-marl}.
 
 In particular, Independent Reinforcement Learning reach good results in this kind of system, 
  even if no theorem exists as in the single-agent context.
@@ -412,14 +411,14 @@ With Independent learning is still possible to reach a global collective behavio
 
 \paragraph{Learning technique}
 Aside from what kind of problem we set up, we can then use different Machine Learning techniques,
- such as Reinforcement Learning or Supervised Learning.
+ such as RL or Supervised Learning (SL).
 %
-Supervised learning is rare in CSAS -- or in the ``swarm" like system in general.
+SL is rare in CSAS -- or in the ``swarm" like system in general.
 %
 Novel works~\cite{DBLP:conf/corl/TolstayaGPP0R19} leverage Graph Neural network to learn how agents should communicate, 
  supposing to know the right behaviour (i.e. produced via global vision simulation or by emulation of natural phenomena).
 
-In Aggregate Computing, Supervised Learning can be applied when we want to build up new building blocks from zero. 
+In AC, S) can be applied when we want to build up new building blocks from zero. 
 % 
 Indeed, we eventually know the right state of the system, but we do not know how the system can reach it.
 
@@ -440,13 +439,13 @@ Mixed-time learning can be a mid-level complexity direction instead.
  the behaviour can be adapted based on the new environmental situations. 
 Finally, we can imagine that learning can be performed online. 
  It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
- In mixed and online cases, Reinforcement Learning is the most suitable model, because agents \textit{learn by doing}.
+ In mixed and online cases, RL is the most suitable model, because agents \textit{learn by doing}.
 
 \section{Aggregate Computing with Reinforcement}\label{aggregate-and-rl}
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{img/algorithm-learning.pdf}
-  \caption{This figure shows the main steps of RL in Aggregate Computing.
+  \caption{This figure shows the main steps of RL in AC.
   Each agent starts with his copy of a Q table. 
   Then, during the simulation, they refine them Q tables changing q values according to their experience (different colours mean different values). 
   In the end, a new $Q_{max}$ table will be created aggregating each agent table. 
@@ -456,8 +455,8 @@ Finally, we can imagine that learning can be performed online.
 \end{figure}
 As first experiments, we leverage RL to improve building blocks. 
 % 
-In this section, we briefly describe how Reinforcement Learning can be injected into the computation loop,
- and what Reinforcement Learning we used with Aggregate Computing.
+In this section, we briefly describe how RL can be injected into the computation loop,
+ and what RL we used with AC.
 
 From a local view, program execution can be seen as:
 $$
@@ -470,7 +469,7 @@ Where $\textit{Context}$ contains:
 \end{itemize}
 The computational field $\theta$ contains all output produced by the system.
 
-Speaking of Reinforcement Learning settings, we need to define the state function and the reward function.
+Speaking of RL settings, we need to define the state function and the reward function.
 %
 The execution needs to be distributed, so the state will be a function from the local node context:
 $$
@@ -495,7 +494,7 @@ $$
 \textit{Action} \leftarrow \pi(K)
 $$
 
-As a first step towards a complete integration between Aggregate Computing and RL, we decide to set up an Independent learning technique, 
+As a first step towards a complete integration between AC and RL, we decide to set up an Independent learning technique, 
  by which each agent try to improve our current local policy (shown in \Cref{fig:aggregate-q-learning}). 
 % 
 We made this choice inspired by other work in CSAS~\cite{csas-and-marl} and swarm systems~\cite{nguyen2018swarm}.
@@ -547,7 +546,7 @@ Then, in the next episode, each agent starts with the $Q_{max}$ and try to refin
 In this section, we outline the results of the application of RL for one simple
  aggregate program: the hop count. In this case, the computational field that will eventually be produced consists of the distance in terms of the minimum number of nodes needed to reach source nodes ((\Cref{fig:hop-count})).
 
-A naive implementation of this kind of problem can be described in Aggregate Computing as:
+A naive implementation of this kind of problem can be described in AC as:
 \begin{minted}[fontsize=\scriptsize]{scala}
 def hopCount(): Int = {
   rep(Double.PositiveInfinity) { 
@@ -732,12 +731,12 @@ As a result, the aggregate speed-up convergence in each new situation.
 %\todos{add movement scenarios}
 
 \section{Discussion and Concluding Remarks}\label{conclusion}
-In this article, we have discussed a preliminary example of how Aggregate Computing can be integrated with Reinforcement Learning. 
-We have then compared Aggregate Computing problems with current Machine Learning solutions in MASs systems.
+In this article, we have discussed a preliminary example of how AC can be integrated with RL. 
+We have then compared AC problems with current Machine Learning solutions in MASs systems.
 %
-We have defined a possible roadmap towards full support of learning mechanisms in Aggregate Computing. %
+We have defined a possible roadmap towards full support of learning mechanisms in AC. %
 As a proof of concept, we have discussed preliminary use case where 
- learning successfully enhances a standard Aggregate Computing program.
+ learning successfully enhances a standard AC program.
 Furthermore, we have shown that the learnt program can easily scale up to system size.
 
 
