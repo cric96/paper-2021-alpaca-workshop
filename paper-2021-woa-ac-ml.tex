@@ -96,7 +96,7 @@ Even though it is promising for expressing high-level collective behaviour syste
 Therefore, with this work, we propose a solution that can be seen as the first step towards the integration between Aggregate Computing and Machine Learning, and, in particular Reinforcement Learning. 
  The goal is to improve adaptivity through low-level specifications but maintaining high-level program behaviours. 
  
-In this work, we outline issues, opportunities and methodologies of this integration, presenting a case study where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
+In this paper, we outline issues, opportunities and methodologies of this integration, presenting a case study where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
 %
 
 \end{abstract}
@@ -108,7 +108,7 @@ In this work, we outline issues, opportunities and methodologies of this integra
 \end{IEEEkeywords}
   
 \section{Introduction}
-Recent trends like pervasive and autonomic computing 
+Recent trends like pervasive~\cite{DBLP:journals/wc/Satyanarayanan01} and autonomic~\cite{DBLP:journals/computer/KephartC03} computing 
  promote a vision of artificially designed Collective Adaptive Systems (CASs),
  namely collections of agents coordinating and adapting %as wholes 
  to pursue joint goals in changing environments.
@@ -723,7 +723,7 @@ As a result, the aggregate speed-up convergence in each new situation.
       \caption{}
       \label{fig:simulation-d}
   \end{subfigure}
-  \caption{Analysis of the learning process. \Cref{fig:simulation-a} shows the $total_{error}$ evolution during the learning process. \Cref{fig:simulation-b}, \Cref{fig:simulation-c}, and \Cref{fig:simulation-d} shows the average error in three different simulations with 80, 360 and 760 nodes. 
+  \caption{Analysis of the learning process. \Cref{fig:simulation-a} shows the $total_{error}$ evolution during the learning process. \Cref{fig:simulation-b}, \Cref{fig:simulation-c}, and \Cref{fig:simulation-d} show the average error in three different simulations with 80, 360 and 760 nodes. 
   The black line is the error of the RL-based solution, 
   the green line is the error produced by the standard hop count implementation.}
   \label{fig:simulation}
