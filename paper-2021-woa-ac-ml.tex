@@ -76,27 +76,37 @@ Email: \{gianluca.aguzzi, roby.casadei, mirco.musolesi, mirko.viroli\}@unibo.it
 
 \maketitle
 \begin{abstract}
-Artificial intelligence is here to stay. 
- In particular, in recent years, Machine Learning techniques have outperformed 
- hand-craft human solutions in different contexts, ranging from computer vision to videogames.
+Recent trends like pervasive, autonomic, and swarm computing
+ promote 
+ a vision of large-scale collections of relatively simple agents
+ that act and coordinate 
+ with no central coordinator
+ to support distributed applications.
 %
-%Currently, though, an all-encompassing Machine learning algorithm does not exist, 
-% so researchers explore the possibility to apply these techniques in different fields.
-
-An interesting field for Machine Learning applications is the design of algorithms for Collective-Adaptive Systems (CASs). % Or do we want to use Cyber-Physical Swarm??
-Researchers have to deal with a series of challenges including dealing with massive number of nodes, global-to-local behaviour mapping, and highly environment stochasticity.  Historically, researchers have favoured the use of self-organisation, by which a collective behaviour emerges from continuously local interaction between simple components.
-A novel technique to specify self-organising behaviour in a composable and functional manner is Aggregate Computing.
- In particular, this paradigm enables collective program specification as a whole, 
- as it is based on a distributed data structure manipulation called \textit{computational field}.
- It is successfully used in different scenarios ranging from Swarm Robotics to Smart cities.
-Even though it is promising for expressing high-level collective behaviour system-size independent,
- practically it is difficult to write programs that work in highly dynamic networks, 
- where nodes have to deal with continuous changes in terms of environment.
-
-Therefore, with this work, we propose a solution that can be seen as the first step towards the integration between Aggregate Computing and Machine Learning, and, in particular Reinforcement Learning. 
- The goal is to improve adaptivity through low-level specifications but maintaining high-level program behaviours. 
- 
-In this paper, we outline issues, opportunities and methodologies of this integration, presenting a case study where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
+Such Collective Adaptive Systems (CAS)
+ are hard to engineer,
+ because mechanisms for developing global behaviour
+ out of local behaviour and interaction must be devised,
+ often leveraging natural inspiration.
+%
+In particular, in the field-based Aggregate Computing approach,
+ behaviour is specified in terms of computational fields,
+ namely maps from CAS entities to computational values evolving over time, and neighbour-based interaction.
+%
+However, devising efficient aggregate computing algorithms
+ for different scenarios
+ is not an easy task; in particular,
+ a problem is determining the best local decisions based on the current context
+ for fostering collective outcomes.
+%
+Therefore, in this work we investigate
+ the possibility of using machine learning techniques
+ to automatically devise local actions
+ to improve existing aggregate algorithms.
+%
+In particular, we propose a Reinforcement Learning solution that can be seen as the first step towards the integration between Aggregate Computing and Machine Learning. 
+% The goal is to improve adaptivity through low-level specifications but maintaining high-level program behaviours. 
+Accordingly, we outline challenges and opportunities of this integration, and present preliminary results based on a case study where Aggregate Computing is successfully combined with Hysteretic Q-Learning.
 %
 
 \end{abstract}
