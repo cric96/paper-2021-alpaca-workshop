@@ -1,5 +1,0 @@
-def state(hopCount: Int, k: Int, w: Int) =
-{
-  val currentSpeed = speed(hopCount, k)
-  recentValues(currentSpeed, w)
-}
