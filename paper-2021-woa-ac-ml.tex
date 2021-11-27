@@ -126,19 +126,19 @@ CAS are notoriously hard to design and control
  %due to as part of complex systems
  as globally desired behaviour
  has to emerge from local behaviours and interactions. 
-For this reason, over the years, various approaches have tried to handle this complexity. Some of them take inspiration from the natural system composed of social animals --- like bees, fish, and ants. 
+For this reason, over the years, various approaches have tried to handle this complexity. Some of them take inspiration from the natural system composed of social animals. %--- like bees, fish, and ants. 
 %
-In this case, a sort of hive mind arises -- 
- also referred to as swarm intelligence --  
+In this case, a sort of hive mind arises 
+ %-- also referred to as swarm intelligence --  
  born from local interactions between agents. 
 %
 These kinds of behaviours are accomplished with self-organisation, 
  namely a global order that emerges from continuous 
  interactions between simple entities.
 
-Initially, researchers had tried to translate these properties to computing systems by miming natural collective behaviour bottom-up~\cite{DBLP:journals/connection/Webb02}, 
- namely trying to find the right single-node-behaviour 
- to reach a global behaviour, e.g. flocking, foraging, etc.
+Initially, researchers had tried to translate these properties to computing systems by miming natural collective behaviour bottom-up~\cite{DBLP:journals/connection/Webb02}. %, 
+ %namely trying to find the right single-node-behaviour 
+ %to reach a global behaviour. %, e.g. flocking, foraging, etc.
 %
 However, this mapping cannot be easily defined, since we are dealing with complex systems.
 %
@@ -147,33 +147,33 @@ Ideally, we would like to express collective behaviours at the ensemble level,
  system size.
 
 In this direction, Aggregate Computing (AC)~\cite{DBLP:journals/computer/BealPV15} is an innovative paradigm, according to which
- developers can express collective self-organising behaviours through a functional program specification.
+ developers can express collective self-organising behaviours. % through a functional program specification.
 %
-Indeed, an aggregate program (i.e. a program written with AC) consists of the manipulation of \textit{computational fields}, a distributed
- data structure where each point in the spacetime is associated with the result of a computation
- performed by a node.
+Indeed, an aggregate program 
+ %(i.e. a program written with AC) 
+ consists of the manipulation of \textit{computational fields}, a distributed
+ data structure where each node is associated with the result of a computation
+ performed by it.
 %
 %These operations are defined in \textit{field-calculus}~\cite{DBLP:conf/coordination/AudritoBDV18} --- the root of Aggregate Computing. 
 % This calculus describes a set of minimal constructs to express any spatiotemporal computation.
 
-AC captures common abstractions for collective behaviour specification. 
- These abstractions are encapsulated in so-called ``building blocks'' through which various
- applications have been built 
- (e.g., for swarm robotics and crowds engineering~\cite{DBLP:journals/eaai/CasadeiVAPD21}).
+AC captures common abstractions for collective behaviour specification in so-called ``building-blocks''. 
+ %These abstractions are encapsulated in so-called ``building blocks''.
+ %through which various applications have been built (e.g., for swarm robotics and crowds engineering~\cite{DBLP:journals/eaai/CasadeiVAPD21}).
 However, building block synthesis concerns different stuff not only related to the behaviour itself
  but also to the "ensemble" specifications. 
  For instance, it is quite difficult to craft building blocks
  that easily adapt w.r.t. the node movements rapidity.
-
+%
 Ideally, we would like to continue building our application using these building blocks -- so the high-level specification remains the same -- but using some
  under-the-hood mechanisms that adapt the behaviour according to different environmental changes. For this reason, we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden
  to developers of defining the right collective specifications.
-This lead to an ``hybrid" approach where a part of behaviour is still expressed using common 
- AC abstractions and another part is distilled through learning~\cite{research}.
-
+%This lead to an ``hybrid" approach where a part of behaviour is still expressed using common 
+% AC abstractions and another part is distilled through learning~\cite{research}.
 In particular, in this paper,
  we investigate how AC can be extended with Reinforcement Learning (RL) through a case study,
- where we outline the performance improvement of the ``hop count" program --- 
+ where we outline the performance improvement of the ``hop count" program ---
  i.e. an aggregate program that produces a field that stores the distance from a source zone. 
  Furthermore, we show that the learnt policy scales up to different system sizes.
 
