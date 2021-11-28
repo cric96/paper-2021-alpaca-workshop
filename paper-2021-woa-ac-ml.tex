@@ -199,7 +199,7 @@ The paper is divided as follow, in \Cref{background} we describe
  \Cref{evaluation} we practically applied it in a paradigmatic AC case study,
  finally, \Cref{conclusion} we discuss the result showed and we underline a path toward an in-depth AC and RL integration.
 
- \section{Background and Related Work}\label{background}
+ \section{Background and Motivation}\label{background}
 
 %Computer Science is an incredibly evolving research area. 
 % In a few years, the environment had been filled with intercommunicating computational devices, such as smartphones, smart things, and personal computers.
@@ -594,7 +594,7 @@ Then, in the next episode, each agent starts with the $Q_{max}$ and try to refin
   \label{fig:hop-count}
 \end{figure*}
 In this section, we outline the results of the application of RL for one simple
- aggregate program: the hop count. In this case, the computational field that will eventually be produced consists of the distance in terms of the minimum number of nodes needed to reach source nodes ((\Cref{fig:hop-count})).
+ aggregate program: the hop count. In this case, the computational field that will eventually be produced consists of the distance in terms of the minimum number of nodes needed to reach source nodes (\Cref{fig:hop-count}).
 
 A naive implementation of this kind of problem can be described in AC as:
 \begin{minted}[fontsize=\scriptsize]{scala}
@@ -636,7 +636,7 @@ def speed(hopCount: Int, k: Int) =
   min - window.head 
 }
 \end{minted}
-\mintinline{scala}{recentValues(data, k)} is an aggregate operator that returns a list containing the last k data perceived by the agent.
+\mintinline{scala}{recentValues(data, k)} is an aggregate operator that returns a list containing the last\textbf{\texttt{k}} data perceived by the agent.
 Then, due to the partial observability of the environment, we maintain a 
  list of velocity, to understand the hop count direction:
 
@@ -667,35 +667,9 @@ The idea is to maintain the nodes in a stable situation or to
   Using the output produced and the history of state and output, 
   each agent computes its current state. 
   Using it, they evaluate the action to speed up the hop count convergence following a policy. 
-  This new refined output is then used to evaluate the reward and to refine the Q table (dotted line path)}
+  This new refined output is then used to evaluate the reward and to improve the Q table (dotted line path)}
   \label{fig:aggregate-learning-loop}
 \end{figure}
-%\begin{minted}[obeytabs=true,tabsize=1]{scala}
-%val inf = Double.PositiveInfinity
-%rep((initState, initPolicy, inf)) {
-%  (oldState, policy, hopCount) => 
-%      val currentState = 
-%        state(hopCount, k, w)
-%      val action = policy(state)
-%      val output = mux(source) 
-%        { 0 } 
-%        { minHood(hopCount) 
-%          + 1 
-%          + action
-%        } 
-%      }
-%      val currentReward = 
-%        reward(output)
-%      val improvedPolicy = 
-%        qLearning(oldState, 
-%          state, 
-%          action, 
-%          reward,
-%          policy
-%      (currentState, policy, output)
-%    )
-%}
-%\end{minted}
 
 \subsection{Simulation Setup}
 We verify our learning algorithm through simulation~\footnote{repository at \url{https://github.com/cric96/alpaca-2022-ac-rl}} leveraging Alchemist and ScaFi.
@@ -734,12 +708,12 @@ The error is evaluated as:
 \end{equation*}
 
 where \textbf{i} is the node identifier and \textbf{t} is the time when the error is evaluated.
-%
 
 Then, we test our learnt algorithm in different environments (\Cref{fig:simulation} b,c,d). To do that, we share the learnt Q-table to the 
-entire aggregate and we test the program changing the system size (80, 360 and 760 nodes).
+ entire aggregate and we test the program changing the system size (80, 360 and 760 nodes).
+%
 For each population size, we run 50 episodes and then we average the error at each time step. 
-As a result, the aggregate speed-up convergence in each new situation.
+ As a result, the aggregate speed-up convergence in each new situation.
 
 \begin{figure*}
   \begin{subfigure}[b]{\textwidth}
@@ -784,10 +758,10 @@ As a result, the aggregate speed-up convergence in each new situation.
 \section{Discussion and Concluding Remarks}\label{conclusion}
 In this article, we have discussed the combination of AC with Machine Learning techniques in order to improve adaptivity
  and effectiveness of the AC framework.
-%In doing so, we compared AC problems with current Machine Learning solutions in MASs systems.
 %
 In particular, we explore the combination of AC with Hysteretic Q-Learning.
-RL application in this kind of setting is quite unexplored -- even if some works exists~\cite{DBLP:conf/icml/YangLLZZW18} -- 
+%
+RL application in this kind of setting is quite unexplored %-- even if some works exists~\cite{DBLP:conf/icml/YangLLZZW18} -- 
  area for several reasons, such as the high system dynamic, non-stationarity,  partial environment observability, and non-bounded system size.
 In a case study, we empirically show the effectiveness of RL, by which we speed up the convergence time of
  aggregate program taking into consideration -- the hop count.
@@ -800,15 +774,15 @@ We know that this is preliminary work and it shed light on several problems that
 
 Aggregate systems are partially observable from the perspective of each node. 
  Local observations may not be statistically significant in summarising the state of the entire aggregate. 
- In the future, we could address this problem through recurrent networks and a CTDE learning methodology.
+ In the future, we could address this problem through recurrent neural networks and a CTDE learning methodology.
  
 The learning, in this case, was applied at the building block level. 
  Another possible direction is to use it at the framework level, e.g., to select which messages to send to the neighbourhood or not. 
- This has already been addressed in the literature, usually under the name of \textit{learn to communicate}~\cite{DBLP:journals/corr/abs-1908-03963}. 
- A novel way to handle this problem is to use Graph Neural Networks~\cite{DBLP:journals/corr/abs-1812-08434} to learn the representation of a distributed system and to select messages based on that representation. 
+ This has already been addressed in the literature under the name of \textit{learn to communicate}~\cite{DBLP:journals/corr/abs-1908-03963}. 
+A novel way to handle this problem is to use Graph Neural Networks~\cite{DBLP:journals/corr/abs-1812-08434} to learn the representation of a distributed system and to select messages based on that representation. 
  Thus, we should consider this methodology when we will extend RL at the AC framework level.
  
-In this case, we applied a variation of the independent learning approach. 
+In our experiment, we have applied a variation of the independent learning approach. 
  Agents first learn the best policy locally, and then at the end of the episode, a learner merges the Q-tables. 
  However, this does not reduce the problems of scalability and non-stationary, since a central agent must still collect all the Q-tables of the aggregate. 
  In particular, to handle the scalability issues, we will have to consider decentralised approaches based only on the neighbourhood information (or local leaders).
