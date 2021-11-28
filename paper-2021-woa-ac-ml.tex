@@ -158,7 +158,7 @@ A different approach could attempt to express collective behaviours in a more to
 %, abstracting over non-functional aspects such as the network topology, environment uncertainties and system size.
 In this direction, Aggregate Computing (AC)~\cite{DBLP:journals/computer/BealPV15} is proposed:
  it is a paradigm by which
- developers can express collective self-organising behaviours by a global perspective. % through a functional program specification.
+ developers can express collective self-organising behaviours from a global perspective. % through a functional program specification.
 %
 Indeed, an aggregate program 
  (i.e. a program written with AC) 
@@ -172,7 +172,7 @@ Indeed, an aggregate program
 AC captures common abstractions for collective behaviour specification in so-called ``building-blocks''. 
  %These abstractions are encapsulated in so-called ``building blocks''.
  %through which various applications have been built (e.g., for swarm robotics and crowds engineering~\cite{DBLP:journals/eaai/CasadeiVAPD21}).
-However, building block synthesis concerns different stuffs not only related to the behaviour itself
+However, building block synthesis concerns different stuff not only related to the behaviour itself
  but also to the ``ensemble" specifications. 
 %
 For instance, it is quite difficult to craft building blocks
@@ -262,8 +262,8 @@ A full coverage of the field calculus is beyond the scope of this paper. A more 
 
 \subsection{Computational Model}
 %
-For an aggreate program to yield collective adaptive behaviour, 
- continuous computation and communication is needed.
+For an aggregate program to yield collective adaptive behaviour, 
+ continuous computation and communication are needed.
 %
 An individual atomic step 
  involving context acquisition,
@@ -289,7 +289,7 @@ Rounds execution is completely asynchronous, so there is no global clock or barr
 The combination of the logic of the aggregate program
  and 
  such a collective, proactive, and periodical execution
- can promote the pursuing of collective adaptive behaviour.
+ can promote the pursuit of collective adaptive behaviour.
 
 \subsection{Motivation}
 
@@ -596,7 +596,7 @@ $$
 \textit{Action} \leftarrow \pi(K)
 $$
 
-As a first step towards a complete integration between AC and RL, we haved decided to set up an Independent RL learning technique, 
+As a first step towards a complete integration between AC and RL, we have decided to set up an Independent RL learning technique, 
  by which each agent try to improve their own current local policy (shown in \Cref{fig:aggregate-q-learning}). 
 % 
 We made this choice inspired by other work in CSAS~\cite{csas-and-marl} and swarm systems~\cite{nguyen2018swarm}.
