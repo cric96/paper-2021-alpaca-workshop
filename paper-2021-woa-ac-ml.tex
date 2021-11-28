@@ -156,7 +156,7 @@ However, such local rules cannot easily be defined, since emergence, and its eff
 %
 A different approach could attempt to express collective behaviours in a more top-down fashion, in terms of the desired emergents.
 %, abstracting over non-functional aspects such as the network topology, environment uncertainties and system size.
-In this direction, Aggregate Computing (AC)~\cite{DBLP:journals/computer/BealPV15} as proposed:
+In this direction, Aggregate Computing (AC)~\cite{DBLP:journals/computer/BealPV15} is proposed:
  it is a paradigm by which
  developers can express collective self-organising behaviours by a global perspective. % through a functional program specification.
 %
@@ -215,11 +215,11 @@ Engineering this kind of system is a thriving area, and so various approaches ha
  First attempts leverage \textit{local-to-global} techniques, where the collective behaviour emerges from local behaviour description, 
  usually inspired by nature~\cite{DBLP:journals/swarm/BrambillaFBD13}. 
 %
-A natural way to describe this kind of problem is through a \textit{collective} view of the system.
+Instead, a natural way to describe this kind of problems should be through a \textit{collective} view of the system.
  This is the idea used by the \textit{global-to-local} techniques~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/scp/AlrahmanNL20, DBLP:conf/cbse/BuresGHKKP13}, 
  where the behaviours are designed \textit{top-down}, and then the local behaviour is generated automatically from this ``system-wide'' specification. 
 % 
-Also, ``meet-in-the-middle''~\cite{DBLP:journals/computer/PinciroliB16} approaches exist, where
+Also ``meet-in-the-middle''~\cite{DBLP:journals/computer/PinciroliB16} approaches exist, where
  a part of the system is still expressed bottom-up (device-centric) whereas a part is expressed top-down (swarm-centric)
 
 In this work, we focus on Aggregate Computing~\cite{DBLP:journals/computer/BealPV15}, a global-to-local approach where
@@ -685,9 +685,9 @@ def speed(hopCount: Int, k: Int) =
   min - window.head 
 }
 \end{minted}
-\mintinline{scala}{recentValues(data, k)} is an aggregate operator that returns a list containing the last\textbf{\texttt{k}} data perceived by the agent.
+\mintinline{scala}{recentValues(data, k)} is an aggregate operator that returns a list containing the last \textbf{\texttt{k}} data perceived by the agent.
 Then, due to the partial observability of the environment, we maintain a 
- list of velocity, to understand the hop count direction:
+ list of velocities, to understand the hop count direction:
 
  \begin{minted}[fontsize=\scriptsize]{scala}
 def state(hopCount: Int, k: Int, w: Int) =
@@ -721,9 +721,9 @@ The idea is to maintain the nodes in a stable situation or to
 \end{figure}
 
 \subsection{Simulation Setup}
-We verify our learning algorithm through simulation~\footnote{repository at \url{https://github.com/cric96/alpaca-2022-ac-rl}} leveraging Alchemist and ScaFi.
+We verify our learning algorithm through simulation\footnote{repository at \url{https://github.com/cric96/alpaca-2022-ac-rl}} leveraging Alchemist and ScaFi.
  To check if the aggregate eventually speeds up the hop count convergence time, we create a situation where the rising problem emerges (\Cref{fig:hop-count}):
- in the beginning, two source nodes exist in the network, ($A$ and $B$).
+ firstly, two source nodes exist in the network, ($A$ and $B$).
  At the time $t$, $B$ disappears. So the nodes near $B$ start a slow process
  to eventually reach the distance towards $A$.
 We use 80 ($N$) nodes displaced into an irregular grid with a width of 100 meters and a height of 20 meters. 
