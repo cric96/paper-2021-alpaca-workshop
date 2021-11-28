@@ -136,34 +136,35 @@ CAS are notoriously hard to design and control
  %due to as part of complex systems
  as globally desired behaviour
  has to emerge from local behaviours and interactions. 
-For this reason, over the years, various approaches have tried to handle this complexity. Some of them take inspiration from the natural system composed of social animals --- like bees, fish, and ants. 
 %
-In this case, a sort of hive mind arises 
- %-- also referred to as swarm intelligence --  
- born from local interactions between agents. 
+For this reason, over the years, various approaches have tried to handle this complexity---for instance, by taking inspiration from natural systems like insect and animal societies (e.g., ant colonies, bee hives, flocks of birds etc.). 
 %
-These kinds of behaviours are accomplished with self-organisation, 
- namely a global order that emerges from continuous 
- interactions between simple entities.
+%In this case, a sort of hive mind arises 
+% %-- also referred to as swarm intelligence --  
+% born from local interactions between agents. 
+%
+Specifically, such approaches tend to exploit 
+ \emph{self-organisation}, 
+ i.e., processes by which global order emerges 
+ from continuous interactions among simple entities.
 
-Initially, researchers had tried to translate these properties to computing systems by miming natural collective behaviour bottom-up~\cite{DBLP:journals/connection/Webb02}, 
- namely trying to find the right single-node-behaviour 
- to reach a global behaviour. %, e.g. flocking, foraging, etc.
+Initially, researchers had tried to achieve these properties in computing systems by miming natural collective behaviours ``from the bottom up''~\cite{DBLP:journals/connection/Webb02}, 
+ namely trying to find the right single-node-behaviour (local rules)
+ to pursue the intended global behaviour. %, e.g. flocking, foraging, etc.
 %
-However, this mapping cannot be easily defined, since we are dealing with complex systems.
+However, such local rules cannot easily be defined, since emergence, and its effects, are (almost by definition) hard to be controlled or predicted in complex systems.
 %
-Ideally, we would like to express collective behaviours at the ensemble level,
- abstracting over non-functional aspects such as the network topology, environment uncertainties and 
- system size.
-
-In this direction, Aggregate Computing (AC)~\cite{DBLP:journals/computer/BealPV15} is an innovative paradigm, according to which
- developers can express collective self-organising behaviours. % through a functional program specification.
+A different approach could attempt to express collective behaviours in a more top-down fashion, in terms of the desired emergents.
+%, abstracting over non-functional aspects such as the network topology, environment uncertainties and system size.
+In this direction, Aggregate Computing (AC)~\cite{DBLP:journals/computer/BealPV15} as proposed:
+ it is a paradigm by which
+ developers can express collective self-organising behaviours by a global perspective. % through a functional program specification.
 %
 Indeed, an aggregate program 
  (i.e. a program written with AC) 
- consists of the manipulation of \textit{computational fields}, a distributed
- data structure where each node is associated with the result of a computation
- performed by it.
+ consists of the manipulation of \textit{computational fields}, i.e., distributed
+ data structures where each node is associated with the result of a computation performed by it,
+ and neighbourhood observation.
 %
 %These operations are defined in \textit{field-calculus}~\cite{DBLP:conf/coordination/AudritoBDV18} --- the root of Aggregate Computing. 
 % This calculus describes a set of minimal constructs to express any spatiotemporal computation.
