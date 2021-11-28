@@ -258,22 +258,35 @@ The main constructs that capture the essential aspects for programming self-orga
 A full coverage of the field calculus is beyond the scope of this paper. A more comprehensive presentation is given in~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 
 \subsection{Computational Model}
-An aggregate program execution consists of a continuously node-point execution of a \round{}, 
- which is the atomical part of AC. Each node can interact only within its neighbourhoods sharing the \export{}, namely the result produced by the evaluation of a \round{}.
-
-The main \round{} steps consist of:
+%
+For an aggreate program to yield collective adaptive behaviour, 
+ continuous computation and communication is needed.
+%
+An individual atomic step 
+ involving context acquisition,
+ computation of the program,
+ and neighbourhood-based communication 
+ is called a \round{}.
+%
+In detail, a \round{} run at some device consists of:
 \begin{enumerate}
-  \item execution context creation: nodes create the execution context collecting information from the sensors, 
-  the neighbourhood messages, and the old program output;
-  \item program evaluation: the system-wide aggregate program is evaluated against the local context created by the nodes. 
-  This produces the \export{};
-  \item export sharing: the export created will be shared within the current neighbourhoods perceived by the nodes;
-  \item actuations: giving the export produced, nodes may perform some actuation (e.g. motor activations, steering, ...).
+  \item \emph{context acquisition}: the device collects information from the sensors, 
+  the messages from neighbours
+  (including the device itself---to model state);
+  \item \emph{program evaluation}: the aggregate program is evaluated against the acquired context,
+  yielding an \export{}, namely the message to be sent to neighbours;
+  \item \emph{export sharing}: the \export{} is sent to the neighbours;
+  \item \emph{actuations}: the \export{} also includes information that can be used to drive actuators in the local node.
 \end{enumerate}
 
-Rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
- This makes it possible to scale easily with the node number size. 
- This collective, proactive and periodical execution will eventually lead to the satisfaction of the system-wide specification.
+Rounds execution is completely asynchronous, so there is no global clock or barrier to coordinate the aggregate. 
+%
+ This makes it possible to scale easily with the number of nodes. 
+%
+The combination of the logic of the aggregate program
+ and 
+ such a collective, proactive, and periodical execution
+ can promote the pursuing of collective adaptive behaviour.
 
 \subsection{Motivation}
 Currently, Aggregate computing has a problem in the ability to generalise collective behaviours that are capable of working well in different scenarios. 
