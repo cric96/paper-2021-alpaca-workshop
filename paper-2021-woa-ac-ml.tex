@@ -816,10 +816,10 @@ In a case study, we empirically show the effectiveness of RL, by which we speed 
  aggregate program taking into consideration -- the hop count.
 Furthermore, we have shown that the learnt program can easily scale up to system size.
 
-This is the first effort towards an ``hybrid'' collective programming approach, where the high-level program specification is 
+To the best of our knowledge, this is the first effort towards an ``hybrid'' collective programming approach, where the high-level program specification is 
  done by a designer and the low-level matters are left to machine learning algorithms.
-
-We know that this is preliminary work and it shed light on several problems that we should handle in the future.
+%
+As such, this work shed light on several issues deserving future investigation.
 
 Aggregate systems are partially observable from the perspective of each node. 
  Local observations may not be statistically significant in summarising the state of the entire aggregate. 
@@ -834,7 +834,7 @@ A novel way to handle this problem is to use Graph Neural Networks~\cite{DBLP:jo
 In our experiment, we have applied a variation of the independent learning approach. 
  Agents first learn the best policy locally, and then at the end of the episode, a learner merges the Q-tables. 
  However, this does not reduce the problems of scalability and non-stationary, since a central agent must still collect all the Q-tables of the aggregate. 
- In particular, to handle the scalability issues, we will have to consider decentralised approaches based only on the neighbourhood information (or local leaders).
+ In particular, to handle the scalability issues, we will have to consider decentralised approaches based only on neighbour data (or local leaders).
  
 Finally, we do not address the multi-agent credit assignment problem in this work. 
  Indeed, we use a global reward function for the whole aggregate. In this way, however, learning often degenerated because it was difficult to understand the influence of an agent w.r.t. the system. 
