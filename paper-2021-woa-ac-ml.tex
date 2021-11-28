@@ -189,8 +189,9 @@ In particular, in this paper,
 
 The paper is divided as follow, in \Cref{background} we describe
  the AC framework, showing the context in which
- is typically applied and the overall idea of how it works, in \Cref{aggregate-and-machine-learning} we detail the relevant properties of Aggregate
- Computing in terms of machine learning problems, in \Cref{aggregate-and-rl} we describe a combination of AC with RL and then in
+ is typically applied and the overall idea of how it works, and then the motivation of injecting Reinforcement Learning in this paradigm,
+ %in \Cref{aggregate-and-machine-learning} we detail the relevant properties of Aggregate Computing in terms of machine learning problems, 
+ in \Cref{aggregate-and-rl} we describe a combination of AC with RL and then in
  \Cref{evaluation} we practically applied it in a paradigmatic AC case study,
  finally, \Cref{conclusion} we discuss the result showed and we underline a path toward an in-depth AC and RL integration.
 
@@ -264,193 +265,217 @@ The main round steps consist of:
 Rounds execution is completely asynchronous, so do not exist a global clock to coordinate the aggregate. 
  This makes it possible to scale easily with the node number size. This collective, proactive and periodical execution will eventually lead to the satisfaction of the system-wide specification.
 
-\section{Aggregate Computing and Machine Learning}\label{aggregate-and-machine-learning}
+\subsection{Motivation}
+Currently, Aggregate computing has a problem in the ability to generalise collective behaviours that are capable of working well in different scenarios. 
+ For example, a well-tested aggregate application in a static network could lead to a non-stable behaviour in a dynamic network. 
+ Typically, to alleviate this problem, designers create ad-hoc building blocks that cope with certain environmental aspects (such as the ULT block~\cite{DBLP:conf/saso/AudritoCDV17}). 
+ But they are still context-specific solutions.
 
-In this section, we analyse the characteristics of the AC paradigm,
- map these to relevant machine learning contributions in the literature,
- and point out different learning perspectives about the integration of AC with Machine Learning
+A novel way to deal with this problem is to leave the low-level aspects of AC to machine learning, 
+ training the collective in different environments and thus building general behaviours that are capable of adapting to many circumstances.
 
-\paragraph{Multi-and many-agent system}
-%
-An aggregate system is a multi-agent system
- and, often, a \emph{many}-agent system
- where a large number (hundreds or more)
- of autonomous entities are programmed to achieve 
- some collective behaviour through \emph{repeated} 
- sensing, computation, communication, and actuation steps.
-%
-Due to the high stochasticity of the environment,
- it is almost impossible to know and
- program the optimal behaviour for all agents in advance.
- This uncertainty results in the need of creating intelligent agents
- so that they can learn the optimal behaviour and adapt to environmental changes.
-%
-In recent decades there has been an emerging trend in the use of RL 
- in multi-agent settings -- called Multi-Agent Reinforcement Learning (MARL) -- as a powerful, robust and adaptive learning paradigm.
- Progress has been considerable and a wide range of algorithms are now available.
+In this case, when Reinforcement Learning is applied to several agents, we speak of Multi-Agent Reinforcement Learning (MARL)~\cite{DBLP:journals/aamas/Hernandez-LealK19}.
+ AC has a typical cooperative and homogeneous learning setting: 
+ each agent collaborates to achieve a common goal guided by the same reward function.
+In this setting, several works have tried to apply the algorithms known in the single-agent context to the multi-agent one - the so-called Independent MARL~\cite{DBLP:journals/tsmc/BusoniuBS08}. 
+ However, several issues emerge, such as non-stationarity, multi-agent credit assignment, scalability and partial observability of the system. 
+ Therefore, several heuristics have tried to solve these problems.
+Among many Hysteric Q-Learning~\cite{hysteretic-q} uses an optimistic approach in which more weight is given to positive actions than negative ones.
 
-MARL is a conjunction of Game theory and RL, 
- and there are several (even orthogonal) viewpoints on which researchers have been focused.
+Another way to handle multi-agent learning is to use so-called \textit{Centralised Training and Decentralised Execution} (CTDE) algorithms. 
+ In this case, a central agent collects the experiences of the various agents and distils a policy that each agent can execute locally in a typical actor-critic setting. 
+ During the learning phase, the problems of partial observability and non-stationarity are reduced, since the agent has a global view. 
+ However, the problem of scalability is typically not addressed.
 
-First attempts from RL viewpoint, 
- goes towards a so-called \textit{independent learning}~\cite{DBLP:journals/tsmc/BusoniuBS08} approach, 
- where each agent learn locally against the whole environment~\cite{DBLP:conf/icml/Tan93}.
+In the next section, we exploit Hysteretic Q-Learning (since it empirically showed good performance) with AC, as the first step towards \textit{``hybrid"} techniques for programming aggregate systems.
+ In this way, an application part is described in terms of aggregate computations and the low-level part is left to learning.
+% \section{Aggregate Computing and Machine Learning}\label{aggregate-and-machine-learning}
 
-Examples of these are Hysteretic Q-Learning (used to reduce non-stationarity)~\cite{hysteretic-q}, 
- Lenient Learning~\cite{DBLP:journals/jmlr/WeiL16}, and Frequency Maximum Q-value~\cite{DBLP:conf/atal/KaisersT10}.
-%
-The pro of these approaches is that their complexity does not scale up with the number of agents, 
- but, unfortunately, the learning process is extremely non-stationary and unstable.
-% 
-Furthermore, they are heuristic and do not exist any convergence proof (even if, in practice, they often reach a good policy).
+% In this section, we analyse the characteristics of the AC paradigm,
+%  map these to relevant machine learning contributions in the literature,
+%  and point out different learning perspectives about the integration of AC with Machine Learning
 
-Other efforts have focussed on achieving equilibria such as Nash-equilibrium of Pareto optimality.
- The first works towards this direction are Nash-Q-Learning~\cite{nash-q}, Friend-or-Foe Q-learning~\cite{DBLP:conf/icml/Littman01}, Minimax-Q~\cite{DBLP:conf/icml/Littman94}.
-The problem is that it is used with few agents and scale hardly with the application complexity.
-%
-Finally, current emerging trends tend to leverage a so-called centralised training and decentralised execution (CTDE) approach, by which 
- agents should leverage the system-wide knowledge at training time but at runtime, they act independently~\cite{DBLP:journals/aamas/Hernandez-LealK19}.
- Most promising approaches in this direction are MAPPO~\cite{DBLP:journals/corr/abs-2103-01955}, COMA~\cite{DBLP:journals/corr/FoersterFANW17} and MADDPG~\cite{DBLP:conf/nips/LoweWTHAM17}.
+% \paragraph{Multi-and many-agent system}
+% %
+% An aggregate system is a multi-agent system
+%  and, often, a \emph{many}-agent system
+%  where a large number (hundreds or more)
+%  of autonomous entities are programmed to achieve 
+%  some collective behaviour through \emph{repeated} 
+%  sensing, computation, communication, and actuation steps.
+% %
+% Due to the high stochasticity of the environment,
+%  it is almost impossible to know and
+%  program the optimal behaviour for all agents in advance.
+%  This uncertainty results in the need of creating intelligent agents
+%  so that they can learn the optimal behaviour and adapt to environmental changes.
+% %
+% In recent decades there has been an emerging trend in the use of RL 
+%  in multi-agent settings -- called Multi-Agent Reinforcement Learning (MARL) -- as a powerful, robust and adaptive learning paradigm.
+%  Progress has been considerable and a wide range of algorithms are now available.
+
+% MARL is a conjunction of Game theory and RL, 
+%  and there are several (even orthogonal) viewpoints on which researchers have been focused.
+
+% First attempts from RL viewpoint, 
+%  goes towards a so-called \textit{independent learning}~\cite{DBLP:journals/tsmc/BusoniuBS08} approach, 
+%  where each agent learn locally against the whole environment~\cite{DBLP:conf/icml/Tan93}.
+
+% Examples of these are Hysteretic Q-Learning (used to reduce non-stationarity)~\cite{hysteretic-q}, 
+%  Lenient Learning~\cite{DBLP:journals/jmlr/WeiL16}, and Frequency Maximum Q-value~\cite{DBLP:conf/atal/KaisersT10}.
+% %
+% The pro of these approaches is that their complexity does not scale up with the number of agents, 
+%  but, unfortunately, the learning process is extremely non-stationary and unstable.
+% % 
+% Furthermore, they are heuristic and do not exist any convergence proof (even if, in practice, they often reach a good policy).
+
+% Other efforts have focussed on achieving equilibria such as Nash-equilibrium of Pareto optimality.
+%  The first works towards this direction are Nash-Q-Learning~\cite{nash-q}, Friend-or-Foe Q-learning~\cite{DBLP:conf/icml/Littman01}, Minimax-Q~\cite{DBLP:conf/icml/Littman94}.
+% The problem is that it is used with few agents and scale hardly with the application complexity.
+% %
+% Finally, current emerging trends tend to leverage a so-called centralised training and decentralised execution (CTDE) approach, by which 
+%  agents should leverage the system-wide knowledge at training time but at runtime, they act independently~\cite{DBLP:journals/aamas/Hernandez-LealK19}.
+%  Most promising approaches in this direction are MAPPO~\cite{DBLP:journals/corr/abs-2103-01955}, COMA~\cite{DBLP:journals/corr/FoersterFANW17} and MADDPG~\cite{DBLP:conf/nips/LoweWTHAM17}.
  
-The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
- In AC instead, we need to find a technique that does not depend on the system node count.
+% The main problem with most of the solutions available in the literature is that they consider a small number of agents (or at least test them on small games).
+%  In AC instead, we need to find a technique that does not depend on the system node count.
 
-\paragraph{Neighbour-based or indirect (environment-mediated) interaction}
-%
-In aggregate systems, a device can directly interact only with its neighbours.
-%
-Data flows may be implemented
- to support indirect communication across multiple hops;
- however, information from devices far away tends to be obsolete.
-%
-The environment can also be used, via stigmergy~\cite{DBLP:journals/scp/NicolaSI20},
- for indirect communication;
- however, a device can typically only access 
-  to a very local portion of the environment.
-%
-In other words, the system state is only \emph{partially observable}.
-In practice, CTDE technique aims to solve these problems, using a \emph{global} view at training time but
- a \emph{partial view} at execution time.
+% \paragraph{Neighbour-based or indirect (environment-mediated) interaction}
+% %
+% In aggregate systems, a device can directly interact only with its neighbours.
+% %
+% Data flows may be implemented
+%  to support indirect communication across multiple hops;
+%  however, information from devices far away tends to be obsolete.
+% %
+% The environment can also be used, via stigmergy~\cite{DBLP:journals/scp/NicolaSI20},
+%  for indirect communication;
+%  however, a device can typically only access 
+%   to a very local portion of the environment.
+% %
+% In other words, the system state is only \emph{partially observable}.
+% In practice, CTDE technique aims to solve these problems, using a \emph{global} view at training time but
+%  a \emph{partial view} at execution time.
 
-Furthermore, when the system node size is very large, novel works of Mean-Field Reinforcement Learning~\cite{DBLP:conf/ijcnn/ZhouZX21} are able to
- handle learning efficiently, reasoning about agent and agent neighbourhoods.
-%
-\paragraph{Learning goal: collective behaviour}
-%
-The devices of an aggregate 
- must cooperatively learn the ``aggregate program'',
- namely the collective behaviour 
- that achieves a particular \emph{global goal}
- in a decentralised, resilient way.
-%
+% Furthermore, when the system node size is very large, novel works of Mean-Field Reinforcement Learning~\cite{DBLP:conf/ijcnn/ZhouZX21} are able to
+%  handle learning efficiently, reasoning about agent and agent neighbourhoods.
+% %
+% \paragraph{Learning goal: collective behaviour}
+% %
+% The devices of an aggregate 
+%  must cooperatively learn the ``aggregate program'',
+%  namely the collective behaviour 
+%  that achieves a particular \emph{global goal}
+%  in a decentralised, resilient way.
+% %
 
-% \paragraph{Self-organisation, swarm robotics} it is condensed it other perspective, so I think it is better to avoid this paragraph.
-%
-% \suggestions{You can talk about similar problem structure (i.e. the collective follow the same local behaviour)}
+% % \paragraph{Self-organisation, swarm robotics} it is condensed it other perspective, so I think it is better to avoid this paragraph.
+% %
+% % \suggestions{You can talk about similar problem structure (i.e. the collective follow the same local behaviour)}
 
-\paragraph{Emergent behaviour}
-%
-The collective behaviour of an aggregate system
- \emph{emerges} 
- from a dense network of computations and interactions
- in an evolving environment.
-%
+% \paragraph{Emergent behaviour}
+% %
+% The collective behaviour of an aggregate system
+%  \emph{emerges} 
+%  from a dense network of computations and interactions
+%  in an evolving environment.
+% %
 
-Typically, in CAS, single-agent RL brings to emergent behaviour and is used in various applications~\cite{DBLP:conf/icse/DAngeloGGGNPT19}.
+% Typically, in CAS, single-agent RL brings to emergent behaviour and is used in various applications~\cite{DBLP:conf/icse/DAngeloGGGNPT19}.
 
-\paragraph{Delayed, global rewards}
-%
-In the light of the above properties,
- if we consider a learning approach based on rewards,
- we must observe that such rewards would be
- delayed and mostly global---i.e.,
- it may not be easy to solve the credit assignment problem
- to distinguish good from bad individual contributions
- to the global outcome.
+% \paragraph{Delayed, global rewards}
+% %
+% In the light of the above properties,
+%  if we consider a learning approach based on rewards,
+%  we must observe that such rewards would be
+%  delayed and mostly global---i.e.,
+%  it may not be easy to solve the credit assignment problem
+%  to distinguish good from bad individual contributions
+%  to the global outcome.
 
-A way to handle this kind of rewards in multi-agent settings is \textit{difference rewards}~\cite{DBLP:conf/atal/DevlinYKT14, DBLP:conf/aaai/FoersterFANW18}. It is used to capture agents contributions to the system's global performance.
-\paragraph{Transient phase}
-%
-When an aggregate behaviour is carried out,
- we often focus on the final stable outcomes after the transitory period.
-%
-However, intermediate results are also important,
- and invariants should hold throughout the entire computation.
+% A way to handle this kind of rewards in multi-agent settings is \textit{difference rewards}~\cite{DBLP:conf/atal/DevlinYKT14, DBLP:conf/aaai/FoersterFANW18}. It is used to capture agents contributions to the system's global performance.
+% \paragraph{Transient phase}
+% %
+% When an aggregate behaviour is carried out,
+%  we often focus on the final stable outcomes after the transitory period.
+% %
+% However, intermediate results are also important,
+%  and invariants should hold throughout the entire computation.
 
-\paragraph{Dynamic topology}
-%
-If we admit \emph{mobility} and \emph{failure} (rarely considered in related works, where node population is fixed),
- then we must also consider
- the possibility of changes in neighbourhoods
- and hence the need of dealing with dynamic topologies.
+% \paragraph{Dynamic topology}
+% %
+% If we admit \emph{mobility} and \emph{failure} (rarely considered in related works, where node population is fixed),
+%  then we must also consider
+%  the possibility of changes in neighbourhoods
+%  and hence the need of dealing with dynamic topologies.
 
-\subsection{Integrating Learning Mechanisms into Aggregate Computing}
-We now outline the different perspectives about AC with learning, 
- to clarify the current and the future research path.
-%
-\paragraph{Application} Learning can be useful at different levels in our framework.
- First of all, learning can be applied to the building blocks definition.
-% 
-Indeed, most of our results and applications are based on them.
-%
-The building block improvement may consist either of learning a correction factor or by entirely learning the behaviour.
+% \subsection{Integrating Learning Mechanisms into Aggregate Computing}
+% We now outline the different perspectives about AC with learning, 
+%  to clarify the current and the future research path.
+% %
+% \paragraph{Application} Learning can be useful at different levels in our framework.
+%  First of all, learning can be applied to the building blocks definition.
+% % 
+% Indeed, most of our results and applications are based on them.
+% %
+% The building block improvement may consist either of learning a correction factor or by entirely learning the behaviour.
 
-On the other side, learning can be useful also for framework related stuff,
- mainly aiming at "non-functional" aspects. 
- Trust mechanisms, evaluation frequency, energy consumption manager, package storage are all the things that could take advantage of using Machine Learning algorithms.
+% On the other side, learning can be useful also for framework related stuff,
+%  mainly aiming at "non-functional" aspects. 
+%  Trust mechanisms, evaluation frequency, energy consumption manager, package storage are all the things that could take advantage of using Machine Learning algorithms.
  
-\paragraph{Learning problem} 
-The learning problem in multi-agent settings can be posed as \textit{Independent} and \textit{Team} learning. 
-In the foster, each agent perform the learning process and while in the latter,
- the learning process is performed only by one agent and then shared with the collective (in a typical CDTE setting).
-% 
-Team learning is usually used in the ``swarm'' system, due to the homogeneous behaviour 
- --- i.e. each agent performs the same program. 
- Here, a common reward signal exists and evaluate the overall collective behaviour.
-% 
-In AC, each agent follows the \textit{same} aggregate program shared within the entire system, so Team learning can 
- be applied seamlessly.
+% \paragraph{Learning problem} 
+% The learning problem in multi-agent settings can be posed as \textit{Independent} and \textit{Team} learning. 
+% In the foster, each agent perform the learning process and while in the latter,
+%  the learning process is performed only by one agent and then shared with the collective (in a typical CDTE setting).
+% % 
+% Team learning is usually used in the ``swarm'' system, due to the homogeneous behaviour 
+%  --- i.e. each agent performs the same program. 
+%  Here, a common reward signal exists and evaluate the overall collective behaviour.
+% % 
+% In AC, each agent follows the \textit{same} aggregate program shared within the entire system, so Team learning can 
+%  be applied seamlessly.
 
-On the other hand, Independent Learning is usually applied in Collective
- (Self-)Adaptive System \cite{csas-and-marl}.
+% On the other hand, Independent Learning is usually applied in Collective
+%  (Self-)Adaptive System \cite{csas-and-marl}.
 
-In particular, Independent Reinforcement Learning reach good results in this kind of system, 
- even if no theorem exists as in the single-agent context.
-%
-With Independent learning is still possible to reach a global collective behaviour convergence. 
- Indeed using a common reward signal, the collective may reach the same behaviour through emergence \cite{iima2008swarm, nguyen2018swarm}.
+% In particular, Independent Reinforcement Learning reach good results in this kind of system, 
+%  even if no theorem exists as in the single-agent context.
+% %
+% With Independent learning is still possible to reach a global collective behaviour convergence. 
+%  Indeed using a common reward signal, the collective may reach the same behaviour through emergence \cite{iima2008swarm, nguyen2018swarm}.
 
-\paragraph{Learning technique}
-Aside from what kind of problem we set up, we can then use different Machine Learning techniques,
- such as RL or Supervised Learning (SL).
-%
-SL is rare in CSAS -- or in the ``swarm" like system in general.
-%
-Novel works~\cite{DBLP:conf/corl/TolstayaGPP0R19} leverage Graph Neural network to learn how agents should communicate, 
- supposing to know the right behaviour (i.e. produced via global vision simulation or by emulation of natural phenomena).
+% \paragraph{Learning technique}
+% Aside from what kind of problem we set up, we can then use different Machine Learning techniques,
+%  such as RL or Supervised Learning (SL).
+% %
+% SL is rare in CSAS -- or in the ``swarm" like system in general.
+% %
+% Novel works~\cite{DBLP:conf/corl/TolstayaGPP0R19} leverage Graph Neural network to learn how agents should communicate, 
+%  supposing to know the right behaviour (i.e. produced via global vision simulation or by emulation of natural phenomena).
 
-In AC, S) can be applied when we want to build up new building blocks from zero. 
-% 
-Indeed, we eventually know the right state of the system, but we do not know how the system can reach it.
+% In AC, S) can be applied when we want to build up new building blocks from zero. 
+% % 
+% Indeed, we eventually know the right state of the system, but we do not know how the system can reach it.
 
-RL is predominantly used in CAS, 
- due to its flexibility and thanks to the plethora of approaches used in this scenario~\cite{csas-and-marl}.
+% RL is predominantly used in CAS, 
+%  due to its flexibility and thanks to the plethora of approaches used in this scenario~\cite{csas-and-marl}.
 
-In our case, RL can be used both at the building block level and the framework level.
-%
-For the foster, the simplest scenario can be that agents learn a correction factor to improve a long-term reward signal.
+% In our case, RL can be used both at the building block level and the framework level.
+% %
+% For the foster, the simplest scenario can be that agents learn a correction factor to improve a long-term reward signal.
  
-\paragraph{Learning time}
-Finally, learning can be performed \textit{offline}, \textit{online} or \textit{offline an then online} (\textit{mixed time}).
-% 
-The foster is the common scenario in multi-agent settings.
- Here indeed, we can leverage simulation to know the right computational field and then use one of the novels CTDE techniques. 
-Mixed-time learning can be a mid-level complexity direction instead.
- Here, simulation can always be exploited to reach a good behaviour, but at runtime, 
- the behaviour can be adapted based on the new environmental situations. 
-Finally, we can imagine that learning can be performed online. 
- It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
- In mixed and online cases, RL is the most suitable model, because agents \textit{learn by doing}.
+% \paragraph{Learning time}
+% Finally, learning can be performed \textit{offline}, \textit{online} or \textit{offline an then online} (\textit{mixed time}).
+% % 
+% The foster is the common scenario in multi-agent settings.
+%  Here indeed, we can leverage simulation to know the right computational field and then use one of the novels CTDE techniques. 
+% Mixed-time learning can be a mid-level complexity direction instead.
+%  Here, simulation can always be exploited to reach a good behaviour, but at runtime, 
+%  the behaviour can be adapted based on the new environmental situations. 
+% Finally, we can imagine that learning can be performed online. 
+%  It is a common situation where we do not know the environment and also simulation can be very hard to accomplish. 
+%  In mixed and online cases, RL is the most suitable model, because agents \textit{learn by doing}.
 
 \section{Aggregate Computing with Reinforcement}\label{aggregate-and-rl}
 \begin{figure}
@@ -464,7 +489,7 @@ Finally, we can imagine that learning can be performed online.
   }
   \label{fig:aggregate-q-learning}
 \end{figure}
-As first experiments, we leverage RL to improve building blocks. 
+%As first experiments, we leverage RL to improve building blocks. 
 % 
 In this section, we briefly describe how RL can be injected into the computation loop,
  and what RL we used with AC.
@@ -744,18 +769,18 @@ As a result, the aggregate speed-up convergence in each new situation.
 
 \section{Discussion and Concluding Remarks}\label{conclusion}
 In this article, we have discussed the combination of AC with Machine Learning techniques in order to improve adaptivity
- and effictveness of the AC framework.
-In doing so, we compared AC problems with current Machine Learning solutions in MASs systems.
+ and effectiveness of the AC framework.
+%In doing so, we compared AC problems with current Machine Learning solutions in MASs systems.
 %
-Finally, we explore the combination of AC with RL (in particular Hysteretic Q-Learning).
-RL application in this kind of settings is quite an explored -- even if some works exists~\cite{DBLP:conf/icml/YangLLZZW18} -- 
- area for several reason, such us the highly system dynamic, non-stationarity,  partial enviroment observability, and non-bounded system size.
-In a case study we empirically shown the effictveness of RL, by which we speed up the convergence time of
- aggregate program taking in consideration -- the hop count.
+In particular, we explore the combination of AC with Hysteretic Q-Learning.
+RL application in this kind of setting is quite unexplored -- even if some works exists~\cite{DBLP:conf/icml/YangLLZZW18} -- 
+ area for several reasons, such as the high system dynamic, non-stationarity,  partial environment observability, and non-bounded system size.
+In a case study, we empirically show the effectiveness of RL, by which we speed up the convergence time of
+ aggregate program taking into consideration -- the hop count.
 Furthermore, we have shown that the learnt program can easily scale up to system size.
 
-This is a first effort towards an ``hybrid'' collective programming approach, where the high-level program specification is 
- done by a designer and the low-level matters are leaved to machine learning algorithms.
+This is the first effort towards an ``hybrid'' collective programming approach, where the high-level program specification is 
+ done by a designer and the low-level matters are left to machine learning algorithms.
 
 We know that this is preliminary work and it shed light on several problems that we should handle in the future.
 
