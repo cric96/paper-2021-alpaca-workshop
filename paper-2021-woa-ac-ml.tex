@@ -649,14 +649,14 @@ In this section, we outline the results of the application of RL for one simple
  aggregate program: the hop count. In this case, the computational field that will eventually be produced consists of the distance in terms of the minimum number of nodes needed to reach source nodes (\Cref{fig:hop-count}).
 
 A naive implementation of this kind of problem can be described in AC as:
-\begin{minted}[fontsize=\scriptsize]{scala}
-def hopCount(): Int = {
-  rep(Double.PositiveInfinity) { 
-    hopCounts => mux(source) 
-    { 0 } 
-    { minHoodPlus(nbr{hopCounts}) + 1 }
+\begin{minted}[fontsize=\scriptsize,mathescape]{scala}
+def hopCount(): Int = 
+  // update state (initially, $\infty$; now, hopCounts) by ...
+  rep(Double.PositiveInfinity) { hopCounts => 
+    // source returns 0,
+    // non-sources minimise over neighbourdhood and add 1
+    mux(source) { 0 }{ minHoodPlus(nbr{hopCounts}) + 1 }
   }
-}
 \end{minted}
 However, this solution suffers from the slow-rising problem~\cite{DBLP:conf/saso/AudritoCDV17}. 
  It consists of a slow convergence time when an equilibrium situation is broken.
@@ -665,15 +665,12 @@ So, our first intuition is to accelerate convergence through learning.
 
  \begin{minted}[fontsize=\scriptsize]{scala}
 def hopCountRl(k: Int, w: Int): Int = 
-{
-  rep(Double.PositiveInfinity) { 
-    hopCounts => 
+  rep(Double.PositiveInfinity) { hopCounts => 
       val currentState = 
         state(hopCounts, k, w)
       val action = localPolicy(state)
       hopCout() + action
   }
-}
 \end{minted}
 
 Where the actions are discrete values (0, 1, 2 in our experiments) that correct the local result following a policy refined through learning.
