@@ -234,12 +234,12 @@ By opportunistically crafting these building-blocks it is possible to verify pro
  (i.e. the ability of a system to recover from arbitrary changes)~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 
 AC is studied in various simulated scenarios ranging from smart cities to crowd management~\cite{DBLP:journals/jlap/ViroliBDACP19}, 
- thanks to Alchemist~\cite{DBLP:journals/jos/PianiniMV13} (a meta-simulator for pervasive systems) and to programming languages and toolchains that support 
- this paradigm, such as ScaFi~\cite{DBLP:conf/isola/CasadeiVAD20}. %, FCCP~\cite{DBLP:conf/acsos/Audrito20} and Protelis~\cite{PianiniSAC2015}.
+ thanks to Alchemist~\cite{DBLP:journals/jos/PianiniMV13} (a meta-simulator for pervasive systems) and programming languages and tools that support 
+ this paradigm~\cite{DBLP:journals/jlap/ViroliBDACP19}, such as the ScaFi aggregate programming language~\cite{DBLP:conf/isola/CasadeiVAD20}. %, FCCP~\cite{DBLP:conf/acsos/Audrito20} and Protelis~\cite{PianiniSAC2015}.
 
-In the next sections, we show the field calculus operators that are essential to understand the case study presented,
- and then we underline how each node computes to follow the aggregate program specification.
- Finally, we discuss the motivation that brings us to integration Reinforcement Learning in the AC framework.
+In the next sections, we summarise the field calculus language and computation model, which are essential to understand the case study of \Cref{evaluation}.
+Then, we discuss the motivation that brought us to integrate Reinforcement Learning into the AC framework.
+ 
 \subsection{Field Calculus operators}
 The main constructs that capture the essential aspects for programming self-organising systems with field calculus are:
 \begin{itemize}
@@ -254,7 +254,8 @@ The main constructs that capture the essential aspects for programming self-orga
   field into two non-communicating zones hosting isolated subcomputations:
   $e_1$ where $e_0$ is true, and $e_2$ where $e_0$ is false.
 \end{itemize}
-For a more in-depth explanation of these operators, please refer to~\cite{DBLP:journals/computer/BealPV15}.
+%
+A full coverage of the field calculus is beyond the scope of this paper. A more comprehensive presentation is given in~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 
 \subsection{Computational Model}
 An aggregate program execution consists of a continuously node-point execution of a \round{}, 
