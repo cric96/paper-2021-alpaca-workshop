@@ -738,7 +738,7 @@ $$
 \beta = 0.05,
 \gamma = 0.9
 $$
-Furthermore, we use a $\epsilon$ decay policy for the $\epsilon$-greedy policy as:
+Moreover, we use a $\epsilon$ decay policy for the $\epsilon$-greedy policy as:
 \begin{equation*}
   \begin{array}{l}
     \epsilon_t = \epsilon_{start} * e^{-t/\theta}\\ 
@@ -755,7 +755,7 @@ The error is evaluated as:
     total_{error} = \frac{1}{T} * \sum_{i = 0}^T \frac{1}{N} * \sum_{j = 0}^N = error(i, j)
   \end{array}
 \end{equation*}
-
+%
 where \textbf{i} is the node identifier and \textbf{t} is the time when the error is evaluated.
 
 Then, we test our learnt algorithm in different environments (\Cref{fig:simulation} b,c,d). To do that, we share the learnt Q-table to the 
