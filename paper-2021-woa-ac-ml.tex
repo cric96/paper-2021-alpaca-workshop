@@ -289,12 +289,46 @@ The combination of the logic of the aggregate program
  can promote the pursuing of collective adaptive behaviour.
 
 \subsection{Motivation}
-Currently, Aggregate computing has a problem in the ability to generalise collective behaviours that are capable of working well in different scenarios. 
- For example, a well-tested aggregate application in a static network could lead to a non-stable behaviour in a dynamic network. 
- Typically, to alleviate this problem, designers create ad-hoc building blocks that cope with certain environmental aspects (such as the ULT block~\cite{DBLP:conf/saso/AudritoCDV17}). 
- But they are still context-specific solutions.
 
-A novel way to deal with this problem is to leave the low-level aspects of AC to Machine Learning algorithms, 
+Consider the problem of associating
+ to each node of the network
+ a value
+ representing the estimation of the minimum distance
+ from that node to the closest \emph{source} node (see \Cref{fig:hop-count}).
+%
+This is indeed a computational field 
+ and it is known as a \emph{gradient}~\cite{DBLP:conf/saso/AudritoCDV17}
+ and there exist aggregate algorithms
+ for computing it in such a way that
+ the field automatically adapts 
+ to changes induced by mobility
+  and addition/removal of sources.
+%
+The gradient is a key building block 
+ for building more complex self-organising behaviour~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+
+%Currently, aggregate computing has a problem in the ability to generalise collective behaviours that are capable of working well in different scenarios. 
+%%
+% For example, a well-tested aggregate application in an environment with limited dynamics could lead to a non-stable behaviour under continuous perturbations.
+%% 
+% Typically, to alleviate this problem, designers create ad-hoc building blocks that cope with certain environmental aspects (such as the ULT block~\cite{DBLP:conf/saso/AudritoCDV17}). 
+% But they are still context-specific solutions.
+However, in practice, 
+ specific gradient algorithms
+ may be developed
+ to achieve different trade-offs 
+ in terms of reactivity to change and stability~\cite{DBLP:conf/saso/AudritoCDV17},
+ which make them more or less suitable depending on 
+ the environmental and network dynamics at hand.
+%
+The problem is that manually crafting such algorithms
+ is not an easy task, for various heuristics and assumptions typically have to be considered.
+%
+To address this problem,
+ we propose to use machine learning techniques
+ in order to learn ``good'' local decision-making.
+% 
+That is, the idea is to leave the low-level aspects of AC to Machine Learning algorithms, 
  training the collective in different environments and thus building general behaviours that are capable of adapting to many circumstances.
 
 In this case, when Reinforcement Learning is applied to several agents, we speak of Multi-Agent Reinforcement Learning (MARL)~\cite{DBLP:journals/aamas/Hernandez-LealK19}.
@@ -307,8 +341,8 @@ In the cooperative and homogeneous systems, several works have tried to apply th
 However, several issues emerge, such as non-stationarity, multi-agent credit assignment, scalability and partial observability of the system. 
  Therefore, several heuristics have tried to solve these problems.
 %
-Among many Hysteric Q-Learning~\cite{hysteretic-q} uses an optimistic approach in which more weight is given to positive actions than negative ones.
-
+Among many, Hysteric Q-Learning~\cite{hysteretic-q} uses an optimistic approach in which more weight is given to positive actions than negative ones.
+%
 Another way to handle multi-agent learning is to use so-called \textit{Centralised Training and Decentralised Execution} (CTDE) algorithms. 
  In this case, a central agent collects the experiences of the various agents and then distils a policy that each agent can execute locally in a typical actor-critic setting. 
 %
