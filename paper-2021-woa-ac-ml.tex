@@ -11,7 +11,7 @@
 \usepackage{textcomp}
 \usepackage{minted}
 \usepackage{subcaption}
-\usepackage[hidelinks, draft]{hyperref}
+\usepackage[draft]{hyperref}
 \usepackage[inline]{enumitem}
 \usepackage[T1]{fontenc}
 \usepackage{cleveref}
@@ -687,7 +687,7 @@ def speed(hopCount: Int, k: Int) =
 \end{minted}
 \mintinline{scala}{recentValues(data, k)} is an aggregate operator that returns a list containing the last \textbf{\texttt{k}} data perceived by the agent.
 Then, due to the partial observability of the environment, we maintain a 
- list of velocities to understand the hop count direction:
+ list of velocities, to understand the hop count direction:
 
  \begin{minted}[fontsize=\scriptsize]{scala}
 def state(hopCount: Int, k: Int, w: Int) =
