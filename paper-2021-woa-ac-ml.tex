@@ -601,7 +601,7 @@ As a first step towards a complete integration between AC and RL, we have decide
 % 
 We made this choice inspired by other work in CSAS~\cite{csas-and-marl} and swarm systems~\cite{nguyen2018swarm}.
 
-Our approach is partially inspired by Swarm Q-Learning~\cite{nguyen2018swarm} and leverage Hysteretic Q-Learning~\cite{hysteretic-q} to 
+Our approach is partially inspired by Swarm Q-Learning~\cite{nguyen2018swarm} and leverage Hysteretic Q-Learning~\cite{hysteretic-q} to
  handle the non-stationarity in the environment.
 %
 In particular, each agent updates a local Q table ($Q_i(s, a)$, where $i$ is the agent id) following the standard hysteretic update:
@@ -816,7 +816,7 @@ In a case study, we empirically show the effectiveness of RL, by which we speed 
  aggregate program taking into consideration -- the hop count.
 Furthermore, we have shown that the learnt program can easily scale up to system size.
 
-To the best of our knowledge, this is the first effort towards an ``hybrid'' collective programming approach, where the high-level program specification is 
+To the best of our knowledge, this is the first effort towards a ``hybrid'' collective programming approach, where the high-level program specification is 
  done by a designer and the low-level matters are left to machine learning algorithms.
 %
 As such, this work shed light on several issues deserving future investigation.
