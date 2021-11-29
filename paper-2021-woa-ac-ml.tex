@@ -137,7 +137,7 @@ CAS are notoriously hard to design and control
  as globally desired behaviour
  has to emerge from local behaviours and interactions. 
 %
-For this reason, over the years, various approaches have tried to handle this complexity---for instance, by taking inspiration from natural systems like insect and animal societies (e.g., ant colonies, bee hives, flocks of birds etc.). 
+For this reason, over the years, various approaches have addressed the problem of dealing with this complexity---for instance, by taking inspiration from natural systems like insect and animal societies (e.g., ant colonies, bee hives, flocks of birds etc.). 
 %
 %In this case, a sort of hive mind arises 
 % %-- also referred to as swarm intelligence --  
@@ -148,9 +148,9 @@ Specifically, such approaches tend to exploit
  i.e., processes by which global order emerges 
  from continuous interactions among simple entities.
 
-Initially, researchers had tried to achieve these properties in computing systems by miming natural collective behaviours ``from the bottom up''~\cite{DBLP:journals/connection/Webb02}, 
+Initially, researchers had tried to build systems that show these properties in computing systems by mimickng natural collective behaviours ``from the bottom up''~\cite{DBLP:journals/connection/Webb02}, 
  namely trying to find the right single-node-behaviour (local rules)
- to pursue the intended global behaviour. %, e.g. flocking, foraging, etc.
+ to achieve the intended global behaviour. %, e.g. flocking, foraging, etc.
 %
 However, such local rules cannot easily be defined, since emergence, and its effects, are (almost by definition) hard to be controlled or predicted in complex systems.
 %
@@ -172,18 +172,17 @@ Indeed, an aggregate program
 AC captures common abstractions for collective behaviour specification in so-called ``building-blocks''. 
  %These abstractions are encapsulated in so-called ``building blocks''.
  %through which various applications have been built (e.g., for swarm robotics and crowds engineering~\cite{DBLP:journals/eaai/CasadeiVAPD21}).
-However, building block synthesis concerns different stuff not only related to the behaviour itself
+However, building block synthesis concerns different elements not only related to the behaviour itself
  but also to the ``ensemble" specifications. 
 %
 For instance, it is quite difficult to craft building blocks
- that easily adapt w.r.t. the node movements rapidity.
+ that easily adapt to the non stationarity due to node movements.
 %
-Ideally, we would like to continue building our application using these building blocks 
+Ideally, we would like to continue developing our applications using these building blocks 
  -- so the high-level specification remains the same -- 
  but using some under-the-hood mechanisms that adapt the behaviour according to different environmental changes. 
 %
-For this reason, we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden
- to developers of defining the right collective specifications.
+For this reason, we claim that Machine Learning can help us in handling this "unseen" situation, leaving only the burden of defining the right collective specifications to developers.
 %This lead to an ``hybrid" approach where a part of behaviour is still expressed using common 
 % AC abstractions and another part is distilled through learning~\cite{research}.
 In particular, in this paper,
@@ -208,7 +207,7 @@ Finally, in \Cref{conclusion} we discuss the results and the path towards deeper
 %Computer Science is an incredibly evolving research area. 
 % In a few years, the environment had been filled with intercommunicating computational devices, such as smartphones, smart things, and personal computers.
 
-Collective Adaptive Systems are characterized by a very high number of nodes without a central coordinating authority that coordinate nodes. 
+Collective Adaptive Systems are characterized by a very high number of nodes without a central authority that coordinate nodes. 
  The overall behaviour is a consequence of local interactions.%The systems expose self-* properties.
  
 Engineering this kind of system is a thriving area, and so various approaches have been proposed.
@@ -216,22 +215,22 @@ Engineering this kind of system is a thriving area, and so various approaches ha
  usually inspired by nature~\cite{DBLP:journals/swarm/BrambillaFBD13}. 
 %
 Instead, a natural way to describe this kind of problems should be through a \textit{collective} view of the system.
- This is the idea used by the \textit{global-to-local} techniques~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/scp/AlrahmanNL20, DBLP:conf/cbse/BuresGHKKP13}, 
- where the behaviours are designed \textit{top-down}, and then the local behaviour is generated automatically from this ``system-wide'' specification. 
+ This is the idea used by the so-called \textit{global-to-local} techniques~\cite{DBLP:journals/jlap/ViroliBDACP19,DBLP:journals/scp/AlrahmanNL20, DBLP:conf/cbse/BuresGHKKP13}, 
+ where the behaviours are designed \textit{top-down}, and then the local one is generated automatically from this ``system-wide'' specification. 
 % 
 Also ``meet-in-the-middle''~\cite{DBLP:journals/computer/PinciroliB16} approaches exist, where
  a part of the system is still expressed bottom-up (device-centric) whereas a part is expressed top-down (swarm-centric)
 
 In this work, we focus on Aggregate Computing~\cite{DBLP:journals/computer/BealPV15}, a global-to-local approach where
  the self-organising collective behaviour is expressed in terms of manipulation of \textit{computational fields}.
-The latter could be seen as the extension of electromagnetic fields to Computer Science since it consists of a 
- map from any devices to their computational value (i.e. the result of a computation).
+The latter could be seen as the application of the mathematical concept of field: it consists of a 
+ map from any devices to their computational value (i.e., the result of a computation).
 The computational field manipulation is ruled by \textit{field calculus}, which define the constructs needed 
  to express spatio-temporal computations~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 %
-The novelty of AC consists in its composable (functional-like) system-size independent program definition: 
- using basic constructs we identify the main patterns (\textit{building-blocks}) that could be reusable at the application level.
-By opportunistically crafting these building-blocks it is possible to verify prominent properties such as eventual consistency %~\cite{DBLP:journals/taas/BealVPD17} 
+The novelty of AC resides in its composable (functional-like) system-size independent program definition: 
+ using basic constructs we identify the main patterns (\textit{building-blocks}) that could be reusable at application level.
+By opportunistically crafting these building-blocks, it is possible to verify prominent properties such as eventual consistency %~\cite{DBLP:journals/taas/BealVPD17} 
  (i.e. the ensemble behaviour is independent of the underlying network details)
  and self-stabilisation %~\cite{DBLP:journals/tomacs/ViroliABDP18} 
  (i.e. the ability of a system to recover from arbitrary changes)~\cite{DBLP:journals/jlap/ViroliBDACP19}.
@@ -251,14 +250,14 @@ The main constructs that capture the essential aspects for programming self-orga
   \item \textit{Neighbour interaction} expression \mintinline[escapeinside=||]{scala}{|\color{teal}nbr|{|$e$|}} a view
   of the field values in the surroundings of each device where neighbours are
   mapped to their evaluations of $e$. A series of \mintinline{scala}{*hood} operators leverage this map to produce relevant result. 
-  For instance, \mintinline{scala}{minHood} return the minimum value 
+  For instance, \mintinline{scala}{minHood} returns the minimum value 
   within the neighbourhood.
   \item \textit{Domain partitioning} expression \mintinline[escapeinside=||]{scala}{|\color{teal}if|(|$e_0$|){|$e_1$|}{|$e_2$|}} splits the computational
   field into two non-communicating zones hosting isolated subcomputations:
   $e_1$ where $e_0$ is true, and $e_2$ where $e_0$ is false.
 \end{itemize}
 %
-A full coverage of the field calculus is beyond the scope of this paper. A more comprehensive presentation is given in~\cite{DBLP:journals/jlap/ViroliBDACP19}.
+A full coverage of field calculus is beyond the scope of this paper. A more comprehensive presentation is given in~\cite{DBLP:journals/jlap/ViroliBDACP19}.
 
 \subsection{Computational Model}
 %
@@ -346,7 +345,7 @@ However, several issues emerge, such as non-stationarity, multi-agent credit ass
 %
 Among many, Hysteric Q-Learning~\cite{hysteretic-q} uses an optimistic approach in which more weight is given to positive actions than negative ones.
 %
-Another way to handle multi-agent learning is to use so-called \textit{Centralised Training and Decentralised Execution} (CTDE) algorithms. 
+Another way to handle multi-agent learning is to use the so-called \textit{Centralised Training and Decentralised Execution} (CTDE) algorithms. 
  In this case, a central agent collects the experiences of the various agents and then distils a policy that each agent can execute locally in a typical actor-critic setting. 
 %
 During the learning phase, the problems of partial observability and non-stationarity are reduced, since the centralised learner has a global view. 
@@ -548,10 +547,10 @@ In the next section, we exploit Hysteretic Q-Learning (since it empirically show
   \centering
   \includegraphics[width=\linewidth]{img/algorithm-learning.pdf}
   \caption{This figure shows the main steps of RL in AC.
-  Each agent starts with his copy of a Q table. 
-  Then, during the simulation, they refine them Q tables changing Q values according to their experience (different colours mean different values). 
+  Each agent starts with his copy of a Q-table. 
+  Then, during the simulation, they refine them Q-tables changing Q values according to their experience (different colours mean different values). 
   In the end, a new $Q_{max}$ table will be created aggregating each agent table. 
-  Finally, a new episode starts using this $Q_{max}$ as a starting Q table.
+  Finally, a new episode starts using this $Q_{max}$ as a starting Q-table.
   }
   \label{fig:aggregate-q-learning}
 \end{figure}
@@ -560,7 +559,7 @@ In the next section, we exploit Hysteretic Q-Learning (since it empirically show
 In this section, we briefly describe how RL can be injected into the AC computation loop,
  and what RL we used with AC.
 
-From a local view, AC program execution can be seen as:
+From a local point of view, AC program execution can be seen as:
 $$
 f : \textit{Context} \rightarrow \textit{Output}
 $$
@@ -571,14 +570,14 @@ Where $\textit{Context}$ contains:
 \end{itemize}
 The computational field $\theta$ contains all output produced by the system.
 
-Speaking of RL settings, we need to define the state function and the reward function.
+As far as RL settings are concerned, we need to define the state function and the reward function.
 %
 The execution needs to be distributed, so the state will be a function from the local node context:
 $$
 K := \Omega(\textit{Context})
 $$
 
-Reward function instead, might be depending on the learning technique, time, and problem. 
+Instead, reward function might be dependent on the learning technique, time, and problem. 
  Indeed, if we perform learning offline, it could be defined from the overall \textit{simulated} computational field:
 $$
 \textit{R}_{global} := \psi({\theta})
@@ -591,12 +590,12 @@ Finally, actions influence the current aggregate program output, changing the pr
 $$
 f_{rl} : \textit{Context} \rightarrow \lambda(\textit{Output}, \textit{Action})
 $$
-As remarked before, the policy $\pi$ need to be distributed, so each agent can choose the action that will be performed:
+As remarked before, the policy $\pi$ needs to be distributed, so that each agent can choose the action that will be performed:
 $$
 \textit{Action} \leftarrow \pi(K)
 $$
 
-As a first step towards a complete integration between AC and RL, we have decided to set up an Independent RL learning technique, 
+As a first step towards a complete integration between AC and RL, we have decided to adopt an Independent RL learning technique, 
  by which each agent try to improve their own current local policy (shown in \Cref{fig:aggregate-q-learning}). 
 % 
 We made this choice inspired by other work in CSAS~\cite{csas-and-marl} and swarm systems~\cite{nguyen2018swarm}.
@@ -604,7 +603,7 @@ We made this choice inspired by other work in CSAS~\cite{csas-and-marl} and swar
 Our approach is partially inspired by Swarm Q-Learning~\cite{nguyen2018swarm} and leverage Hysteretic Q-Learning~\cite{hysteretic-q} to
  handle the non-stationarity in the environment.
 %
-In particular, each agent updates a local Q table ($Q_i(s, a)$, where $i$ is the agent id) following the standard hysteretic update:
+In particular, each agent updates a local Q-table ($Q_i(s, a)$, where $i$ is the agent id) following the standard hysteretic update:
 $$
 \delta \leftarrow r + \gamma * max_a Q_i(s', a) - Q_i(s_t, a_t)
 $$
@@ -615,8 +614,8 @@ Q(s_t, a_t) =  \begin{cases}
 \end{cases}
 $$
 
-At the end of each episode, each agent has collected its local experience, which can vary in different zones. 
- So, we combine the N (the number of nodes) Q table selecting the maximum value for each state-action pair since we assume an optimistic homogeneous behaviour:
+At the end of each episode, each agent collects its local experience, which can vary in different zones. 
+ So, we combine the $N$ (the number of nodes) Q-table selecting the maximum value for each state-action pair since we assume an optimistic homogeneous behaviour:
 $$
 Q_{max}(s, a) = max_i(Q_i(s, a))
 $$
@@ -705,7 +704,7 @@ The policy is learnt locally, during simulation, using our version of Q-Learning
 \systeme*{0 : & \mbox{\textit{hop count output is right}}, -1 : & \mbox{\textit{otherwise}}}
 \]
 The idea is to maintain the nodes in a stable situation or to
- fasten the time needed to reach a stable one.
+ speed up the time needed to reach a stable one.
 %
 \Cref{fig:aggregate-learning-loop} shows the learning loop in details.
 \begin{figure}
@@ -715,8 +714,8 @@ The idea is to maintain the nodes in a stable situation or to
   periodically performs the standard hop count. 
   Using the output produced and the history of state and output, 
   each agent computes its current state. 
-  Using it, they evaluate the action to speed up the hop count convergence following a policy. 
-  This new refined output is then used to evaluate the reward and to improve the Q table (dotted line path)}
+  Then, an agent evaluates the action to speed up the hop count convergence following a policy. 
+  This new refined output is then used to evaluate the reward and to improve the Q-table (dotted line path)}
   \label{fig:aggregate-learning-loop}
 \end{figure}
 
@@ -727,9 +726,9 @@ We verify our learning algorithm through simulation\footnote{repository at \url{
  At the time $t$, $B$ disappears. So the nodes near $B$ start a slow process
  to eventually reach the distance towards $A$.
 We use 80 ($N$) nodes displaced into an irregular grid with a width of 100 meters and a height of 20 meters. 
- Each node has a neighbourhoods range equal to 8 meters --- on average, each node has 7 neighbours. 
+ Each node has a neighbourhood range equal to 8 meters --- on average, each node has 7 neighbours. 
  The time $t$ is fixed to 20.
- Each simulation episode lasts 60-time unit. Finally, we set $k = 3$ and $w = 2$.
+ Each simulation episode lasts 60 time-unit. Finally, we set $k = 3$ and $w = 2$.
 % 
 We train the aggregate for 500 episodes.
  The Q-learning parameters are:
@@ -758,11 +757,11 @@ The error is evaluated as:
 %
 where \textbf{i} is the node identifier and \textbf{t} is the time when the error is evaluated.
 
-Then, we test our learnt algorithm in different environments (\Cref{fig:simulation} b,c,d). To do that, we share the learnt Q-table to the 
+Then, we test our learnt algorithm in different environments (\Cref{fig:simulation} b, c, d). To do that, we share the learnt Q-table to the 
  entire aggregate and we test the program changing the system size (80, 360 and 760 nodes).
 %
 For each population size, we run 50 episodes and then we average the error at each time step. 
- As a result, the aggregate speed-up convergence in each new situation.
+The aggregate speed-up convergence is observed for each scenario taken into consideration.
 
 \begin{figure*}
   \begin{subfigure}[b]{\textwidth}
@@ -807,38 +806,35 @@ For each population size, we run 50 episodes and then we average the error at ea
 \section{Discussion and Concluding Remarks}\label{conclusion}
 In this article, we have discussed the combination of AC with Machine Learning techniques in order to improve adaptivity
  and effectiveness of the AC framework.
-%
 In particular, we explore the combination of AC with Hysteretic Q-Learning.
-%
-RL application in this kind of setting is quite unexplored %-- even if some works exists~\cite{DBLP:conf/icml/YangLLZZW18} -- 
- area for several reasons, such as the high system dynamic, non-stationarity,  partial environment observability, and non-bounded system size.
-In a case study, we empirically show the effectiveness of RL, by which we speed up the convergence time of
- aggregate program taking into consideration -- the hop count.
+The application of RL to this kind of setting is a largely unexplored %-- even if some works exists~\cite{DBLP:conf/icml/YangLLZZW18} -- 
+ research area. There are a variety of challenges, such as non-stationarity,  partial environment observability, and non-bounded system size.
+In a case study, we have empirically showed the effectiveness of RL by showing a speed up of the convergence time of
+ aggregate program we took into consideration, namely the hop count.
 Furthermore, we have shown that the learnt program can easily scale up to system size.
 
 To the best of our knowledge, this is the first effort towards a ``hybrid'' collective programming approach, where the high-level program specification is 
- done by a designer and the low-level matters are left to machine learning algorithms.
+ done by a designer and the low-level implementation to building blocks based on machine learning.
 %
-As such, this work shed light on several issues deserving future investigation.
+As such, this work has shed light on several issues deserving future investigation.
 
 Aggregate systems are partially observable from the perspective of each node. 
  Local observations may not be statistically significant in summarising the state of the entire aggregate. 
  In the future, we could address this problem through recurrent neural networks and a CTDE learning methodology.
- 
-The learning, in this case, was applied at the building block level. 
- Another possible direction is to use it at the framework level, e.g., to select which messages to send to the neighbourhood or not. 
+ Learning algorithms were implemented at building block level. 
+ Another possible direction is to use them at the framework level, e.g., to select which messages to send to the neighbourhood or not. 
  This has already been addressed in the literature under the name of \textit{learn to communicate}~\cite{DBLP:journals/corr/abs-1908-03963}. 
 A novel way to handle this problem is to use Graph Neural Networks~\cite{DBLP:journals/corr/abs-1812-08434} to learn the representation of a distributed system and to select messages based on that representation. 
  Thus, we should consider this methodology when we will extend RL at the AC framework level.
  
-In our experiment, we have applied a variation of the independent learning approach. 
+In our experiments, we have applied a variation of the independent learning approach. 
  Agents first learn the best policy locally, and then at the end of the episode, a learner merges the Q-tables. 
  However, this does not reduce the problems of scalability and non-stationary, since a central agent must still collect all the Q-tables of the aggregate. 
  In particular, to handle the scalability issues, we will have to consider decentralised approaches based only on neighbour data (or local leaders).
  
 Finally, we do not address the multi-agent credit assignment problem in this work. 
- Indeed, we use a global reward function for the whole aggregate. In this way, however, learning often degenerated because it was difficult to understand the influence of an agent w.r.t. the system. 
- To reduce this problem, we will consider novel techniques of difference reward~\cite{DBLP:conf/atal/AgoginoT04} or counterfactual baseline~\cite{DBLP:journals/corr/FoersterFANW17}.
+ Indeed, we use a global reward function for the whole aggregate. In this way, however, learning often degenerated because it was difficult to understand the influence of an agent on the system. 
+ To reduce this problem, we plan to study the application of difference rewards~\cite{DBLP:conf/atal/AgoginoT04} or counterfactual baselines~\cite{DBLP:journals/corr/FoersterFANW17}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{biblio-reduced}
