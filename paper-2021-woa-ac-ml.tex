@@ -137,7 +137,7 @@ CAS are notoriously hard to design and control
  as globally desired behaviour
  has to emerge from local behaviours and interactions. 
 %
-For this reason, over the years, various approaches have addressed the problem of dealing with this complexity---for instance, by taking inspiration from natural systems like insect and animal societies (e.g., ant colonies, bee hives, flocks of birds etc.). 
+For this reason, over the years, various approaches have addressed the problem of dealing with this complexity---for instance, by taking inspiration from natural systems like insect and animal societies (e.g., ant colonies, beehives, flocks of birds etc.). 
 %
 %In this case, a sort of hive mind arises 
 % %-- also referred to as swarm intelligence --  
@@ -148,7 +148,7 @@ Specifically, such approaches tend to exploit
  i.e., processes by which global order emerges 
  from continuous interactions among simple entities.
 
-Initially, researchers had tried to build systems that show these properties in computing systems by mimickng natural collective behaviours ``from the bottom up''~\cite{DBLP:journals/connection/Webb02}, 
+Initially, researchers had tried to build systems that show these properties in computing systems by mimicking natural collective behaviours ``from the bottom up''~\cite{DBLP:journals/connection/Webb02}, 
  namely trying to find the right single-node-behaviour (local rules)
  to achieve the intended global behaviour. %, e.g. flocking, foraging, etc.
 %
@@ -176,7 +176,7 @@ However, building block synthesis concerns different elements not only related t
  but also to the ``ensemble" specifications. 
 %
 For instance, it is quite difficult to craft building blocks
- that easily adapt to the non stationarity due to node movements.
+ that easily adapt to the non-stationarity due to node movements.
 %
 Ideally, we would like to continue developing our applications using these building blocks 
  -- so the high-level specification remains the same -- 
@@ -577,7 +577,7 @@ $$
 K := \Omega(\textit{Context})
 $$
 
-Instead, reward function might be dependent on the learning technique, time, and problem. 
+Instead, the reward function might be dependent on the learning technique, time, and problem. 
  Indeed, if we perform learning offline, it could be defined from the overall \textit{simulated} computational field:
 $$
 \textit{R}_{global} := \psi({\theta})
@@ -809,8 +809,8 @@ In this article, we have discussed the combination of AC with Machine Learning t
 In particular, we explore the combination of AC with Hysteretic Q-Learning.
 The application of RL to this kind of setting is a largely unexplored %-- even if some works exists~\cite{DBLP:conf/icml/YangLLZZW18} -- 
  research area. There are a variety of challenges, such as non-stationarity,  partial environment observability, and non-bounded system size.
-In a case study, we have empirically showed the effectiveness of RL by showing a speed up of the convergence time of
- aggregate program we took into consideration, namely the hop count.
+In a case study, we have empirically shown the effectiveness of RL by showing a speedup of the convergence time of
+ the aggregate program we took into consideration, namely the hop count.
 Furthermore, we have shown that the learnt program can easily scale up to system size.
 
 To the best of our knowledge, this is the first effort towards a ``hybrid'' collective programming approach, where the high-level program specification is 
